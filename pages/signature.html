@@ -1,0 +1,271 @@
+<div class="page" data-name="signature">
+	<div class="navbar">
+		<div class="navbar-inner sliding">
+			<div class="left"><a href="#" class="link back"><i class="icon icon-back"></i><span class="ios-only">Retour</span></a></div>
+			<div class="title">OP2A Mobile - Signature</div>
+		</div>
+	</div>
+
+	<div class="page-content">
+		<div id="signature-pad" class="signature-pad">
+		    <div class="signature-pad--body">
+		      <canvas></canvas>
+		    </div>
+		    <div class="signature-pad--footer">
+		      <div class="description">Signer ci-dessus</div>		
+		      <div class="signature-pad--actions">
+		        <div>
+					<button type="button" class="button clear" data-action="clear">Effacer</button>
+<!--				<button type="button" class="button" data-action="change-color">Change color</button> -->
+<!--				<button type="button" class="button" data-action="undo">Undo</button> -->	
+		        </div>
+		        <div>
+<!--				<button type="button" class="button save" data-action="save-png">Save as PNG</button> -->
+					<button type="button" class="button save" data-action="save-jpg">Enregistrer</button>
+<!--				<button type="button" class="button save" data-action="save-svg">Save as SVG</button> -->
+		        </div>
+		      </div>
+		    </div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" ws_script="page">
+	ws_engine.register_page("signature", ws_page.extend(
+	{
+		custom_init: function(page, event, params)
+		{
+			var self = this;
+			
+			self.id = params.id;
+			
+			var wrapper = document.getElementById("signature-pad");
+			var clearButton = wrapper.querySelector("[data-action=clear]");
+			var changeColorButton = wrapper.querySelector("[data-action=change-color]");
+			var undoButton = wrapper.querySelector("[data-action=undo]");
+			var savePNGButton = wrapper.querySelector("[data-action=save-png]");
+			var saveJPGButton = wrapper.querySelector("[data-action=save-jpg]");
+			var saveSVGButton = wrapper.querySelector("[data-action=save-svg]");
+			var canvas = wrapper.querySelector("canvas");
+			
+			var signaturePad = new SignaturePad(canvas, 
+			{
+				// It's Necessary to use an opaque color when saving image as JPEG;
+				// this option can be omitted if only saving as PNG or SVG
+				backgroundColor: 'rgb(255, 255, 255)'
+			});
+			
+			const data = signaturePad.toData();
+			
+			
+			
+			if (!signaturePad.isEmpty()) console.log( signaturePad.toDataURL());
+			
+			// Adjust canvas coordinate space taking into account pixel ratio,
+			// to make it look crisp on mobile devices.
+			// This also causes canvas to be cleared.
+			function resizeCanvas()
+			{
+				// When zoomed out to less than 100%, for some very strange reason,
+				// some browsers report devicePixelRatio as less than 1
+				// and only part of the canvas is cleared then.
+				var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+			
+				// This part causes the canvas to be cleared
+				canvas.width = canvas.offsetWidth * ratio;
+				canvas.height = canvas.offsetHeight * ratio;
+				canvas.getContext("2d").scale(ratio, ratio);
+			
+				// This library does not listen for canvas changes, so after the canvas is automatically
+				// cleared by the browser, SignaturePad#isEmpty might still return false, even though the
+				// canvas looks empty, because the internal data of this library wasn't cleared. To make sure
+				// that the state of this library is consistent with visual state of the canvas, you
+				// have to clear it manually.
+				signaturePad.clear();
+			}
+			
+			// On mobile devices it might make more sense to listen to orientation change,
+			// rather than window resize events.
+			window.onresize = resizeCanvas;
+			resizeCanvas();
+			
+			function download(dataURL, filename)
+			{
+				if (navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") === -1)
+				{
+			    	window.open(dataURL);
+			    }
+			    else
+			    {
+			    	var blob = dataURLToBlob(dataURL);
+					var url = window.URL.createObjectURL(blob);
+			
+					var a = document.createElement("a");
+					a.style = "display: none";
+					a.href = url;
+					a.download = filename;
+			
+					document.body.appendChild(a);
+					a.click();
+			
+					window.URL.revokeObjectURL(url);
+			  	}
+			}
+			
+			// One could simply use Canvas#toBlob method instead, but it's just to show
+			// that it can be done using result of SignaturePad#toDataURL.
+			function dataURLToBlob(dataURL)
+			{
+				// Code taken from https://github.com/ebidel/filer.js
+				var parts = dataURL.split(';base64,');
+				var contentType = parts[0].split(":")[1];
+				var raw = window.atob(parts[1]);
+				var rawLength = raw.length;
+				var uInt8Array = new Uint8Array(rawLength);
+			
+				for (var i = 0; i < rawLength; ++i)
+				{
+					uInt8Array[i] = raw.charCodeAt(i);
+				}
+			
+				return new Blob([uInt8Array], { type: contentType });
+			}
+			
+			var data_img = localStorage.getItem('signature'+self.id);
+			
+			if (data_img) signaturePad.fromDataURL(data_img);
+			
+			
+			clearButton.addEventListener("click", function (event)
+			{
+				signaturePad.clear();
+			});
+			
+/*
+			undoButton.addEventListener("click", function (event) {
+			  var data = signaturePad.toData();
+			
+			  if (data) {
+			    data.pop(); // remove the last dot or line
+			    signaturePad.fromData(data);
+			  }
+			});
+*/
+			
+/*
+			changeColorButton.addEventListener("click", function (event) {
+			  var r = Math.round(Math.random() * 255);
+			  var g = Math.round(Math.random() * 255);
+			  var b = Math.round(Math.random() * 255);
+			  var color = "rgb(" + r + "," + g + "," + b +")";
+			
+			  signaturePad.penColor = color;
+			});
+*/
+			
+/*
+			savePNGButton.addEventListener("click", function (event) {
+			  if (signaturePad.isEmpty()) {
+			    alert("Please provide a signature first.");
+			  } else {
+			    var dataURL = signaturePad.toDataURL();
+			    download(dataURL, "signature.png");
+			  }
+			});
+*/
+			
+			saveJPGButton.addEventListener("click", function (event)
+			{
+				if (signaturePad.isEmpty())
+				{
+					alert("S'il vous plaît fournir une signature d'abord.");
+				}
+				else
+				{
+				    var dataURL = signaturePad.toDataURL();
+				    localStorage.setItem('signature'+self.id, dataURL);
+				}
+				
+/*
+			  if (signaturePad.isEmpty()) {
+			    alert("Please provide a signature first.");
+			  } else {
+*/
+
+/*
+			    var dataURL = signaturePad.toDataURL("image/jpeg");
+			    download(dataURL, "signature.jpg");
+*/
+				//console.log( signaturePad.toDataURL());
+
+				//signaturePad.fromDataURL(data_img);  //draw la signature
+
+			  //}
+			});
+			
+/*
+			saveSVGButton.addEventListener("click", function (event) {
+			  if (signaturePad.isEmpty()) {
+			    alert("Please provide a signature first.");
+			  } else {
+			    var dataURL = signaturePad.toDataURL('image/svg+xml');
+			    download(dataURL, "signature.svg");
+			  }
+			});
+*/
+
+		},
+	}));	
+	</script>
+</div>
+<!--
+<div class="page" data-name="signature">
+	<div class="navbar">
+		<div class="navbar-inner sliding">
+			<div class="left"><a href="#" class="link back"><i class="icon icon-back"></i><span class="ios-only">Retour</span></a></div>
+			<div class="title">Signature</div>
+		</div>
+	</div>
+<style>
+.kbw-signature { width: 400px; height: 200px; }
+</style>
+	<div class="page-content">
+		<div class="block">
+			<div id="sig">
+			</div>
+			<p style="clear: both;">
+				<button id="disable">Disable</button> 
+				<button id="clear">Clear</button> 
+				<button id="json">To JSON</button>
+				<button id="svg">To SVG</button>
+			</p>
+		</div>
+	</div>
+	
+	<script type="text/javascript" ws_script="page">
+	ws_engine.register_page("signature", ws_page.extend(
+	{
+		custom_init: function(page, event, params)
+		{
+			var sig = $('#sig').signature();
+
+			
+			$('#disable').click(function() {
+				var disable = $(this).text() === 'Disable';
+				$(this).text(disable ? 'Enable' : 'Disable');
+				sig.signature(disable ? 'disable' : 'enable');
+			});
+			$('#clear').click(function() {
+				sig.signature('clear');
+			});
+			$('#json').click(function() {
+				alert(sig.signature('toJSON'));
+			});
+			$('#svg').click(function() {
+				alert(sig.signature('toSVG'));
+			}); 
+			 
+		},
+	}));	
+	</script>
+</div>
+-->
