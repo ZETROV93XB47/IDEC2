@@ -696,7 +696,7 @@ var ws_synchronizer_class = Class.extend(
 			{
 				self.startTime = new Date().getTime();
 				self.elapsedTime = 0;
-				return self.apply_synchro_update(status.updates).then(function(result)
+				if (status.updates) return self.apply_synchro_update(status.updates).then(function(result)
 				{
 					if (update != undefined) return ws_database.synchro_event.delete_all();
 				})
@@ -714,6 +714,7 @@ var ws_synchronizer_class = Class.extend(
 				{
 					if (ws_defines.debug) console.log(error);
 				});
+				return Promise.resolve(true);
 			}
 			else if( typeof status == "string")
 			{

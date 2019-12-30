@@ -49,29 +49,36 @@ var osiri_projects = new function()
         })
     }
 
+    this.get_projet = function(id)
+    {
+        return ws_database.projets.get_with_id(id).then(function(projet)
+        {
+            if (projet != null) return projet[OSIRI_PROJET_PROPERTY_NOM];
+        })
+    }
+
     this.get_phase_color = function(phase)
 	{
 		switch (phase)
 		{
 			case OSIRI_PROJET_PHASE_KEYS_DEPLOIMENT :
-				return OSIRI_COLOR_DEPLOIEMENT;
+				return OSIRI_PHASE_COLOR_DEPLOIEMENT;
 				
 			case OSIRI_PROJET_PHASE_KEYS_PRESERIE :
-				return OSIRI_COLOR_PRESEREIE;
+				return OSIRI_PHASE_COLOR_PRESEREIE;
 				
 			case OSIRI_PROJET_PHASE_KEYS_PROTOTYPE :
-				return OSIRI_COLOR_PROTOTYPE;
+				return OSIRI_PHASE_COLOR_PROTOTYPE;
 				
 			case OSIRI_PROJET_PHASE_KEYS_ETUDE :
-				return OSIRI_COLOR_ETUDE;
+				return OSIRI_PHASE_COLOR_ETUDE;
 				
 			case OSIRI_PROJET_PHASE_KEYS_IDEE :
-                return OSIRI_COLOR_IDEE;
+                return OSIRI_PHASE_COLOR_IDEE;
                 
             default :
                 return '#FFFFF';
 		}
-		
     }
 
     this.get_etape_name = function(phase, etape)

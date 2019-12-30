@@ -362,8 +362,44 @@ $$(document).on('page:init', function(e)
 	switch (page.name)
 	{
 		case 'home' :
-            break;
-        
+		{
+			load_home();
+			
+			$$('#menu_disconnect').on('click', function () 
+			{				
+				app.dialog.confirm("Voulez-vous vraiment vous déconnecter ?", "Déconnexion", function ()
+				{
+					ws_user.logout().then(function()
+					{
+						app.panel.close();
+						app.popup.open('#popup_connection', true)
+					});
+				});
+			});
+		
+			$(".synchro").on('click', function () 
+			{
+				app.dialog.preloader("Synchronisation en cours...");
+				
+				return ws_synchronizer.synchro_db_with_server().then(function(success)
+				{
+					debugger;
+					if (success)
+					{
+						app.dialog.close();
+						app.dialog.alert("Synchronisation terminée !");
+						load_home();
+					}
+				})
+				.catch(function(error)
+				{
+					app.dialog.close();
+					if (ws_defines.debug) app.dialog.alert(error);
+					console.error(error);
+				});
+			});
+			break;
+		}
 	}
 });
 

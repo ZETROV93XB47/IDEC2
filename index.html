@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="fonts/fontawesome/css/all.css">
 
 	    <!-- Path to your custom app styles-->
-        <link rel="stylesheet" href="css/icons.css">
+        <!-- <link rel="stylesheet" href="css/icons.css"> -->
         <link rel="stylesheet" href="css/app.css">
         
         <style >
@@ -89,40 +89,6 @@
                         <div class="page-content">
                             <div class="list">
                                 <ul>
-                                    <!-- test -->
-                                    <!-- <li class="accordion-item">
-                                        <a href="#" class="item-content item-link">
-                                            <div class="item-inner">
-                                                <div class="item-title">Contacts</div>
-                                            </div>
-                                        </a>
-                                        <div class="accordion-item-content">
-                                            <div class="block">
-                                                <div class="list links-list">
-                                                    <ul>	
-                                                        <li>
-                                                            <a class="panel-close" href="/contacts-entites/" id="contacts_entites">Entites BYCM</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="panel-close" href="/contacts-collaborateurs/" id="contacts_collaborateurs">Collaborateurs</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="panel-close" href="/contacts-clients-entites/" id="contacts_clients_entites">Entités clients</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="panel-close" href="/contacts-clients-contacts/" id="contacts-clients-contacts">Contacts clients</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="panel-close" href="/contacts-prestataires/" id="contacts_prestataires">Prestataires</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="panel-close" href="/contacts-organismes/" id="contacts_organismes">Organismes</a>
-                                                        </li>
-                                                    </ul>		
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li> -->
                                     <li>
                                         <a href="/contacts/" class="item-content item-link panel-close">
                                             <div class="item-inner">
@@ -213,197 +179,225 @@
 
             <!-- Views/Tabs container -->
             <div class="views tabs safe-areas">
-            <!-- Tabbar for switching views-tabs -->
-            <div class="toolbar toolbar-bottom tabbar-labels">
-                <div class="toolbar-inner">
-                    <a href="#view-home" class="tab-link tab-link-active">
-                        <i class="icon f7-icons if-not-md">house_fill</i>
-                        <i class="icon material-icons if-md">home</i>
-                        <span class="tabbar-label">Tableau de bord</span>
-                    </a>
-                    <a href="#view-submit-idea" class="tab-link">
-                        <i class="icon f7-icons if-not-md">square_list_fill</i>
-                        <i class="icon material-icons if-md">view_list</i>
-                        <span class="tabbar-label">Déposer un idée</span>
-                    </a>
-                    <a href="#view-my-actions" class="tab-link">
-                        <i class="icon f7-icons if-not-md">square_list_fill</i>
-                        <i class="icon material-icons if-md">view_list</i>
-                        <span class="tabbar-label">Mes Actions</span>
-                    </a>
-                    <a href="#view-innovations" class="tab-link">
-                        <i class="icon f7-icons if-not-md">gear</i>
-                        <i class="icon material-icons if-md">settings</i>
-                        <span class="tabbar-label">Les innovations</span>
-                    </a>
-                </div>
-            </div>
-            <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
-            <div id="view-home" class="view view-main view-init tab tab-active">
-                <div class="page" data-name="home">
-                    <!-- Top Navbar -->
-                    <div class="navbar">
-                        <div class="navbar-bg"></div>
-                        <div class="navbar-inner">
-                        <div class="left">
-                            <a href="#" class="link icon-only panel-open" data-panel="left">
-                            <i class="icon f7-icons if-not-md">menu</i>
-                            <i class="icon material-icons if-md">menu</i>
-                            </a>
-                        </div>
-                        <div class="title sliding">OSIRI</div>
-                        </div>
+                <!-- Tabbar for switching views-tabs -->
+                <div class="toolbar toolbar-bottom tabbar-labels">
+                    <div class="toolbar-inner">
+                        <a href="#view-home" class="tab-link tab-link-active">
+                            <i class="icon f7-icons if-not-md">house_fill</i>
+                            <i class="icon material-icons if-md">home</i>
+                            <span class="tabbar-label">Tableau de bord</span>
+                        </a>
+                        <a href="#view-submit-idea" class="tab-link">
+                            <i class="icon f7-icons if-not-md">square_list_fill</i>
+                            <i class="icon material-icons if-md">view_list</i>
+                            <span class="tabbar-label">Déposer un idée</span>
+                        </a>
+                        <a href="#view-my-actions" class="tab-link">
+                            <i class="icon f7-icons if-not-md">square_list_fill</i>
+                            <i class="icon material-icons if-md">view_list</i>
+                            <span class="tabbar-label">Mes Actions</span>
+                        </a>
+                        <a href="#view-innovations" class="tab-link">
+                            <i class="icon f7-icons if-not-md">gear</i>
+                            <i class="icon material-icons if-md">settings</i>
+                            <span class="tabbar-label">Les innovations</span>
+                        </a>
                     </div>
-                    <!-- Scrollable page content-->
-                    <div class="page-content">
-                        <div style="overflow:auto;">
-                            <div class="col card-expandable" style="height: 150px; float:left; width:45%;">
-                                <div class="card-content">
-                                    <div class="bg-color-blue" style="height: 150px">
-                                    <div class="card-header text-color-white">
-                                            2 REX à réaliser
-                                        <br>
-                                    </div>
-                                    <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
-                                        <i class="icon f7-icons">multiply_circle_fill</i>
+                </div>
+                <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
+                <div id="view-home" class="view view-main view-init tab tab-active">
+                    <div class="page" data-name="home">
+                        <!-- Top Navbar -->
+                        <div class="navbar">
+                            <div class="navbar-bg"></div>
+                            <div class="navbar-inner">
+                                <div class="left">
+                                    <a href="#" class="link icon-only panel-open" data-panel="left">
+                                    <i class="icon f7-icons if-not-md">menu</i>
+                                    <i class="icon material-icons if-md">menu</i>
                                     </a>
-                                    </div>
-                                    <div class="card-content-padding">
-                                    <p>Framework7 - is a free and open source HTML mobile framework to develop hybrid mobile apps or web apps with iOS or Android (Material) native look and feel. It is also an indispensable prototyping apps tool to show working app prototype as soon as possible in case you need to.</p>
-                                    ...
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="col card-expandable" style="height: 150px;">
-                                <div class="card-content">
-                                    <div class="bg-color-green" style="height: 150px">
-                                    <div class="card-header text-color-white">
-                                        1 revue à organiser
-                                        <br>
-                                    </div>
-                                    <a href="#" class="link card-close card-opened-fade-in color-black" style="position: absolute; right: 15px; top: 15px">
-                                        <i class="icon f7-icons">multiply_circle_fill</i>
+                                <div class="title sliding">OSIRI</div>
+                                <div class="right">
+                                    <a class="synchro link icon-only" data-panel="right">
+                                        <i class="icon f7-icons ios-only">sync</i>
+                                        <i class="icon material-icons md-only">sync</i>
                                     </a>
-                                    </div>
-                                    <div class="card-content-padding">
-                                    <p>Framework7 - is a free and open source HTML mobile framework to develop hybrid mobile apps or web apps with iOS or Android (Material) native look and feel. It is also an indispensable prototyping apps tool to show working app prototype as soon as possible in case you need to.</p>
-                                    ...
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div style="overflow:auto;">
-                            <div class="col card-expandable" style="height: 150px; float:left; width:45%;">
-                                <div class="card-content">
-                                    <div class="bg-color-orange" style="height: 150px">
-                                    <div class="card-header text-color-white">
-                                            3 projets en déploiement ce mois-ci
-                                        <br>
-                                    </div>
-                                    <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
-                                        <i class="icon f7-icons">multiply_circle_fill</i>
-                                    </a>
-                                    </div>
-                                    <div class="card-content-padding">
-                                    <p>Framework7 - is a free and open source HTML mobile framework to develop hybrid mobile apps or web apps with iOS or Android (Material) native look and feel. It is also an indispensable prototyping apps tool to show working app prototype as soon as possible in case you need to.</p>
-                                    ...
+                        <!-- Scrollable page content-->
+                        <div class="page-content">
+                                <div class="card-expandable" style="height: 150px;">
+                                    <div class="card-content">
+                                        <div class="bg-color-blue" style="height: 150px">
+                                        <div class="card-header text-color-white">
+                                                2 REX à réaliser
+                                            <br>
+                                        </div>
+                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
+                                            <i class="icon f7-icons">multiply_circle_fill</i>
+                                        </a>
+                                        </div>
+                                        <div class="card-content-padding">
+                                            <div class="list">
+                                                <ul>
+                                                    <li>
+                                                        <a href="/formulaire_action/" class="item-link item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">
+                                                            Ancrage de pied pour 1/2 pied de reprise
+                                                            <div class="item-header">Validation</div>
+                                                            </div>
+                                                            <div class="item-after">Idée</div>
+                                                        </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/formulaire_action/" class="item-link item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">ETUDE : Passage en phase étude
+                                                            <div class="item-header">Validation</div>
+                                                            
+                                                            </div>
+                                                            <div class="item-after">deploiement</div>
+                                                        </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col card-expandable" style="height: 150px;">
-                                <div class="card-content">
-                                    <div class="bg-color-yellow" style="height: 150px">
-                                    <div class="card-header text-color-white">
-                                        1 revue à organiser
-                                        <br>
-                                    </div>
-                                    <a href="#" class="link card-close card-opened-fade-in color-black" style="position: absolute; right: 15px; top: 15px">
-                                        <i class="icon f7-icons">multiply_circle_fill</i>
-                                    </a>
-                                    </div>
-                                    <div class="card-content-padding">
-                                    <p>Framework7 - is a free and open source HTML mobile framework to develop hybrid mobile apps or web apps with iOS or Android (Material) native look and feel. It is also an indispensable prototyping apps tool to show working app prototype as soon as possible in case you need to.</p>
-                                    ...
+                                <div class="card-expandable" style="height: 150px;">
+                                    <div class="card-content">
+                                        <div class="bg-color-green" style="height: 150px">
+                                        <div class="card-header text-color-white">
+                                            1 revue à organiser
+                                            <br>
+                                        </div>
+                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
+                                            <i class="icon f7-icons">multiply_circle_fill</i>
+                                        </a>
+                                        </div>
+                                        <div class="card-content-padding">
+                                            <div class="list">
+                                                <ul>
+                                                    <li>
+                                                        <a href="" class="item-link item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">revue
+                                                            <div class="item-header"></div>
+                                                            
+                                                            </div>
+                                                            <div class="item-after">Organiser</div>
+                                                        </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="card-expandable" style="height: 150px;">
+                                    <div class="card-content">
+                                        <div class="bg-color-orange" style="height: 150px">
+                                        <div class="card-header text-color-white">
+                                                3 projets en déploiement ce mois-ci
+                                            <br>
+                                        </div>
+                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
+                                            <i class="icon f7-icons">multiply_circle_fill</i>
+                                        </a>
+                                        </div>
+                                        <div class="card-content-padding">
+                                            <div class="list">
+                                                <ul>
+                                                    <li>
+                                                        <a href="/project/1" class="item-link item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">Ancrage de pied pour 1/2 pied de reprise
+                                                            <div class="item-header">Validation</div>
+                                                            
+                                                            </div>
+                                                            <div class="item-after">deploiement</div>
+                                                        </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/project/1" class="item-link item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">DEPLOIEMENT : Mise à disposition et informations
+                                                            <div class="item-header">Validation</div>
+                                                            
+                                                            </div>
+                                                            <div class="item-after">deploiement</div>
+                                                        </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/project/1" class="item-link item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">DEPLOIEMENT : Mise à disposition et informations
+                                                            <div class="item-header">Validation</div>
+                                                            </div>
+                                                            <div class="item-after">deploiement</div>
+                                                        </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-expandable" style="height: 150px;">
+                                    <div class="card-content">
+                                        <div class="bg-color-yellow" style="height: 150px">
+                                        <div class="card-header text-color-white">
+                                            1 revue à organiser
+                                            <br>
+                                        </div>
+                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
+                                            <i class="icon f7-icons">multiply_circle_fill</i>
+                                        </a>
+                                        </div>
+                                        <div class="card-content-padding">
+                                            <div class="list">
+                                                <ul>
+                                                    <li>
+                                                        <a href="" class="item-link item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title">revue
+                                                            <div class="item-header"></div>
+                                                            
+                                                            </div>
+                                                            <div class="item-after">Organiser</div>
+                                                        </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Submit idea View -->
-            <div id="view-submit-idea" class="view view-init tab">
-            <!-- <div id="view-submit-idea" class="view view-init tab" data-view="submit-idea-tab" data-url="/submit_idea_tab/"> -->
-                <!-- Submit idea page will be loaded here dynamically from /submit_idea_tab/ route -->
-            </div>
-            <!-- My actions View -->
-            <div id="view-my-actions" class="view view-init tab">
-                <!-- My actions page will be loaded here dynamically from /my_actions_tab/ route -->
-            </div>
-            <!-- Innovations View -->
-            <div id="view-innovations" class="view view-init tab">
-                <!-- Innovations page will be loaded here dynamically from /innovations_tab/ route -->
-            </div>
-            </div>
-            <!-- Popup -->
-            <div class="popup" id="my-popup">
-            <div class="view">
-                <div class="page">
-                <div class="navbar">
-                    <div class="navbar-bg"></div>
-                    <div class="navbar-inner">
-                    <div class="title">Popup</div>
-                    <div class="right">
-                        <a href="#" class="link popup-close">Close</a>
-                    </div>
-                    </div>
+                <!-- Submit idea View -->
+                <div id="view-submit-idea" class="view view-init tab">
+                <!-- <div id="view-submit-idea" class="view view-init tab" data-view="submit-idea-tab" data-url="/submit_idea_tab/"> -->
+                    <!-- Submit idea page will be loaded here dynamically from /submit_idea_tab/ route -->
                 </div>
-                <div class="page-content">
-                    <div class="block">
-                    <p>Popup content goes here.</p>
-                    </div>
+                <!-- My actions View -->
+                <div id="view-my-actions" class="view view-init tab">
+                    <!-- My actions page will be loaded here dynamically from /my_actions_tab/ route -->
                 </div>
+                <!-- Innovations View -->
+                <div id="view-innovations" class="view view-init tab">
+                    <!-- Innovations page will be loaded here dynamically from /innovations_tab/ route -->
                 </div>
             </div>
-            </div>
-            <!-- Login Screen -->
-            <div class="login-screen" id="my-login-screen">
-            <div class="view">
-                <div class="page">
-                <div class="page-content login-screen-content">
-                    <div class="login-screen-title">Login</div>
-                    <div class="list">
-                    <ul>
-                        <li class="item-content item-input">
-                        <div class="item-inner">
-                            <div class="item-title item-label">Username</div>
-                            <div class="item-input-wrap">
-                            <input type="text" name="username" placeholder="Your username">
-                            </div>
-                        </div>
-                        </li>
-                        <li class="item-content item-input">
-                        <div class="item-inner">
-                            <div class="item-title item-label">Password</div>
-                            <div class="item-input-wrap">
-                            <input type="password" name="password" placeholder="Your password">
-                            </div>
-                        </div>
-                        </li>
-                    </ul>
-                    </div>
-                    <div class="list">
-                    <ul>
-                        <li>
-                        <a href="#" class="item-link list-button login-button">Sign In</a>
-                        </li>
-                    </ul>
-                    <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
+            
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>
@@ -438,7 +432,10 @@
         <script type="text/javascript" src="js/app/app_form.js"></script>
         <script type="text/javascript" src="js/app/app_synchronizer.js"></script>
         <script type="text/javascript" src="js/app/app_engine.js"></script>
+
         <!-- Custom scripts -->
+        <script type="text/javascript" src="js/osiri/osiri_actions.js"></script>
+        <script type="text/javascript" src="js/osiri/osiri_projects.js"></script>
         
         <!-- App routes -->
         <script src="js/routes.js"></script>

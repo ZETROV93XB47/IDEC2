@@ -34,7 +34,7 @@
 						<div class="item-inner">
 							<div class="item-title item-label">Objectif</div>
 							<div class="item-input-wrap">
-								<input type="text" placeholder="Problématique" value="{{ objectif }}">
+								<input type="text" placeholder="Problématique" value="{{ objectifs }}">
 							</div>
 						</div>
 					</li>
@@ -50,7 +50,7 @@
 								<li id="osiri_interet_ergonomie" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
 										<label class="toggle toggle-init color-blue">
-											<input type="checkbox">
+											<input type="checkbox" {{#if interet_ergonomie}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
 									</div>
@@ -64,7 +64,7 @@
 								<li id="osiri_interet_securite" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
 										<label class="toggle toggle-init color-blue">
-											<input type="checkbox">
+											<input type="checkbox" {{#if interet_securite}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
 									</div>
@@ -78,7 +78,7 @@
 								<li id="osiri_interet_productivite" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
 										<label class="toggle toggle-init color-blue">
-											<input type="checkbox">
+											<input type="checkbox" {{#if interet_productivite}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
 									</div>
@@ -92,7 +92,7 @@
 								<li id="osiri_interet_competitivite" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
 										<label class="toggle toggle-init color-blue">
-											<input type="checkbox">
+											<input type="checkbox" {{#if interet_competitivite}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
 									</div>
@@ -106,7 +106,7 @@
 								<li id="osiri_interet_environnement" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
 										<label class="toggle toggle-init color-blue">
-											<input type="checkbox">
+											<input type="checkbox" {{#if interet_environnement}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
 									</div>
@@ -120,7 +120,7 @@
 								<li id="osiri_interet_autre" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
 										<label class="toggle toggle-init color-blue">
-											<input type="checkbox">
+											<input type="checkbox" {{#if interet_autre}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
 									</div>
@@ -170,21 +170,48 @@
 					</li>
 				</ul>
 			</div>
-			<div class="block-title block-title-medium" style="white-space: normal;">Membres de l'équipe / Provenance  <a href="#"><i class="fa fa-plus" style="font-size:20px;"></i></a></div>
+			<div class="block-title block-title-medium" style="white-space: normal;">Membres de l'équipe / Provenance  <a href="#" id="osiri_add_provenance"><i class="fa fa-plus" style="font-size:20px;"></i></a></div>
 			
 			<div class="list media-list">
-				<ul>
+				<ul id="osiri_provenance_list">
+					{{#if provenance_1_nom}}
 					<li>
 						<div href="#" class="item-content">
 							<div class="item-inner">
 								<div class="item-title-row">
-									<div class="item-title">Yahya SAMADI</div>
-									<div class="item-after">Métier | UO/filiale</div>
+									<div class="item-title"> {{ provenance_1_nom }} {{ provenance_1_prenom }}</div>
+									<div class="item-after"> {{ provenance_1_metier }} </div>
 								</div>
-								<div class="item-subtitle">yasamadi@hotmail.com</div>
+								<div class="item-subtitle">{{ provenance_1_email }}</div>
 							</div>
 						</div>
 					</li>
+					{{/if}}
+					{{#if provenance_2_nom}}
+					<li>
+						<div href="#" class="item-content">
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title"> {{ provenance_2_nom }} {{ provenance_2_prenom }}</div>
+									<div class="item-after"> {{ provenance_2_metier }} </div>
+								</div>
+								<div class="item-subtitle">{{ provenance_2_email }}</div>
+							</div>
+						</div>
+					</li>
+					{{/if}}{{#if provenance_3_nom}}
+					<li>
+						<div href="#" class="item-content">
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title"> {{ provenance_3_nom }} {{ provenance_3_prenom }}</div>
+									<div class="item-after"> {{ provenance_3_metier }} </div>
+								</div>
+								<div class="item-subtitle">{{ provenance_3_email }}</div>
+							</div>
+						</div>
+					</li>
+					{{/if}}
 				</ul>
 			</div>
 		</script>
@@ -195,6 +222,17 @@
 		ws_engine.register_page("submit-idea-tab", ws_page.extend(
 		{	
 			custom_init: function(page, event, params)
+			{
+				var self = this;
+
+                var idee = ws_storage.get_value(OSIRI_STORAGE_KEY_IDEE);
+				self.data = idee ? JSON.parse(idee): {};
+				self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO] = "base64";
+
+				return self.load_page();
+			},
+
+			custom_beforein: function(page, event, params)
 			{
 				var self = this;
 
@@ -227,7 +265,6 @@
 
 					$("#osiri_submit_idea_content input[type='checkbox']").change(function()
 					{
-						debugger
 						var id = $(this).parent().parent().parent().attr('id').substring(6);
 
 						self.set_value(id, $(this)[0].checked, OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE);
@@ -236,6 +273,56 @@
 					$("#osiri_upload_idea").click(function()
 					{
 						self.upload();
+					});
+
+					$('#osiri_add_provenance').click(function()
+					{
+						var nom, prenom, email, metier;
+						
+						var nmbre = $('#osiri_provenance_list').find("li").length + 1;
+											
+						app.dialog.prompt('Nom ?', function (result)
+						{
+							nom = result;
+							
+							self.set_value('provenance_'+nmbre+'_nom', nom);
+						});
+
+						app.dialog.prompt('Prènom ?', function (result)
+						{
+							prenom = result;
+							
+							self.set_value('provenance_'+nmbre+'_prenom', prenom);
+						});
+
+						app.dialog.prompt('Email ?', function (result)
+						{
+							email = result;
+							
+							self.set_value('provenance_'+nmbre+'_email', email);
+						});
+						
+						app.dialog.prompt('Métier | UO/filiale ?', function (result)
+						{
+							metier = result;
+							
+							var a = '<li>'+
+							'<div href="#" class="item-content">'+
+								'<div class="item-inner">'+
+									'<div class="item-title-row">'+
+										'<div class="item-title">'+ nom +' '+ prenom +'</div>'+
+										'<div class="item-after">'+ metier +'</div>'+
+									'</div>'+
+									'<div class="item-subtitle">'+ email +'</div>'+
+								'</div>'+
+							'</div>'+
+							'</li>';
+
+							$('#osiri_provenance_list').append(a);
+
+							self.set_value('provenance_'+nmbre+'_metier', metier);
+						});
+						
 					});
 				});
 			},
@@ -266,11 +353,10 @@
 				var self = this;
 
 				app.dialog.preloader("Envoie en cours...");
-				debugger
+				
 				ws_server.depose_idee(self.data).then(function(result)
 				{
-					debugger
-					ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, JSON.parse({}));
+					ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, JSON.stringify({}));
 					app.dialog.close();
 					app.dialog.alert("Lancement d'opération envoyé à OP2A");
 				})
