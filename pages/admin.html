@@ -1,0 +1,134 @@
+<div class="page" data-name="admin">
+  	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+		<div class="left">
+			<a href="#" class="link back">
+			<i class="icon icon-back"></i>
+			<span class="ios-only">Back</span>
+			</a>
+		</div>
+		<div class="title">OP2A Mobile - Admin</div>
+		</div>
+	</div>
+	<div class="page-content">
+		<div class="block">
+			<p class="row"id="ws_app_restart">
+				<button class="col button button-fill button-big" id="admin_reset_all">Réinitialiser</button>
+			</p>
+			<p class="row" id="ws_app_informations">
+				<a href="/device_infos/" class="col button button-fill button-big">Informations appareil</a>
+			</p>
+			<p class="row" id="ws_app_database_content">
+				<a href="/database_content/" class="col button button-fill button-big">Contenu base-données</a>
+			</p>
+			<p class="row" id="ws_app_exit_admin_mode">
+				<a href="#" class="col button button-fill button-big color-red" id="quit_admin_mode">Quittter le mode admin</a>
+			</p>
+			<p class="row" id="ws_app_exit_support_mode">
+				<a href="#" class="col button button-fill button-big color-red" id="quit_support_mode">Quittter le mode assistant</a>
+			</p>
+			<p class="row" id="ws_app_enter_admin_mode">
+				<a href="#" class="col button button-fill button-big color-green" id="enter_admin_mode">Activer le mode admin</a>
+			</p>
+		</div>
+
+		<script type="text/javascript" ws_script="page">
+		ws_engine.register_page("admin", ws_page.extend(
+		{	
+			custom_init: function(page, event, params)
+			{	
+				var self = this;
+				var type = params.type;
+				
+				if (params.type == WS_USER_MODE_ASSISTANCE)
+				{
+					$$("#ws_app_database_content, ws_app_restart, #ws_app_exit_admin_mode").hide()
+				}
+				else $$("#ws_app_enter_admin_mode, #ws_app_exit_support_mode").hide()
+
+				
+				$("#quit_admin_mode, #quit_support_mode").on('click',function()
+				{
+					app.dialog.confirm("Voulez vous quitter le mode " + type + " ?", function()
+					{
+						ws_engine.set_user_mode(WS_USER_MODE_USER);
+						page.router.navigate("/");
+					});
+				});
+				
+				$("#enter_admin_mode").on('click',function()
+				{
+					app.dialog.password("Entrez votre code d'accés", function (password) 
+					{
+						if (password == ws_engine.get_admin_code())
+						{
+							ws_engine.set_user_mode(WS_USER_MODE_ADMINISTRATOR);
+							
+							$$("#ws_app_database_content, #ws_app_restart, #ws_app_exit_admin_mode").show()
+							$$("#ws_app_enter_admin_mode, #ws_app_exit_support_mode").hide()
+							
+							type = WS_USER_MODE_ADMINISTRATOR;
+						}
+						else
+						{
+							app.dialog.alert('Code incorrecte'); 
+						}
+					});
+				});
+				$("#admin_reset_all").on('click',function()
+				{
+					app.dialog.confirm("Réinitialiser toute l'application ?", "Admin", function()
+					{
+						ws_engine.reset().then(function()
+						{
+							app.popup.open('#popup_connection', true);
+						});
+					});
+				});
+				
+				return true;
+			},
+			
+	/*
+			do_reset_all: function(self, page, selector, event)
+			{
+				app.dialog.confirm("Réinitialiser toute l'application ?", "Admin", function()
+				{
+					ws_engine.reset().then(function()
+					{
+						app.popup.open('#popup_connection', true);
+					});
+				});
+			}
+	*/
+			
+	/*
+			do_reset_all: function(self, page, selector, event)
+			{
+				app.dialog.confirm("Réinitialiser toute l'application ?", "Admin", function()
+				{
+					var synchronizing = ws_synchronizer.stop();
+					
+					ws_engine.reset().then(function()
+					{
+						ws_synchronizer.stop();
+
+						if (home_update_timer != undefined) clearInterval(home_update_timer);
+						home_update_timer = undefined;
+						
+						if (synchronizing) ws_synchronizer.start();
+						
+						app.popup.open('#popup_connection', true);
+					});
+				});
+			},
+			
+			do_synchronize_all: function(self, page, selector, event)
+			{
+				return ws_synchronizer.synchronize_data();
+			}
+	*/
+		}));
+		</script>
+</div>

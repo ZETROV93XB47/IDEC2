@@ -1,0 +1,78 @@
+<div class="page" data-name="projects_list">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+            <div class="left">
+                <a href="#" class="link back">
+                <i class="icon icon-back"></i>
+                <span class="if-not-md">Back</span>
+                </a>
+            </div>
+			<div class="title">OSIRI - Liste des projets</div>
+		</div>
+	</div>
+	<div class="page-content">
+        <script id="osiri_project_template" type="text/template7">
+            <div class="list media-list">
+                <ul>
+                    {{#each projects_list}}
+                    <li>
+                        <a href="/project/{{ id }}" class="item-content item-link">
+                            <div class="item-media"><img src="../img/projet_img.png" width="80"/></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title" style="white-space: normal;">{{ nom }}</div>
+                                    <div class="item-after"></div>
+                                </div>
+                                <div class="item-subtitle">{{ responsable }}</div>
+                            </div>
+                        </a>
+                    </li>
+                    {{else}}
+                    <li class="item-content">aucun projet</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </script>
+		<div id="osiri_projects_list_content"></div>
+	</div>
+	<script type="text/javascript" ws_script="page">
+		ws_engine.register_page("projects_list", ws_page.extend(
+		{	
+			custom_init: function(page, event, params)
+			{
+                var self = this;
+                
+				self.phase = params.phase;
+                self.famille = params.famille;
+                self.data = {};
+
+                self.set_background_color();
+
+				return self.load_page();
+			},
+			
+			load_page: function()
+			{
+                var self = this;
+
+                return osiri_projects.get_template_data(self.phase, self.famille).then(function(result)
+                {
+                    self.data.projects_list = result;
+
+                    return self.apply_template(page, "osiri_project_template", "osiri_projects_list_content", self.data);
+                });
+            },
+
+            set_background_color: function()
+            {
+                var self = this;
+
+                var background_color = osiri_projects.get_phase_color(self.phase);
+                $('#osiri_projects_list_content').css('background', background_color);
+            }
+            
+			
+		}));
+	</script>
+</div>

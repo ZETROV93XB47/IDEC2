@@ -1,0 +1,60 @@
+<div class="page" data-name="my-actions-tab">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+			<div class="title">OSIRI - Mes actions</div>
+		</div>
+	</div>
+	<div class="page-content">
+		
+        <script id="osiri_action_template" type="text/template7">
+			<div class="list media-list">
+				<ul>
+					{{#each actions}}
+					<li>
+						<a href="/formulaire_action/" class="item-content item-link">
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title" style="white-space: normal;">{{ description }}</div>
+									<div class="item-after">{{ phase }}</div>
+								</div>
+								<div class="item-subtitle">Validation</div>
+							</div>
+						</a>
+					</li>
+					{{/each}}
+				</ul>
+			</div>
+		</script>
+		<div id="osiri_actions_list_content"></div>
+	</div>
+	<script type="text/javascript" ws_script="page">
+		ws_engine.register_page("my-actions-tab", ws_page.extend(
+		{
+			custom_init: function(page, event, params)
+			{
+				var self = this;
+
+				self.data = {};
+				
+				return self.load_page();
+			},
+			
+			load_page: function()
+			{
+				var self = this;
+
+                return osiri_actions.get_template_data().then(function(result)
+                {
+					self.data.actions = result;
+
+                    return self.apply_template(page, "osiri_action_template", "osiri_actions_list_content", self.data);
+                });
+			},
+
+			
+			
+		}));
+	</script>
+</div>
+	

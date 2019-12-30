@@ -1,0 +1,287 @@
+<div class="page" data-name="submit-idea-tab">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+			<div class="title">OSIRI - Idée</div>
+		</div>
+	</div>
+	<div>
+		<div id="osiri_upload_idea" class="fab fab-right-bottom">
+			<a href="#"><i class="fa fa-check submit" style="font-size:20px;"></i></a>
+		</div>
+	</div>
+	<style>
+		.item-title.item-label
+		{
+			white-space: normal;
+		}
+	</style>
+	<div class="page-content">
+		<div class="block-title block-title-medium">Fiche innovation</div>
+		
+        <script id="osiri_submit_idea_template" type="text/template7">
+			<div class="list inline-labels no-hairlines-md">
+				<ul>
+					<li id="osiri_nom" class="item-content item-input">
+						<div class="item-inner">
+							<div class="item-title item-label">Nom de l'innovation</div>
+							<div class="item-input-wrap">
+								<input type="text" placeholder="Nom" value="{{ nom }}">
+							</div>
+						</div>
+					</li>
+					<li id="osiri_objectifs" class="item-content item-input">
+						<div class="item-inner">
+							<div class="item-title item-label">Objectif</div>
+							<div class="item-input-wrap">
+								<input type="text" placeholder="Problématique" value="{{ objectif }}">
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="block-title block-title-medium">Informations générales</div>
+			<div class="list inline-labels no-hairlines-md">
+				<ul>
+					<li>
+						<div class="item-label" style="white-space: normal; padding-left:16px;">Intérêt :</div>
+						<div class="list inline-labels no-hairlines-md">
+							<ul style="padding-left: 0px;">
+								<li id="osiri_interet_ergonomie" class="item-content item-input">
+									<div class="item-media" style="padding-top: 21px;">
+										<label class="toggle toggle-init color-blue">
+											<input type="checkbox">
+											<span class="toggle-icon"></span>
+										</label>
+									</div>
+									<div class="item-inner">
+										<div class="item-title item-label">Ergonomie</div>
+										<div class="item-input-wrap">
+											<textarea class="resizable" placeholder="Pourquoi">{{ interet_ergonomie_text }}</textarea>
+										</div>
+									</div>
+								</li>
+								<li id="osiri_interet_securite" class="item-content item-input">
+									<div class="item-media" style="padding-top: 21px;">
+										<label class="toggle toggle-init color-blue">
+											<input type="checkbox">
+											<span class="toggle-icon"></span>
+										</label>
+									</div>
+									<div class="item-inner">
+										<div class="item-title item-label">Sécurité</div>
+										<div class="item-input-wrap">
+											<textarea class="resizable" placeholder="Pourquoi">{{ interet_securite_text }}</textarea>
+										</div>
+									</div>
+								</li>
+								<li id="osiri_interet_productivite" class="item-content item-input">
+									<div class="item-media" style="padding-top: 21px;">
+										<label class="toggle toggle-init color-blue">
+											<input type="checkbox">
+											<span class="toggle-icon"></span>
+										</label>
+									</div>
+									<div class="item-inner">
+										<div class="item-title item-label">Prodéctivité</div>
+										<div class="item-input-wrap">
+											<textarea class="resizable" placeholder="Pourquoi">{{ interet_productivite_text }}</textarea>
+										</div>
+									</div>
+								</li>
+								<li id="osiri_interet_competitivite" class="item-content item-input">
+									<div class="item-media" style="padding-top: 21px;">
+										<label class="toggle toggle-init color-blue">
+											<input type="checkbox">
+											<span class="toggle-icon"></span>
+										</label>
+									</div>
+									<div class="item-inner">
+										<div class="item-title item-label">Compétitivité</div>
+										<div class="item-input-wrap">
+											<textarea class="resizable" placeholder="Pourquoi">{{ interet_competitivite_text }}</textarea>
+										</div>
+									</div>
+								</li>
+								<li id="osiri_interet_environnement" class="item-content item-input">
+									<div class="item-media" style="padding-top: 21px;">
+										<label class="toggle toggle-init color-blue">
+											<input type="checkbox">
+											<span class="toggle-icon"></span>
+										</label>
+									</div>
+									<div class="item-inner">
+										<div class="item-title item-label">Envirenement</div>
+										<div class="item-input-wrap">
+											<textarea class="resizable" placeholder="Pourquoi">{{ interet_environnement_text }}</textarea>
+										</div>
+									</div>
+								</li>
+								<li id="osiri_interet_autre" class="item-content item-input">
+									<div class="item-media" style="padding-top: 21px;">
+										<label class="toggle toggle-init color-blue">
+											<input type="checkbox">
+											<span class="toggle-icon"></span>
+										</label>
+									</div>
+									<div class="item-inner">
+										<div class="item-title item-label">Autre</div>
+										<div class="item-input-wrap">
+											<textarea class="resizable" placeholder="Pourquoi">{{ interet_autre_text }}</textarea>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="item-content item-input">
+						<div class="item-inner">
+							<div class="item-title item-label">Maturité de l'idée</div>
+							<div class="item-input-wrap input-dropdown-wrap">
+								<select placeholder="choisir ...">
+									<option value="developement">En développement</option>
+									<option value="idee">seulement idée</option>
+									<option value="autre">autre</option>
+								</select>
+							</div>
+						</div>
+					</li>
+					<li class="item-content item-input">
+						<div class="item-inner">
+							<div class="item-title item-label">Propriété intellectuelle</div>
+							<div class="item-input-wrap input-dropdown-wrap">
+								<select placeholder="choisir ...">
+									<option value="pas_breveter">Ne pas breveter</option>
+									<option value="autre">autre</option>
+								</select>
+							</div>
+						</div>
+					</li>
+					<li class="item-content item-input">
+						<div class="item-inner">
+							<div class="item-title item-label">Produit existant</div>
+							<div >
+								<label class="toggle toggle-init color-blue">
+									<input type="checkbox">
+									<span class="toggle-icon"></span>
+								</label>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="block-title block-title-medium" style="white-space: normal;">Membres de l'équipe / Provenance  <a href="#"><i class="fa fa-plus" style="font-size:20px;"></i></a></div>
+			
+			<div class="list media-list">
+				<ul>
+					<li>
+						<div href="#" class="item-content">
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title">Yahya SAMADI</div>
+									<div class="item-after">Métier | UO/filiale</div>
+								</div>
+								<div class="item-subtitle">yasamadi@hotmail.com</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</script>
+		
+		<div id="osiri_submit_idea_content"></div>
+	</div>
+	<script type="text/javascript" ws_script="page">
+		ws_engine.register_page("submit-idea-tab", ws_page.extend(
+		{	
+			custom_init: function(page, event, params)
+			{
+				var self = this;
+
+                var idee = ws_storage.get_value(OSIRI_STORAGE_KEY_IDEE);
+				self.data = idee ? JSON.parse(idee): {};
+				self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO] = "base64";
+
+				return self.load_page();
+			},
+			
+			load_page: function()
+			{
+				var self = this;
+				
+				return self.apply_template(page, "osiri_submit_idea_template", "osiri_submit_idea_content", self.data).then(function()
+				{
+					$("#osiri_submit_idea_content input[type='text']").change(function()
+					{
+						var id = $(this).parent().parent().parent().attr('id').substring(6);
+						
+						self.set_value(id, $$(this).val(), OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT);
+					});
+
+					$("#osiri_submit_idea_content textarea").change(function()
+					{
+						var id = $(this).parent().parent().parent().attr('id').substring(6);
+						
+						self.set_value(id+"_text", $$(this).val(), OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT);
+					});
+
+					$("#osiri_submit_idea_content input[type='checkbox']").change(function()
+					{
+						debugger
+						var id = $(this).parent().parent().parent().attr('id').substring(6);
+
+						self.set_value(id, $(this)[0].checked, OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE);
+					});
+					
+					$("#osiri_upload_idea").click(function()
+					{
+						self.upload();
+					});
+				});
+			},
+
+			set_value : function(property_id, value, prop_change)
+			{
+				if (this.data[property_id] == undefined) this.data[property_id] = "";
+				
+				if (this.data[property_id] != value)
+				{
+					this.data[property_id] = value;
+					
+					return this.save();
+				}
+				
+				return Promise.resolve();
+			},
+
+			save : function()
+			{
+				var data = JSON.stringify(this.data);
+				
+                ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, data);
+			},
+
+			upload: function()
+			{
+				var self = this;
+
+				app.dialog.preloader("Envoie en cours...");
+				debugger
+				ws_server.depose_idee(self.data).then(function(result)
+				{
+					debugger
+					ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, JSON.parse({}));
+					app.dialog.close();
+					app.dialog.alert("Lancement d'opération envoyé à OP2A");
+				})
+				.catch(function(error)
+				{
+					app.dialog.close();
+					app.dialog.alert("Error : " + error);
+				});
+			},
+
+		}));
+	</script>
+</div>
+		
