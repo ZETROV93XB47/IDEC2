@@ -8,10 +8,13 @@ var routes = [
     { path: '/formulaire_action/', url: './pages/formulaire_action.html' },
 
     { path: '/innovations_tab/', url: './pages/innovations_tab.html' },
+    { path: '/innovations_familles/', url: './pages/innovations_familles.html' },
+    
     { path: '/projects_list/', url: './pages/projects_list.html' },
     { path: '/projects_list/:phase', url: './pages/projects_list.html' },
+    { path: '/projects_list/:phase/:famille', url: './pages/projects_list.html' },
     { path: '/project/', url: './pages/project.html' },
-    { path: '/project:id/', url: './pages/project.html' },
+    { path: '/project/:id', url: './pages/project.html' },
 
     { path: '/admin/:type', name: 'admin', url: './pages/admin.html' },
     

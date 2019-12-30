@@ -22,7 +22,12 @@ var app_synchronizer_class = ws_synchronizer_class.extend(
 				var server_id = ws_engine.get_server_id();
 				var server_ids = {};
 
-				// if (item[OP2A_FILE_PROPERTY_CHANTIER_ID]) server_ids[OP2A_FILE_PROPERTY_CHANTIER_ID] = {server: server_id, entity: OP2A_DATAMODEL_ENTITY_CHANTIERS, id: item[OP2A_FILE_PROPERTY_CHANTIER_ID]};
+				if (item[OSIRI_ACTION_PROPERTY_CHANTIER]) server_ids[OSIRI_ACTION_PROPERTY_CHANTIER] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_CHANTIERS, id: item[OSIRI_ACTION_PROPERTY_CHANTIER]};
+				if (item[OSIRI_ACTION_PROPERTY_PROJET]) server_ids[OSIRI_ACTION_PROPERTY_PROJET] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_PROJETS, id: item[OSIRI_ACTION_PROPERTY_PROJET]};
+				if (item[OSIRI_PROJET_PROPERTY_PILOTE]) server_ids[OSIRI_PROJET_PROPERTY_PILOTE] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: item[OSIRI_PROJET_PROPERTY_PILOTE]};
+				if (item[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT]) server_ids[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: item[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT]};
+				if (item[OSIRI_PROJET_PROPERTY_REDACTEUR]) server_ids[OSIRI_PROJET_PROPERTY_REDACTEUR] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: item[OSIRI_PROJET_PROPERTY_REDACTEUR]};
+				if (item[OSIRI_ACTION_PROPERTY_COLLABORATEUR]) server_ids[OSIRI_ACTION_PROPERTY_COLLABORATEUR] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: item[OSIRI_ACTION_PROPERTY_COLLABORATEUR]};
 				
 				return self.get_locals_ids(server_ids).then(function(ids)
 				{

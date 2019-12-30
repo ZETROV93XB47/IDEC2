@@ -12,6 +12,7 @@ var app_database_class = ws_database_class.extend(
 			this.collaborateurs = undefined;
 			this.chantiers = undefined;
 			this.projets = undefined;
+			this.actions = undefined;
 			this.rexs = undefined;
 			
 			this.servers_class = ws_datatable.extend(
@@ -67,6 +68,14 @@ var app_database_class = ws_database_class.extend(
 				constructor: function(db)
 				{
 					this._super(db, OSIRI_DATABASE_TABLE_PROJETS);
+				},
+			});
+
+			this.actions_class = ws_datatable.extend(
+			{
+				constructor: function(db)
+				{
+					this._super(db, OSIRI_DATABASE_TABLE_ACTIONS);
 				},
 			});
 			
@@ -125,6 +134,9 @@ var app_database_class = ws_database_class.extend(
 				case OSIRI_DATABASE_TABLE_PROJETS :
 					return this.projets;
 	
+				case OSIRI_DATABASE_TABLE_ACTIONS :
+					return this.actions;
+	
 				case OSIRI_DATABASE_TABLE_REXS :
 					return this.rexs;
 			}
@@ -151,6 +163,7 @@ var app_database_class = ws_database_class.extend(
 				self.collaborateurs = new self.collaborateurs_class(self);
 				self.chantiers = new self.chantiers_class(self);
 				self.projets = new self.projets_class(self);
+				self.actions = new self.actions_class(self);
 				self.rexs = new self.rexs_class(self);
 				
 				resolve();

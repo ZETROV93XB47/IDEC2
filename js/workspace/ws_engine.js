@@ -103,7 +103,8 @@ var ws_engine_class = Class.extend(
         debugger
         //homeView.router.back();
         page.view.router.back();
-    },
+	},
+	
 	//! Multiserver
 		
 	is_multi_servers : function()

@@ -103,7 +103,8 @@ var app = new Framework7(
             {
 				connected = result;
 				
-				return connected ? ws_server.update_params() : Promise.resolve();
+				// return connected ? ws_server.update_params() : Promise.resolve();
+				return Promise.resolve();
             })
             .then(function()
             {
@@ -233,12 +234,13 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 			ws_user.connect(qrcode.url, qrcode.token, qrcode.data).then(function(result)
 			{
 				debugger;
+                ws_storage.set_value(OSIRI_STORAGE_KEY_FAMILLES, JSON.stringify(result.familles));
 				startTime = new Date().getTime();
 				elapsedTime = 0;
 				app.dialog.close();			
 
 				if (result == undefined) throw 'Erreur de connexion, données vides.';
-				if (typeof result == 'string') throw result.substring(0,90);
+				if (typeof result == 'string') throw result.substring(0,100);
 				if (result.success == false) throw result.error;
 			
 				
