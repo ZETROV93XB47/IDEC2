@@ -19,7 +19,7 @@
 					<div class="list links-list">
 						<ul>
 							{{#each familles}}
-							<li style="background:{{ color }}; margin-bottom: 5px;"><a href="/projects_list/deploiement/{{ id }}" class="text-color-black">{{ nom }}</a></li>
+							<li style="background:{{ color }}; margin-bottom: 5px;"><a href="/projects_list/deploiement/{{ value }}" class="text-color-black">{{ name }}</a></li>
 							{{/each}}
 							
 						</ul>
@@ -45,20 +45,7 @@
 			load_page: function()
 			{
 				var self = this;
-				self.data.familles = [];
-
-				var familles = JSON.parse(ws_storage.get_value(OSIRI_STORAGE_KEY_FAMILLES));
-
-				for (var i = 0; i<familles.length; i++)
-				{
-					var obj = {};
-					
-					obj.id = familles[i][1];
-					obj.nom = familles[i][2];
-					obj.color = familles[i][3];
-
-					self.data.familles.push(obj);
-				}
+				self.data.familles = JSON.parse(ws_storage.get_value(OSIRI_STORAGE_KEY_FAMILLES));
 
                 return self.apply_template(page, "osiri_action_template", "osiri_actions_list_content", self.data);
 			},

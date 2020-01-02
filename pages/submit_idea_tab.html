@@ -170,13 +170,36 @@
 					</li>
 				</ul>
 			</div>
-			<div class="block-title block-title-medium" style="white-space: normal;">Membres de l'équipe / Provenance  <a href="#" id="osiri_add_provenance"><i class="fa fa-plus" style="font-size:20px;"></i></a></div>
+			
+			<div class="block-title block-title-medium" style="white-space: normal;">
+				<a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-searchbar-placeholder="Chercher un collaborateur ...">
+					<select name="collaborateur">
+						<option value="honda" selected>Honda</option>
+						<option value="lexus">Lexus</option>
+						<option value="mazda">Mazda</option>
+						<option value="nissan">Nissan</option>
+						<option value="toyota">Toyota</option>
+						<option><a class="sheet-open" href="#" data-sheet=".my-sheet-swipe-to-close">Ajouter un collaborateur</a></option>
+						<div class="block searchbar-not-found">
+							<div class="block-inner">Nothing found</div>
+						  </div>
+					</select>
+					<i class="fa fa-plus" style="font-size:20px;"></i>
+				</a>
+				<a class="sheet-open" href="#" data-sheet=".my-sheet-swipe-to-close"><i class="fa fa-plus" style="font-size:20px;"></i></a>
+				<!-- <a class="popup-open" href="#" data-popup=".popup-provenance" ><i class="fa fa-plus" style="font-size:20px;"></i></a> -->
+				Provenances
+			</div>
+			<!-- <div class="block-title block-title-medium" style="white-space: normal;">
+				<a class="sheet-open" href="#" data-sheet=".my-sheet-swipe-to-close"><i class="fa fa-plus" style="font-size:20px;"></i></a>
+				Provenances
+			</div> -->
 			
 			<div class="list media-list">
 				<ul id="osiri_provenance_list">
 					{{#if provenance_1_nom}}
-					<li>
-						<div href="#" class="item-content">
+					<li id="provenance_1" class="swipeout deleted-callback">
+						<div class="item-content swipeout-content">
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title"> {{ provenance_1_nom }} {{ provenance_1_prenom }}</div>
@@ -185,11 +208,14 @@
 								<div class="item-subtitle">{{ provenance_1_email }}</div>
 							</div>
 						</div>
+						<div class="swipeout-actions-right">
+							<a href="#" class="swipeout-delete">Delete</a>
+						</div>
 					</li>
 					{{/if}}
 					{{#if provenance_2_nom}}
-					<li>
-						<div href="#" class="item-content">
+					<li id="provenance_2" class="swipeout deleted-callback">
+						<div class="item-content swipeout-content">
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title"> {{ provenance_2_nom }} {{ provenance_2_prenom }}</div>
@@ -198,10 +224,13 @@
 								<div class="item-subtitle">{{ provenance_2_email }}</div>
 							</div>
 						</div>
+						<div class="swipeout-actions-right">
+							<a href="#" class="swipeout-delete">Delete</a>
+						</div>
 					</li>
 					{{/if}}{{#if provenance_3_nom}}
-					<li>
-						<div href="#" class="item-content">
+					<li id="provenance_3" class="swipeout deleted-callback">
+						<div class="item-content swipeout-content">
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title"> {{ provenance_3_nom }} {{ provenance_3_prenom }}</div>
@@ -210,29 +239,120 @@
 								<div class="item-subtitle">{{ provenance_3_email }}</div>
 							</div>
 						</div>
+						<div class="swipeout-actions-right">
+							<a href="#" class="swipeout-delete">Delete</a>
+						</div>
 					</li>
 					{{/if}}
 				</ul>
 			</div>
 		</script>
+		<div class="sheet-modal my-sheet-swipe-to-close" style="height:auto; --f7-sheet-bg-color: #fff;">
+			<div class="sheet-modal-inner">
+			  <div class="page-content">
+				<div class="block">
+					<div class="block-title">Provenance</div>
+					<div class="list inline-labels no-hairlines-md">
+						<ul>
+							<li class="item-content item-input">
+								<div class="item-inner">
+									<div class="item-title item-label">Nom</div>
+									<div class="item-input-wrap">
+									<input id="nom" type="text" placeholder="Votre nom">
+									<span class="input-clear-button"></span>
+									</div>
+								</div>
+							</li>
+							<li class="item-content item-input">
+								<div class="item-inner">
+									<div class="item-title item-label">Prènom</div>
+									<div class="item-input-wrap">
+									<input id="prenom" type="text" placeholder="Votre prènom">
+									<span class="input-clear-button"></span>
+									</div>
+								</div>
+							</li>
+							<li class="item-content item-input">
+								<div class="item-inner">
+									<div class="item-title item-label">E-mail</div>
+									<div class="item-input-wrap">
+									<input id="email" type="email" placeholder="Votre e-mail">
+									<span class="input-clear-button"></span>
+									</div>
+								</div>
+							</li>
+							<li class="item-content item-input">
+								<div class="item-inner">
+									<div class="item-title item-label">Votre métier</div>
+									<div class="item-input-wrap">
+									<input id="metier" type="text" placeholder="Votre métier | UO/filiale">
+									<span class="input-clear-button"></span>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <div class="popup popup-provenance">
+			<div class="block">
+				<div class="block-title">Provenance</div>
+				<div class="list inline-labels no-hairlines-md">
+					<ul>
+						<li class="item-content item-input">
+							<div class="item-inner">
+								<div class="item-title item-label">Nom</div>
+								<div class="item-input-wrap">
+								<input id="nom" type="text" placeholder="Votre nom">
+								<span class="input-clear-button"></span>
+								</div>
+							</div>
+						</li>
+						<li class="item-content item-input">
+							<div class="item-inner">
+								<div class="item-title item-label">Prènom</div>
+								<div class="item-input-wrap">
+								<input id="prenom" type="text" placeholder="Votre prènom">
+								<span class="input-clear-button"></span>
+								</div>
+							</div>
+						</li>
+						<li class="item-content item-input">
+							<div class="item-inner">
+								<div class="item-title item-label">E-mail</div>
+								<div class="item-input-wrap">
+								<input id="email" type="email" placeholder="Votre e-mail">
+								<span class="input-clear-button"></span>
+								</div>
+							</div>
+						</li>
+						<li class="item-content item-input">
+							<div class="item-inner">
+								<div class="item-title item-label">Votre métier</div>
+								<div class="item-input-wrap">
+								<input id="metier" type="text" placeholder="Votre métier | UO/filiale">
+								<span class="input-clear-button"></span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="row">
+					<button class="col button button-fill popup-close">Ajouter</button>
+					<button class="col button button-fill popup-close">Fermer</button>
+				</div>
+				
+			</div>
+		</div>
 		
 		<div id="osiri_submit_idea_content"></div>
 	</div>
 	<script type="text/javascript" ws_script="page">
 		ws_engine.register_page("submit-idea-tab", ws_page.extend(
-		{	
-			custom_init: function(page, event, params)
-			{
-				var self = this;
-
-                var idee = ws_storage.get_value(OSIRI_STORAGE_KEY_IDEE);
-				self.data = idee ? JSON.parse(idee): {};
-				self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO] = "base64";
-
-				return self.load_page();
-			},
-
-			custom_beforein: function(page, event, params)
+		{
+			custom_tabshow: function(page, event, params)
 			{
 				var self = this;
 
@@ -275,54 +395,54 @@
 						self.upload();
 					});
 
-					$('#osiri_add_provenance').click(function()
+					var my_sheet = app.sheet.create({
+						el: '.my-sheet-swipe-to-close',
+						swipeToClose: true,
+						backdrop: true,
+					});
+
+					$('.my-sheet-swipe-to-close input').change(function()
 					{
-						var nom, prenom, email, metier;
-						
 						var nmbre = $('#osiri_provenance_list').find("li").length + 1;
-											
-						app.dialog.prompt('Nom ?', function (result)
-						{
-							nom = result;
-							
-							self.set_value('provenance_'+nmbre+'_nom', nom);
-						});
+						var id = $$(this).attr('id');
 
-						app.dialog.prompt('Prènom ?', function (result)
-						{
-							prenom = result;
-							
-							self.set_value('provenance_'+nmbre+'_prenom', prenom);
-						});
+						self.set_value('provenance_'+nmbre+'_'+id, $$(this).val());
+					});
 
-						app.dialog.prompt('Email ?', function (result)
-						{
-							email = result;
-							
-							self.set_value('provenance_'+nmbre+'_email', email);
-						});
-						
-						app.dialog.prompt('Métier | UO/filiale ?', function (result)
-						{
-							metier = result;
-							
-							var a = '<li>'+
-							'<div href="#" class="item-content">'+
-								'<div class="item-inner">'+
-									'<div class="item-title-row">'+
-										'<div class="item-title">'+ nom +' '+ prenom +'</div>'+
-										'<div class="item-after">'+ metier +'</div>'+
-									'</div>'+
-									'<div class="item-subtitle">'+ email +'</div>'+
+					my_sheet.on('closed', function (sheet)
+					{
+						var nmbre = $('#osiri_provenance_list').find("li").length + 1;
+						var a = '<li>'+
+						'<div href="#" class="item-content">'+
+							'<div class="item-inner">'+
+								'<div class="item-title-row">'+
+									'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
+									'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +'</div>'+
 								'</div>'+
+								'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
 							'</div>'+
-							'</li>';
+						'</div>'+
+						'</li>';
+						var inputs = $('.my-sheet-swipe-to-close input');
 
-							$('#osiri_provenance_list').append(a);
+						for ( var i = 0; i<inputs.length; i++)
+						{
+							inputs[i].value = "";
+						}
 
-							self.set_value('provenance_'+nmbre+'_metier', metier);
-						});
+						if (self.data['provenance_'+nmbre+'_nom'] && self.data['provenance_'+nmbre+'_prenom'] && self.data['provenance_'+nmbre+'_email']) $('#osiri_provenance_list').append(a);
+					});
+
+					$$('.deleted-callback').on('swipeout:deleted', function ()
+					{
+						var id = $(this).attr("id");
 						
+						self.data[id+'_nom'] = undefined;
+						self.data[id+'_prenom'] = undefined;
+						self.data[id+'_email'] = undefined;
+						self.data[id+'_metier'] = undefined;
+						
+						return self.save();
 					});
 				});
 			},

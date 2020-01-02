@@ -13,6 +13,7 @@
 					{{#each actions}}
 					<li>
 						<a href="/formulaire_action/" class="item-content item-link">
+                            <div class="item-media"><img src="../img/projet_img.png" width="80"/></div>
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title" style="white-space: normal;">{{ nom }}</div>
@@ -32,6 +33,15 @@
 		ws_engine.register_page("my-actions-tab", ws_page.extend(
 		{
 			custom_init: function(page, event, params)
+			{
+				var self = this;
+
+				self.data = {};
+				
+				return self.load_page();
+			},
+
+			custom_beforein: function(page, event, params)
 			{
 				var self = this;
 
