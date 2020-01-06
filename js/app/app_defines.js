@@ -214,6 +214,7 @@ const OSIRI_REX_PROPERTY_DATE = 'date';
 const OSIRI_REX_PROPERTY_PHOTOS = 'photos';
 const OSIRI_REX_PROPERTY_COMMENT = 'comment';
 const OSIRI_REX_PROPERTY_ETAT = 'etat';
+const OSIRI_REX_PROPERTY_DATA = 'data';
 
 const OSIRI_REX_ETAT_FAIT = 'fait';
 const OSIRI_REX_ETAT_NON_FAIT = 'nonfait';
@@ -275,6 +276,8 @@ const OSIRI_NOUVELLE_IDEE_PROPERTY_PROVENANCE_3_EMAIL = 'provenance_3_email';
 
 const OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT = 'text';
 const OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE = 'value';
+const OSIRI_NOUVELLE_IDEE_OPTION_KEY_ACTION = 'action';
+const OSIRI_NOUVELLE_IDEE_OPTION_KEY_IMAGE = 'image';
 
 //!
 

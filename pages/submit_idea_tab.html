@@ -3,13 +3,16 @@
 		<div class="navbar-bg"></div>
 		<div class="navbar-inner sliding">
 			<div class="title">OSIRI - Idée</div>
+			<div class="right">
+				<a href="#" id="osiri_upload_idea" class="link icon-only"><i class="fa fa-check submit" style="font-size:20px;"></i></a>
+			</div>
 		</div>
 	</div>
-	<div>
+	<!-- <div>
 		<div id="osiri_upload_idea" class="fab fab-right-bottom">
 			<a href="#"><i class="fa fa-check submit" style="font-size:20px;"></i></a>
 		</div>
-	</div>
+	</div> -->
 	<style>
 		.item-title.item-label
 		{
@@ -38,6 +41,30 @@
 							</div>
 						</div>
 					</li>
+					<li id="osiri_photo" class="item-content item-input">
+						<div class="item-inner">
+							<div class="item-title item-label">Photo</div>
+							<div class="item-input-wrap">
+								<a class="link popover-open" href="#" data-popover=".popover-links-photo"><i class="f7-icon material-icons md-only" style="padding-top: 8px;">add_a_photo</i></a>
+							</div>
+						</div>
+						<div class="popover popover-links-photo">
+							<div class="popover-inner">
+								<div class="list">
+									<ul>
+										<li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
+										<li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						
+					</li>
+					{{#if photo}}
+					<div class="card demo-facebook-card">
+						<div class="card-content" style="text-align: center;"> <img src="data:application/octet-stream;base64,{{ photo }}" width="50%"></div>
+					</div>
+					{{/if}}
 				</ul>
 			</div>
 			<div class="block-title block-title-medium">Informations générales</div>
@@ -140,8 +167,8 @@
 							<div class="item-input-wrap input-dropdown-wrap">
 								<select placeholder="choisir ...">
 									<option value="developement">En développement</option>
-									<option value="idee">seulement idée</option>
-									<option value="autre">autre</option>
+									<option value="idee">Seulement idée</option>
+									<option value="autre">Autre</option>
 								</select>
 							</div>
 						</div>
@@ -152,7 +179,7 @@
 							<div class="item-input-wrap input-dropdown-wrap">
 								<select placeholder="choisir ...">
 									<option value="pas_breveter">Ne pas breveter</option>
-									<option value="autre">autre</option>
+									<option value="autre">Autre</option>
 								</select>
 							</div>
 						</div>
@@ -170,24 +197,37 @@
 					</li>
 				</ul>
 			</div>
-			
 			<div class="block-title block-title-medium" style="white-space: normal;">
-				<a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-searchbar-placeholder="Chercher un collaborateur ...">
+				<!-- <a class="link popover-open" href="#" data-popover=".popover-links-add-provenance"><i class="f7-icon material-icons md-only" style="padding-top: 8px;">add</i></a>
+				<div class="popover popover-links-add-provenance">
+					<div class="popover-inner">
+						<div class="list">
+							<ul>
+								<li>
+									<a class="smart-select smart-select-init list-button popover-close item-link" data-open-in="popup" data-searchbar="true" data-close-on-select="true" data-searchbar-placeholder="Chercher un collaborateur ...">
+										<select name="collaborateur">
+											{{#each collaborateurs}}
+												<option value="{{id}}" ws_email="{{email}}" ws_nom="{{nom}}" ws_prenom="{{prenom}}">{{ nom }} {{ prenom }}</option>
+											{{/each}}
+										</select>
+										Depuis la base de donnée
+									</a>
+								</li>
+								<li><a class="list-button popover-close sheet-open" href="#" data-sheet=".my-sheet-swipe-to-close">Nouvelle provenance</a></li>
+							</ul>
+						</div>
+					</div>
+				</div> -->
+
+				<!-- <a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-close-on-select="true" data-searchbar-placeholder="Chercher un collaborateur ...">
 					<select name="collaborateur">
-						<option value="honda" selected>Honda</option>
-						<option value="lexus">Lexus</option>
-						<option value="mazda">Mazda</option>
-						<option value="nissan">Nissan</option>
-						<option value="toyota">Toyota</option>
-						<option><a class="sheet-open" href="#" data-sheet=".my-sheet-swipe-to-close">Ajouter un collaborateur</a></option>
-						<div class="block searchbar-not-found">
-							<div class="block-inner">Nothing found</div>
-						  </div>
+						{{#each collaborateurs}}
+							<option value="{{id}}" ws_email="{{email}}" ws_nom="{{nom}}" ws_prenom="{{prenom}}">{{ nom }} {{ prenom }}</option>
+						{{/each}}
 					</select>
 					<i class="fa fa-plus" style="font-size:20px;"></i>
 				</a>
-				<a class="sheet-open" href="#" data-sheet=".my-sheet-swipe-to-close"><i class="fa fa-plus" style="font-size:20px;"></i></a>
-				<!-- <a class="popup-open" href="#" data-popup=".popup-provenance" ><i class="fa fa-plus" style="font-size:20px;"></i></a> -->
+				<a class="sheet-open" href="#" data-sheet=".my-sheet-swipe-to-close"><i class="fa fa-plus" style="font-size:20px;"></i></a> -->
 				Provenances
 			</div>
 			<!-- <div class="block-title block-title-medium" style="white-space: normal;">
@@ -245,6 +285,23 @@
 					</li>
 					{{/if}}
 				</ul>
+				
+				<div class="block">
+					<div class="row">
+						<button class="col button button-fill">
+							<a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-close-on-select="true" data-searchbar-placeholder="Chercher un collaborateur ...">
+								<select name="collaborateur">
+									{{#each collaborateurs}}
+										<option value="{{id}}" ws_email="{{email}}" ws_nom="{{nom}}" ws_prenom="{{prenom}}">{{ nom }} {{ prenom }}</option>
+									{{/each}}
+								</select>
+								Contacts
+								<div class="item-title" style="display: none;">Contacts</div>
+							</a>
+						</button>
+						<button class="col button button-fill"><a class="item-link sheet-open" href="#" data-sheet=".my-sheet-swipe-to-close">Autre contact</a></button>
+					</div>
+				</div>
 			</div>
 		</script>
 		<div class="sheet-modal my-sheet-swipe-to-close" style="height:auto; --f7-sheet-bg-color: #fff;">
@@ -356,19 +413,65 @@
 			{
 				var self = this;
 
-                var idee = ws_storage.get_value(OSIRI_STORAGE_KEY_IDEE);
+				var idee = ws_storage.get_value(OSIRI_STORAGE_KEY_IDEE);
+				
+				self.template_data = idee ? JSON.parse(idee): {};
 				self.data = idee ? JSON.parse(idee): {};
-				self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO] = "base64";
 
 				return self.load_page();
+			},
+
+			get_collaborateurs_list: function()
+			{
+				var self = this;
+
+				return ws_database.collaborateurs.all();
 			},
 			
 			load_page: function()
 			{
 				var self = this;
 				
-				return self.apply_template(page, "osiri_submit_idea_template", "osiri_submit_idea_content", self.data).then(function()
+				self.get_collaborateurs_list().then(function(result)
 				{
+					self.template_data.collaborateurs = result;
+
+					return self.apply_template(page, "osiri_submit_idea_template", "osiri_submit_idea_content", self.template_data);
+				})
+				.then(function()
+				{
+					var option_element = $("#osiri_submit_idea_content");
+
+					// affectation d'une nouvelle image
+					option_element.find(".op2a_vam_option_action_take_photo").click(function(e)
+					{
+						var id = "photo";
+						osiri_photos.take_photo(Camera.PictureSourceType.CAMERA).then(function(base64)
+						{
+							var ul_element = $('#osiri_photo').parent();
+							var a = '<div class="card demo-facebook-card">'+
+									'<div class="card-content" style="text-align: center;"> <img src="data:application/octet-stream;base64,'+ base64 +'" width="50%"></div>'+
+								'</div>';
+							ul_element.append(a);
+							self.set_value(id, base64);
+						});
+					});	
+					
+					// affectation d'une image deja stocker dans la galerie du telephone
+					option_element.find(".op2a_vam_option_action_add_photo").click(function(e)
+					{
+						var id = "photo";
+						osiri_photos.take_photo(Camera.PictureSourceType.PHOTOLIBRARY).then(function(base64)
+						{
+							var ul_element = $('#osiri_photo').parent();
+							var a = '<div class="card demo-facebook-card">'+
+									'<div class="card-content" style="text-align: center;"> <img src="data:application/octet-stream;base64,'+ base64 +'" width="50%"></div>'+
+								'</div>';
+							ul_element.append(a);
+							self.set_value(id, base64);
+						});
+					});
+
 					$("#osiri_submit_idea_content input[type='text']").change(function()
 					{
 						var id = $(this).parent().parent().parent().attr('id').substring(6);
@@ -412,25 +515,62 @@
 					my_sheet.on('closed', function (sheet)
 					{
 						var nmbre = $('#osiri_provenance_list').find("li").length + 1;
-						var a = '<li>'+
-						'<div href="#" class="item-content">'+
-							'<div class="item-inner">'+
-								'<div class="item-title-row">'+
-									'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
-									'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +'</div>'+
-								'</div>'+
-								'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
-							'</div>'+
-						'</div>'+
-						'</li>';
-						var inputs = $('.my-sheet-swipe-to-close input');
-
-						for ( var i = 0; i<inputs.length; i++)
+						if ( nmbre<=3 )
 						{
-							inputs[i].value = "";
-						}
+							var a = '<li id="provenance_'+nmbre+'" class="swipeout deleted-callback">'+
+							'<div class="item-content swipeout-content">'+
+								'<div class="item-inner">'+
+									'<div class="item-title-row">'+
+										'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
+										'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +'</div>'+
+									'</div>'+
+									'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
+								'</div>'+
+							'</div>'+
+							'</li>';
 
-						if (self.data['provenance_'+nmbre+'_nom'] && self.data['provenance_'+nmbre+'_prenom'] && self.data['provenance_'+nmbre+'_email']) $('#osiri_provenance_list').append(a);
+							var inputs = $('.my-sheet-swipe-to-close input');
+							for ( var i = 0; i<inputs.length; i++)
+							{
+								inputs[i].value = "";
+							}
+
+							if (self.data['provenance_'+nmbre+'_nom'] && self.data['provenance_'+nmbre+'_prenom'] && self.data['provenance_'+nmbre+'_email']) $('#osiri_provenance_list').append(a);
+						}
+					});
+
+					$(".smart-select select").change(function(e)
+					{
+						var nmbre = $('#osiri_provenance_list').find("li").length + 1;
+						if ( nmbre<=3 )
+						{
+							var element = $$(this).children();
+							for ( var i = 0; i<element.length; i++)
+							{
+								if (element[i].selected == true) 
+								{
+									self.set_value('provenance_'+nmbre+'_nom', $(element[i]).attr('ws_nom'));
+									self.set_value('provenance_'+nmbre+'_email', $(element[i]).attr('ws_email'));
+									self.set_value('provenance_'+nmbre+'_prenom', $(element[i]).attr('ws_prenom'));
+									break;
+								}
+							}
+
+							var a = '<li id="provenance_'+nmbre+'" class="swipeout deleted-callback">'+
+							'<div class="item-content swipeout-content">'+
+								'<div class="item-inner">'+
+									'<div class="item-title-row">'+
+										'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
+										'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +'</div>'+
+									'</div>'+
+									'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
+								'</div>'+
+							'</div>'+
+							'</li>';
+							if (self.data['provenance_'+nmbre+'_nom'] && self.data['provenance_'+nmbre+'_prenom'] && self.data['provenance_'+nmbre+'_email']) $('#osiri_provenance_list').append(a);
+						}
+						
+						
 					});
 
 					$$('.deleted-callback').on('swipeout:deleted', function ()

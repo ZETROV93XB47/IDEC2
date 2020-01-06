@@ -310,7 +310,7 @@ var ws_engine_class = Class.extend(
 	{
 		var list_ids = [];
 		
-		for(var i = 0; i < data.length; i++)
+		for (var i = 0; i < data.length; i++)
 		{
 			var ids = {};
 			

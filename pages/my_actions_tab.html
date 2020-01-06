@@ -12,7 +12,7 @@
 				<ul>
 					{{#each actions}}
 					<li>
-						<a href="/formulaire_action/" class="item-content item-link">
+						<a href="/formulaire_action/{{ id }}/{{ chantier }}/{{ projet }}" class="item-content item-link">
                             <div class="item-media"><img src="../img/projet_img.png" width="80"/></div>
 							<div class="item-inner">
 								<div class="item-title-row">
@@ -32,7 +32,7 @@
 	<script type="text/javascript" ws_script="page">
 		ws_engine.register_page("my-actions-tab", ws_page.extend(
 		{
-			custom_init: function(page, event, params)
+			custom_tabshow: function(page, event, params)
 			{
 				var self = this;
 
@@ -41,7 +41,7 @@
 				return self.load_page();
 			},
 
-			custom_beforein: function(page, event, params)
+			custom_init: function(page, event, params)
 			{
 				var self = this;
 
@@ -61,9 +61,6 @@
                     return self.apply_template(page, "osiri_action_template", "osiri_actions_list_content", self.data);
                 });
 			},
-
-			
-			
 		}));
 	</script>
 </div>

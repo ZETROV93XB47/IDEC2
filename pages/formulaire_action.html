@@ -11,591 +11,627 @@
             <div class="title">OSIRI - Mes actions</div>
         </div>
     </div>
+    <style>
+    
+    </style>
     <div class="page-content">
-        <div class="block-title block-title-large">ERGONOMIE</div>
-        <div class="block-title block-title-medium">GENERAL</div>
-        <div class="list inset">
-            <ul>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;">Posture en utilisation</div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
+        
+        <script id="osiri_rex_template" type="text/template7">
+            <div class="popover popover-links-photo">
+                <div class="popover-inner">
+                    <div class="list">
+                        <ul>
+                            <li><a class="list-button popover-close item-link osiri_rex_take_photo" href="#">Prendre une photo</a></li>
+                            <li><a class="list-button popover-close item-link osiri_rex_add_photo" href="#">Galerie du téléphone</a></li>
+                        </ul>
                     </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                </div>
+            </div>
+            <div class="block-title block-title-medium">ERGONOMIE</div>
+            <div class="block-title">GENERAL</div>
+            <div class="list inset">
+                <ul>
+                    <li id="ergonomic_posture_use">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">Posture en utilisation</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if ergonomic_posture_use}}{{#js_if "this.ergonomic_posture_use.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if ergonomic_posture_use}}{{#js_if "this.ergonomic_posture_use.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if ergonomic_posture_use}}{{ ergonomic_posture_use.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="ergonomic_posture_use" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_ergonomic_posture_use" class="actions-grid modal-in" style="display:{{#if ergonomic_posture_use}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if ergonomic_posture_use}}{{#if ergonomic_posture_use.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ ergonomic_posture_use.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;">Poids</div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                    </li>
+                    <li id="ergonomic_weights">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">Poids</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if ergonomic_weights}}{{#js_if "this.ergonomic_weights.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if ergonomic_weights}}{{#js_if "this.ergonomic_weights.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if ergonomic_weights}}{{ ergonomic_weights.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="ergonomic_weights" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_ergonomic_weights" class="actions-grid modal-in" style="display:{{#if ergonomic_weights}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if ergonomic_weights}}{{#if ergonomic_weights.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ ergonomic_weights.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;">Encombrement</div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                    </li>
+                    <li id="ergonomic_congestion">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">Encombrement</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if ergonomic_congestion}}{{#js_if "this.ergonomic_congestion.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if ergonomic_congestion}}{{#js_if "this.ergonomic_congestion.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if ergonomic_congestion}}{{ ergonomic_congestion.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="ergonomic_congestion" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_ergonomic_congestion" class="actions-grid modal-in" style="display:{{#if ergonomic_congestion}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if ergonomic_congestion}}{{#if ergonomic_congestion.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ ergonomic_congestion.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="block-title block-title-medium">SPECIFIQUE</div>
-        <div class="list inset">
-            <ul>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;"></div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                    </li>
+                </ul>
+            </div>
+            <div class="block-title">SPECIFIQUE</div>
+            <div class="list inset">
+                <ul>
+                    <li id="specific_test">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">Test</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if specific_test}}{{#js_if "this.specific_test.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if specific_test}}{{#js_if "this.specific_test.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if specific_test}}{{ specific_test.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="specific_test" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_specific_test" class="actions-grid modal-in" style="display:{{#if specific_test}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if specific_test}}{{#if specific_test.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ specific_test.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
+                    </li>
+                </ul>
+            </div>
 
-        <div class="block-title block-title-large">SECURITE</div>
-        <div class="block-title block-title-medium">GENERAL</div>
-        <div class="list inset">
-            <ul>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;">sécurité en utilisation</div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+            <div class="block-title block-title-medium">SECURITE</div>
+            <div class="block-title">GENERAL</div>
+            <div class="list inset">
+                <ul>
+                    <li id="securite_safety_use">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">sécurité en utilisation</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if securite_safety_use}}{{#js_if "this.securite_safety_use.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if securite_safety_use}}{{#js_if "this.securite_safety_use.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if securite_safety_use}}{{ securite_safety_use.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="securite_safety_use" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_securite_safety_use" class="actions-grid modal-in" style="display:{{#if securite_safety_use}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if securite_safety_use}}{{#if securite_safety_use.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ securite_safety_use.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;">sécurité en mise en place</div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                    </li>
+                    <li id="securite_safety_place">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">sécurité en mise en place</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if securite_safety_place}}{{#js_if "this.securite_safety_place.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if securite_safety_place}}{{#js_if "this.securite_safety_place.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if securite_safety_place}}{{ securite_safety_place.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="securite_safety_place" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_securite_safety_place" class="actions-grid modal-in" style="display:{{#if securite_safety_place}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if securite_safety_place}}{{#if securite_safety_place.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ securite_safety_place.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="block-title block-title-medium">SPECIFIQUE</div>
-        <div class="list inset">
-            <ul>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;"></div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                    </li>
+                </ul>
+            </div>
+            <div class="block-title">SPECIFIQUE</div>
+            <div class="list inset">
+                <ul>
+                    <li id="securite_test">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">Test</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if securite_test}}{{#js_if "this.securite_test.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if securite_test}}{{#js_if "this.securite_test.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if securite_test}}{{ securite_test.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="securite_test" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_securite_test" class="actions-grid modal-in" style="display:{{#if securite_test}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if securite_test}}{{#if securite_test.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ securite_test.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="block-title block-title-large">PRODICTIVITE</div>
-        <div class="block-title block-title-medium">GENERAL</div>
-        <div class="list inset">
-            <ul>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;">Configuration matériel</div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                    </li>
+                </ul>
+            </div>
+            <div class="block-title block-title-medium">PRODICTIVITE</div>
+            <div class="block-title">GENERAL</div>
+            <div class="list inset">
+                <ul>
+                    <li id="prodictivite_hardware_configuration">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">Configuration matériel</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if prodictivite_hardware_configuration}}{{#js_if "this.prodictivite_hardware_configuration.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if prodictivite_hardware_configuration}}{{#js_if "this.prodictivite_hardware_configuration.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if prodictivite_hardware_configuration}}{{ prodictivite_hardware_configuration.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="prodictivite_hardware_configuration" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_prodictivite_hardware_configuration" class="actions-grid modal-in" style="display:{{#if prodictivite_hardware_configuration}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if prodictivite_hardware_configuration}}{{#if prodictivite_hardware_configuration.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ prodictivite_hardware_configuration.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;">Temps de chacune des étapes</div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                    </li>
+                    <li id="prodictivite_time_stage">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">Temps de chacune des étapes</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if prodictivite_time_stage}}{{#js_if "this.prodictivite_time_stage.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if prodictivite_time_stage}}{{#js_if "this.prodictivite_time_stage.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if prodictivite_time_stage}}{{ prodictivite_time_stage.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="prodictivite_time_stage" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_prodictivite_time_stage" class="actions-grid modal-in" style="display:{{#if prodictivite_time_stage}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if prodictivite_time_stage}}{{#if prodictivite_time_stage.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ prodictivite_time_stage.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;">Facilité d'utilisation</div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                    </li>
+                    <li id="prodictivite_ease_use">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">Facilité d'utilisation</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if prodictivite_ease_use}}{{#js_if "this.prodictivite_ease_use.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if prodictivite_ease_use}}{{#js_if "this.prodictivite_ease_use.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if prodictivite_ease_use}}{{ prodictivite_ease_use.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="prodictivite_ease_use" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_prodictivite_ease_use" class="actions-grid modal-in" style="display:{{#if prodictivite_ease_use}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if prodictivite_ease_use}}{{#if prodictivite_ease_use.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ prodictivite_ease_use.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="block-title block-title-medium">SPECIFIQUE</div>
-        <div class="list inset">
-            <ul>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner item-title" style="white-space: normal;"></div>
-                        <div class="item-after">
-                            <p class="segmented segmented-raised segmented-round" id="op2a_vam_{{ ref }}_select_action" ws_values_ref="{{ ref }}" ws_values_group="{{ group }}" >
-                                <button class="button button-round" value="p" ws_value="p">P</button>
-                                <button class="button button-round" value="n" ws_value="n">N</button>
-                            </p>
-                        </div>
-                    </div>
-                    <div id="osiri_action_template_option_{{ }}" class="osiri_action_option" style="display:bloc;">
+                    </li>
+                </ul>
+            </div>
+            <div class="block-title">SPECIFIQUE</div>
+            <div class="list inset">
+                <ul>
+                    <li id="prodictivite_test">
                         <div class="item-content item-input">
-                            <div class="item-inner">
-                                <div class="item-input-wrap">
-                                    <textarea style="height: 70px;" placeholder="Proposition"></textarea>
-                                </div>
+                            <div class="item-inner item-title" style="white-space: normal;">Test</div>
+                            <div class="item-after">
+                                <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if prodictivite_test}}{{#js_if "this.prodictivite_test.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if prodictivite_test}}{{#js_if "this.prodictivite_test.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p>
                             </div>
-                            <div class="item-media" style="padding: 0; height: 88px; ">
-                                <div style="height: 65px;">
-                                    <a class="link popover-open" href="#" data-popover=".popover-links_{{ ref }}" style="width: 40px; height: 40px; padding-left: 17px;">
-                                        <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                    </a>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap">
+                                        <textarea style="height: 70px;" placeholder="Proposition">{{#if prodictivite_test}}{{ prodictivite_test.text }}{{/if}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="popover popover-links_{{ ref }}">
-                                    <div class="popover-inner">
-                                        <div class="list">
-                                            <ul>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_take_photo" href="#">Prendre une photo</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_photo" href="#">Galerie du téléphone</a></li>
-                                                <li><a class="list-button popover-close item-link op2a_vam_option_action_add_op2a_photo" href="#">Galerie de OP2A Mobile</a></li>
-                                            </ul>
-                                        </div>
+                                <div class="item-media" style="padding: 0; height: 88px;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="prodictivite_test" href="#" data-popover=".popover-links-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="op2a_vam_template_option_photos_mesure_{{ ref }}" class="op2a_vam_option_action_photos actions-grid modal-in" style="display: none;">
-                            <div class="actions-group">
-                                {{#each imgs }}
-                                <div class="actions-button" ws_id="{{ id }}">
-                                    <div class="actions-button-media"><img src="{{ source }}" width="48"></div>
-                                    <div class="actions-button-text dynamic-popover-{{ id }}">image {{ id }}</div>
+                            <div id="osiri_rex_photos_prodictivite_test" class="actions-grid modal-in" style="display:{{#if prodictivite_test}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if prodictivite_test}}{{#if prodictivite_test.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ prodictivite_test.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
+                    </li>
+                </ul>
+            </div>
+        </script>
+        
+		<div id="osiri_rex_content"></div>
     </div>
     <script type="text/javascript" ws_script="page">
         ws_engine.register_page("my-actions-tab", ws_page.extend(
         {
             custom_init: function(page, event, params)
             {
-                var self = this; 
+                var self = this;
+
+			    self.action_id = self.params.action_id;
+			    self.chantier_id = self.params.chantier_id;
+			    self.projet_id = self.params.projet_id;
+
+                self.data = {};
+                self.template_data = {};
+                self.template_data.imgs = [];
                 
-                return self.load_page();
+                function init_context()
+                {
+                    var condition = OSIRI_REX_PROPERTY_CHANTIER_ID+" = ? AND "+ OSIRI_REX_PROPERTY_PROJET_ID+" = ?";
+                    var binding = [self.chantier_id, self.projet_id];
+
+                    return ws_database.rexs.get(condition, binding).then(function(result)
+                    {
+                        self.is_new = (result == null);
+                        if (!self.is_new) 
+                        {
+                            self.rexs = result;
+                            self.rex_id = result.id;
+                            self.data = JSON.parse(result.data);
+                        }
+                        else return self.add_rex().then(function(id)
+                        {
+                            self.rex_id = id;
+                        });
+                    });
+                }
+                init_context().then(function()
+                {
+                    return self.load_page();
+                });
             },
 
-            custom_beforein: function(page, event, params)
+            init_data: function()
             {
-                var self = this;
-                
-                return self.load_page();
+                var properties = Object.keys(this.data);
             },
             
             load_page: function()
             {
-                
+                var self = this;
+                var prop;
+
+                self.template_data = self.data;
+
+                return self.apply_template(page, "osiri_rex_template", "osiri_rex_content", self.template_data).then(function()
+				{
+                    var option_element = $("#osiri_rex_content");
+                    $$('.add_photo').on('click', function (e)
+                    {
+                        prop = $(this).attr('osiri_prop');
+                    });
+					// affectation d'une nouvelle image
+					option_element.find(".osiri_rex_take_photo").click(function()
+					{
+                        debugger
+						osiri_photos.take_photo(Camera.PictureSourceType.CAMERA).then(function(base64)
+						{
+							option_element.find("#osiri_rex_photos_"+ prop)[0].style.display = "block";
+                            $('#osiri_rex_photos_'+ prop +' div.actions-group').append('<div class="actions-button" ws_id="'+ 1 +'"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover-'+ 1 +'">image '+ 1 +'</div></div>');
+							self.set_value(prop, base64, OSIRI_NOUVELLE_IDEE_OPTION_KEY_IMAGE);
+						});
+					});	
+					
+					// affectation d'une image deja stocker dans la galerie du telephone
+					option_element.find(".osiri_rex_add_photo").click(function(e)
+					{
+						var id = "photo";
+						osiri_photos.take_photo(Camera.PictureSourceType.PHOTOLIBRARY).then(function(base64)
+						{
+                            option_element.find("#op2a_vam_template_option_photos_mesure_"+ ref)[0].style.display = "block";
+                            $('#op2a_vam_template_option_photos_mesure_'+ ref +' div.actions-group').append('<div class="actions-button" ws_id="'+ result.id +'"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ result.source +'" width="48"></div><div class="actions-button-text dynamic-popover-'+ result.id +'">image '+ result.id +'</div></div>');
+							self.set_value(id, base64, OSIRI_NOUVELLE_IDEE_OPTION_KEY_IMAGE);
+						});
+                    });
+                    
+                    $("#osiri_rex_content textarea").change(function()
+					{   
+                        var id = $(this).parent().parent().parent().parent().parent().attr('id');
+						
+						self.set_value(id, $$(this).val(), OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT);
+                    });
+                    
+                    $('.list li .item-content button').click(function(e)
+                    {
+                        var id = $$(this).parent().parent().parent().parent().attr("id");
+                        var buttons = $$(this).parent().find(".button");
+                        var value = $$(this).val();
+
+                        buttons.removeClass("button-active");
+                        $$(this).parent().find(".button[value='"+ value +"']").addClass("button-active");
+
+						self.set_value(id, value, OSIRI_NOUVELLE_IDEE_OPTION_KEY_ACTION);
+                    });
+                });
             },
+            
+            add_rex: function()
+            {
+                var self = this;
+
+                var rex_properties = [
+                    OSIRI_REX_PROPERTY_CHANTIER_ID,
+                    OSIRI_REX_PROPERTY_PROJET_ID,
+                    OSIRI_REX_PROPERTY_VERSION,
+                    OSIRI_REX_PROPERTY_DATE_DEBUT,
+                    OSIRI_REX_PROPERTY_DATE_FIN,
+                    OSIRI_REX_PROPERTY_DATE,
+                    OSIRI_REX_PROPERTY_PHOTOS,
+                    OSIRI_REX_PROPERTY_COMMENT,
+                    OSIRI_REX_PROPERTY_ETAT,
+                    OSIRI_REX_PROPERTY_DATA
+                ];
+                
+                var rex_values = [
+                    self.chantier_id,
+                    self.projet_id,
+                    1,
+                    ws_tools.get_date_as_string(),
+                    "",
+                    ws_tools.get_date_as_string(),
+                    "",
+                    "",
+                    "",
+                    JSON.stringify(self.data)
+                ];
+
+                return ws_database.rexs.add_with_server(ws_engine.get_server_id(), rex_properties, rex_values);
+            
+            },
+
+            
+            set_value : function(property_id, value, prop_change)
+			{
+                if (this.data[property_id] == undefined) this.data[property_id] = {};
+		
+                if (this.data[property_id][prop_change] != value)
+                {
+                    this.data[property_id][prop_change] = value;
+                
+                    return this.save();
+                }
+				
+				return Promise.resolve();
+			},
+
+			save : function()
+			{
+				var data = JSON.stringify(this.data);
+                
+                ws_database.rexs.set_with_id(this.rex_id, [OSIRI_REX_PROPERTY_DATA], [data]);
+			},
             
         }));
     </script>
