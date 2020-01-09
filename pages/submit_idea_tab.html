@@ -243,7 +243,7 @@
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title"> {{ provenance_1_nom }} {{ provenance_1_prenom }}</div>
-									<div class="item-after"> {{ provenance_1_metier }} </div>
+									<div class="item-after"> {{ provenance_1_metier }} {{ provenance_1_filiale }}</div>
 								</div>
 								<div class="item-subtitle">{{ provenance_1_email }}</div>
 							</div>
@@ -259,7 +259,7 @@
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title"> {{ provenance_2_nom }} {{ provenance_2_prenom }}</div>
-									<div class="item-after"> {{ provenance_2_metier }} </div>
+									<div class="item-after"> {{ provenance_2_metier }} {{ provenance_2_filiale }}</div>
 								</div>
 								<div class="item-subtitle">{{ provenance_2_email }}</div>
 							</div>
@@ -274,7 +274,7 @@
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title"> {{ provenance_3_nom }} {{ provenance_3_prenom }}</div>
-									<div class="item-after"> {{ provenance_3_metier }} </div>
+									<div class="item-after"> {{ provenance_3_metier }} {{ provenance_3_filiale }}</div>
 								</div>
 								<div class="item-subtitle">{{ provenance_3_email }}</div>
 							</div>
@@ -299,12 +299,18 @@
 								<div class="item-title" style="display: none;">Contacts</div>
 							</a>
 						</button>
-						<button class="col button button-fill"><a class="item-link sheet-open" href="#" data-sheet=".my-sheet-swipe-to-close">Autre contact</a></button>
+						<button class="col button button-fill"><a class="item-link sheet-open" href="#" data-sheet=".my-sheet">Autre contact</a></button>
 					</div>
 				</div>
 			</div>
 		</script>
-		<div class="sheet-modal my-sheet-swipe-to-close" style="height:auto; --f7-sheet-bg-color: #fff;">
+		<div class="sheet-modal my-sheet" style="height:auto; --f7-sheet-bg-color: #fff;">
+			<div class="toolbar">
+				<div class="toolbar-inner">
+					<div class="left"><a class="link sheet-close" href="#">Annuler</a></div>
+					<div class="right"><a id="add_provenance" class="link sheet-close" href="#">Ajouter</a></div>
+				</div>
+			</div>
 			<div class="sheet-modal-inner">
 			  <div class="page-content">
 				<div class="block">
@@ -340,10 +346,51 @@
 							</li>
 							<li class="item-content item-input">
 								<div class="item-inner">
-									<div class="item-title item-label">Votre métier</div>
+									<div class="item-title item-label">Métier</div>
 									<div class="item-input-wrap">
-									<input id="metier" type="text" placeholder="Votre métier | UO/filiale">
-									<span class="input-clear-button"></span>
+										<select id="metier" placeholder="choisir ...">
+											<option value="undefined">...</option>
+											<option value="MATERIEL">MATERIEL</option>
+											<option value="R&D - DD">R&D - DD</option>
+											<option value="PREVENTION SANTE SECURITE">PREVENTION SANTE SECURITE</option>
+											<option value="METHODE">METHODE</option>
+											<option value="METHODE">TRAVAUX</option>
+											<option value="AUTRE">AUTRE</option>
+										</select>
+									</div>
+								</div>
+							</li>
+							<li class="item-content item-input">
+								<div class="item-inner">
+									<div class="item-title item-label">UO/filiale</div>
+									<div class="item-input-wrap">
+										<select id="filiale" placeholder="choisir ...">
+											<option value="undefined">...</option>
+											<option value="BYCN">BYCN</option>
+											<option value="BYUK">BYUK</option>
+											<option value="LOSINGER MARAZZI">LOSINGER MARAZZI</option>
+											<option value="BBI">BBI</option>
+											<option value="BBFE">BBFE</option>
+											<option value="BBFE / HAS">BBFE / HAS</option>
+											<option value="BBFE / BZ">BBFE / BZ</option>
+											<option value="BBFE / REP">BBFE / REP</option>
+											<option value="BBFE / OPB">BBFE / OPB</option>
+											<option value="BBFE / CPI">BBFE / CPI</option>
+											<option value="BBFE / HAR">BBFE / HAR</option>
+											<option value="BBFE / BBSE">BBFE / BBSE</option>
+											<option value="BBFE / BBCSO">BBFE / BBCSO</option>
+											<option value="BBFE / BBGO">BBFE / BBGO</option>
+											<option value="BBFE / BBNE">BBFE / BBNE</option>
+											<option value="BYTP">BYTP</option>
+											<option value="BYTP / RF">BYTP / RF</option>
+											<option value="BYTP / RP">BYTP / RP</option>
+											<option value="BCM">BCM</option>
+											<option value="BCM / MATERIEL">BCM / MATERIEL</option>
+											<option value="BCM / DISTRIMO">BCM / DISTRIMO</option>
+											<option value="BYES">BYES</option>
+										</select>
+										<!-- <input id="filiale" type="text" placeholder="Votre UO/filiale">
+										<span class="input-clear-button"></span> -->
 									</div>
 								</div>
 							</li>
@@ -353,63 +400,13 @@
 			  </div>
 			</div>
 		  </div>
-		  <div class="popup popup-provenance">
-			<div class="block">
-				<div class="block-title">Provenance</div>
-				<div class="list inline-labels no-hairlines-md">
-					<ul>
-						<li class="item-content item-input">
-							<div class="item-inner">
-								<div class="item-title item-label">Nom</div>
-								<div class="item-input-wrap">
-								<input id="nom" type="text" placeholder="Votre nom">
-								<span class="input-clear-button"></span>
-								</div>
-							</div>
-						</li>
-						<li class="item-content item-input">
-							<div class="item-inner">
-								<div class="item-title item-label">Prènom</div>
-								<div class="item-input-wrap">
-								<input id="prenom" type="text" placeholder="Votre prènom">
-								<span class="input-clear-button"></span>
-								</div>
-							</div>
-						</li>
-						<li class="item-content item-input">
-							<div class="item-inner">
-								<div class="item-title item-label">E-mail</div>
-								<div class="item-input-wrap">
-								<input id="email" type="email" placeholder="Votre e-mail">
-								<span class="input-clear-button"></span>
-								</div>
-							</div>
-						</li>
-						<li class="item-content item-input">
-							<div class="item-inner">
-								<div class="item-title item-label">Votre métier</div>
-								<div class="item-input-wrap">
-								<input id="metier" type="text" placeholder="Votre métier | UO/filiale">
-								<span class="input-clear-button"></span>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div class="row">
-					<button class="col button button-fill popup-close">Ajouter</button>
-					<button class="col button button-fill popup-close">Fermer</button>
-				</div>
-				
-			</div>
-		</div>
 		
 		<div id="osiri_submit_idea_content"></div>
 	</div>
 	<script type="text/javascript" ws_script="page">
 		ws_engine.register_page("submit-idea-tab", ws_page.extend(
 		{
-			custom_tabshow: function(page, event, params)
+			custom_init: function(page, event, params)
 			{
 				var self = this;
 
@@ -418,8 +415,23 @@
 				self.template_data = idee ? JSON.parse(idee): {};
 				self.data = idee ? JSON.parse(idee): {};
 
-				return self.load_page();
+				return self.load_page().then(function()
+				{
+					self.events();
+				});
 			},
+
+			// custom_tabshow: function(page, event, params)
+			// {
+			// 	var self = this;
+
+			// 	var idee = ws_storage.get_value(OSIRI_STORAGE_KEY_IDEE);
+				
+			// 	self.template_data = idee ? JSON.parse(idee): {};
+			// 	self.data = idee ? JSON.parse(idee): {};
+
+			// 	return self.load_page();
+			// },
 
 			get_collaborateurs_list: function()
 			{
@@ -432,159 +444,211 @@
 			{
 				var self = this;
 				
-				self.get_collaborateurs_list().then(function(result)
+				return self.get_collaborateurs_list().then(function(result)
 				{
 					self.template_data.collaborateurs = result;
 
+					self.template_data.collaborateurs.sort((a,b) => (a[OSIRI_COLLABORATEUR_PROPERTY_LASTNAME] > b[OSIRI_COLLABORATEUR_PROPERTY_LASTNAME]) ? 1 : (a[OSIRI_COLLABORATEUR_PROPERTY_LASTNAME] < b[OSIRI_COLLABORATEUR_PROPERTY_LASTNAME] ? -1 : 0 ));
+
 					return self.apply_template(page, "osiri_submit_idea_template", "osiri_submit_idea_content", self.template_data);
-				})
-				.then(function()
+				});
+			},
+
+			events : function()
+			{
+				var self = this;
+				var option_element = $("#osiri_submit_idea_content");
+
+				// affectation d'une nouvelle image
+				option_element.find(".op2a_vam_option_action_take_photo").click(function(e)
 				{
-					var option_element = $("#osiri_submit_idea_content");
+					var id = "photo";
+					return osiri_photos.take_photo(Camera.PictureSourceType.CAMERA).then(function(base64)
+					{
+						var ul_element = $('#osiri_photo').parent();
+						$('#osiri_photo').parent().find('.card').remove();
 
-					// affectation d'une nouvelle image
-					option_element.find(".op2a_vam_option_action_take_photo").click(function(e)
-					{
-						var id = "photo";
-						osiri_photos.take_photo(Camera.PictureSourceType.CAMERA).then(function(base64)
-						{
-							var ul_element = $('#osiri_photo').parent();
-							var a = '<div class="card demo-facebook-card">'+
-									'<div class="card-content" style="text-align: center;"> <img src="data:application/octet-stream;base64,'+ base64 +'" width="50%"></div>'+
-								'</div>';
-							ul_element.append(a);
-							self.set_value(id, base64);
-						});
-					});	
-					
-					// affectation d'une image deja stocker dans la galerie du telephone
-					option_element.find(".op2a_vam_option_action_add_photo").click(function(e)
-					{
-						var id = "photo";
-						osiri_photos.take_photo(Camera.PictureSourceType.PHOTOLIBRARY).then(function(base64)
-						{
-							var ul_element = $('#osiri_photo').parent();
-							var a = '<div class="card demo-facebook-card">'+
-									'<div class="card-content" style="text-align: center;"> <img src="data:application/octet-stream;base64,'+ base64 +'" width="50%"></div>'+
-								'</div>';
-							ul_element.append(a);
-							self.set_value(id, base64);
-						});
+						var a = '<div class="card demo-facebook-card">'+
+								'<div class="card-content" style="text-align: center;"> <img src="data:application/octet-stream;base64,'+ base64 +'" width="50%"></div>'+
+							'</div>';
+						ul_element.append(a);
+						self.set_value(id, base64);
 					});
+				});	
 
-					$("#osiri_submit_idea_content input[type='text']").change(function()
+				// affectation d'une image deja stocker dans la galerie du telephone
+				option_element.find(".op2a_vam_option_action_add_photo").click(function(e)
+				{
+					var id = "photo";
+					return osiri_photos.take_photo(Camera.PictureSourceType.PHOTOLIBRARY).then(function(base64)
 					{
-						var id = $(this).parent().parent().parent().attr('id').substring(6);
-						
-						self.set_value(id, $$(this).val(), OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT);
-					});
+						var ul_element = $('#osiri_photo').parent();
+						$('#osiri_photo').parent().find('.card').remove();
 
-					$("#osiri_submit_idea_content textarea").change(function()
-					{
-						var id = $(this).parent().parent().parent().attr('id').substring(6);
-						
-						self.set_value(id+"_text", $$(this).val(), OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT);
-					});
-
-					$("#osiri_submit_idea_content input[type='checkbox']").change(function()
-					{
-						var id = $(this).parent().parent().parent().attr('id').substring(6);
-
-						self.set_value(id, $(this)[0].checked, OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE);
-					});
-					
-					$("#osiri_upload_idea").click(function()
-					{
-						self.upload();
-					});
-
-					var my_sheet = app.sheet.create({
-						el: '.my-sheet-swipe-to-close',
-						swipeToClose: true,
-						backdrop: true,
-					});
-
-					$('.my-sheet-swipe-to-close input').change(function()
-					{
-						var nmbre = $('#osiri_provenance_list').find("li").length + 1;
-						var id = $$(this).attr('id');
-
-						self.set_value('provenance_'+nmbre+'_'+id, $$(this).val());
-					});
-
-					my_sheet.on('closed', function (sheet)
-					{
-						var nmbre = $('#osiri_provenance_list').find("li").length + 1;
-						if ( nmbre<=3 )
-						{
-							var a = '<li id="provenance_'+nmbre+'" class="swipeout deleted-callback">'+
-							'<div class="item-content swipeout-content">'+
-								'<div class="item-inner">'+
-									'<div class="item-title-row">'+
-										'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
-										'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +'</div>'+
-									'</div>'+
-									'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
-								'</div>'+
-							'</div>'+
-							'</li>';
-
-							var inputs = $('.my-sheet-swipe-to-close input');
-							for ( var i = 0; i<inputs.length; i++)
-							{
-								inputs[i].value = "";
-							}
-
-							if (self.data['provenance_'+nmbre+'_nom'] && self.data['provenance_'+nmbre+'_prenom'] && self.data['provenance_'+nmbre+'_email']) $('#osiri_provenance_list').append(a);
-						}
-					});
-
-					$(".smart-select select").change(function(e)
-					{
-						var nmbre = $('#osiri_provenance_list').find("li").length + 1;
-						if ( nmbre<=3 )
-						{
-							var element = $$(this).children();
-							for ( var i = 0; i<element.length; i++)
-							{
-								if (element[i].selected == true) 
-								{
-									self.set_value('provenance_'+nmbre+'_nom', $(element[i]).attr('ws_nom'));
-									self.set_value('provenance_'+nmbre+'_email', $(element[i]).attr('ws_email'));
-									self.set_value('provenance_'+nmbre+'_prenom', $(element[i]).attr('ws_prenom'));
-									break;
-								}
-							}
-
-							var a = '<li id="provenance_'+nmbre+'" class="swipeout deleted-callback">'+
-							'<div class="item-content swipeout-content">'+
-								'<div class="item-inner">'+
-									'<div class="item-title-row">'+
-										'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
-										'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +'</div>'+
-									'</div>'+
-									'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
-								'</div>'+
-							'</div>'+
-							'</li>';
-							if (self.data['provenance_'+nmbre+'_nom'] && self.data['provenance_'+nmbre+'_prenom'] && self.data['provenance_'+nmbre+'_email']) $('#osiri_provenance_list').append(a);
-						}
-						
-						
-					});
-
-					$$('.deleted-callback').on('swipeout:deleted', function ()
-					{
-						var id = $(this).attr("id");
-						
-						self.data[id+'_nom'] = undefined;
-						self.data[id+'_prenom'] = undefined;
-						self.data[id+'_email'] = undefined;
-						self.data[id+'_metier'] = undefined;
-						
-						return self.save();
+						var a = '<div class="card demo-facebook-card">'+
+								'<div class="card-content" style="text-align: center;"> <img src="data:application/octet-stream;base64,'+ base64 +'" width="50%"></div>'+
+							'</div>';
+						ul_element.append(a);
+						self.set_value(id, base64);
 					});
 				});
+
+				$("#osiri_submit_idea_content input[type='text']").change(function()
+				{
+					var id = $(this).parent().parent().parent().attr('id').substring(6);
+					
+					self.set_value(id, $$(this).val(), OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT);
+				});
+
+				$("#osiri_submit_idea_content textarea").change(function()
+				{
+					var id = $(this).parent().parent().parent().attr('id').substring(6);
+					
+					self.set_value(id+"_text", $$(this).val(), OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT);
+				});
+
+				$("#osiri_submit_idea_content input[type='checkbox']").change(function()
+				{
+					var id = $(this).parent().parent().parent().attr('id').substring(6);
+
+					self.set_value(id, $(this)[0].checked, OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE);
+				});
+
+				$("#osiri_upload_idea").click(function()
+				{
+					self.upload();
+				});
+
+
+				$('.my-sheet input').change(function()
+				{
+					var nmbre = $('#osiri_provenance_list').find("li").length + 1;
+					var id = $$(this).attr('id');
+
+					self.set_value_in_data('provenance_'+nmbre+'_'+id, $$(this).val());
+				});
+
+				$('.my-sheet select').change(function()
+				{
+					var nmbre = $('#osiri_provenance_list').find("li").length + 1;
+					var id = $$(this).attr('id');
+					var element = $$(this).children();
+
+					for ( var i = 0; i<element.length; i++)
+					{
+						if (element[i].selected == true) 
+						{
+							return self.set_value_in_data('provenance_'+nmbre+'_'+id, $$(this).val());
+						}
+					}
+				});
+
+				$$('#add_provenance').click(function()
+				{
+					self.save();
+					var nmbre = $('#osiri_provenance_list').find("li").length + 1;
+					if ( nmbre <= 3 )
+					{
+						var a = '<li id="provenance_'+nmbre+'" class="swipeout deleted-callback">'+
+							'<div class="item-content swipeout-content">'+
+								'<div class="item-inner">'+
+									'<div class="item-title-row">'+
+										'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
+										'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +' '+ self.data['provenance_'+nmbre+'_filiale'] +'</div>'+
+									'</div>'+
+									'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
+								'</div>'+
+							'</div>'+
+							'<div class="swipeout-actions-right">'+
+								'<a href="#" class="swipeout-delete">Supprimer</a>'+
+							'</div>'+
+						'</li>';
+
+						if (self.data['provenance_'+nmbre+'_nom'] && self.data['provenance_'+nmbre+'_prenom']) 
+						{
+							$('#osiri_provenance_list').append(a);
+						}
+						else 
+						{
+							ws_tools.toast('Veuillez vous ajouter le nom et le prènom du provenance!', 'center');
+						}
+					}
+				})
+
+				$$('.my-sheet').on('sheet:closed', function (e)
+				{
+					var nmbre = $('#osiri_provenance_list').find("li").length + 1;
+
+					self.data['provenance_'+nmbre+'_nom'] = undefined;
+					self.data['provenance_'+nmbre+'_prenom'] = undefined;
+					self.data['provenance_'+nmbre+'_metier'] = undefined;
+					self.data['provenance_'+nmbre+'_filiale'] = undefined;
+					self.data['provenance_'+nmbre+'_email'] = undefined;
+
+					var inputs = $('.my-sheet input');
+					for ( var i = 0; i<inputs.length; i++)
+					{
+						inputs[i].value = "";
+					}
+				});
+
+				$(".smart-select select").change(function(e)
+				{
+					var nmbre = $('#osiri_provenance_list').find("li").length + 1;
+					if ( nmbre<=3 )
+					{
+						var element = $$(this).children();
+						for ( var i = 0; i<element.length; i++)
+						{
+							if (element[i].selected == true) 
+							{
+								self.set_value('provenance_'+nmbre+'_nom', $(element[i]).attr('ws_nom'));
+								self.set_value('provenance_'+nmbre+'_email', $(element[i]).attr('ws_email'));
+								self.set_value('provenance_'+nmbre+'_prenom', $(element[i]).attr('ws_prenom'));
+								break;
+							}
+						}
+
+						var a = '<li id="provenance_'+nmbre+'" class="swipeout deleted-callback">'+
+						'<div class="item-content swipeout-content">'+
+							'<div class="item-inner">'+
+								'<div class="item-title-row">'+
+									'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
+									'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +'</div>'+
+								'</div>'+
+								'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
+							'</div>'+
+						'</div>'+
+						'</li>';
+						if (self.data['provenance_'+nmbre+'_nom'] && self.data['provenance_'+nmbre+'_prenom'] && self.data['provenance_'+nmbre+'_email']) $('#osiri_provenance_list').append(a);
+					}
+					
+					
+				});
+
+				$$('.deleted-callback').on('swipeout:deleted', function ()
+				{
+					var id = $(this).attr("id");
+					
+					self.data[id+'_nom'] = undefined;
+					self.data[id+'_prenom'] = undefined;
+					self.data[id+'_email'] = undefined;
+					self.data[id+'_metier'] = undefined;
+					self.data[id+'_filiale'] = undefined;
+					
+					return self.save();
+				});
+			},
+			
+			set_value_in_data : function(property_id, value, prop_change)
+			{
+				if (this.data[property_id] == undefined) this.data[property_id] = "";
+				
+				if (this.data[property_id] != value)
+				{
+					this.data[property_id] = value;
+					
+				}
 			},
 
 			set_value : function(property_id, value, prop_change)
