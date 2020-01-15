@@ -6,16 +6,20 @@ var osiri_photos = new function()
 		{
 			return Promise.resolve(ws_defines.SAMPLE_IMAGE);
 		}
-		else navigator.camera.getPicture(function(image_data)
-        { 
-            return Promise.resolve(image_data);
-        },
-        function (message)
-        {
-            if (ws_defines.debug) console.log("camera.getPicture error : " + message);
-        },
-        op2a_photos.setOptions(camera_type)
-		);
+		else return new Promise(function(resolve, reject)
+		{
+			navigator.camera.getPicture(function(image_data)
+			{
+				return resolve(image_data);
+			},
+			function (message)
+			{
+				if (ws_defines.debug) console.log("camera.getPicture error : " + message);
+				return reject(message);
+			},
+			osiri_photos.setOptions(camera_type)
+			);
+		});
 	}
 
     this.setOptions = function(srcType)
