@@ -14,7 +14,7 @@ var osiri_actions = new function()
 				return 'Prototype';
 				
 			case OSIRI_PROJET_PHASE_KEYS_ETUDE :
-				return 'Etude';
+				return 'Étude';
 				
 			case OSIRI_PROJET_PHASE_KEYS_IDEE :
                 return 'Idée';
