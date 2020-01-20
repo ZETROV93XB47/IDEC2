@@ -185,11 +185,11 @@
 						</div>
 					</li>
 					<li class="item-content item-input">
-						<div class="item-inner">
+						<div class="item-inner" id="osiri_produit_existant">
 							<div class="item-title item-label">Produit existant</div>
-							<div >
+							<div>
 								<label class="toggle toggle-init color-blue">
-									<input type="checkbox">
+									<input type="checkbox" {{#if produit_existant}}checked{{/if}}>
 									<span class="toggle-icon"></span>
 								</label>
 							</div>
@@ -680,9 +680,11 @@
 				
 				ws_server.depose_idee(self.data).then(function(result)
 				{
+					debugger
+					if (typeof result == 'string') throw result;
 					ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, JSON.stringify({}));
 					app.dialog.close();
-					app.dialog.alert("Lancement d'opération envoyé à OP2A");
+					app.dialog.alert("La nouvelle idée est bien envoyé à OSIRI");
 				})
 				.catch(function(error)
 				{
