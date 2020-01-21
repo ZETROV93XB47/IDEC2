@@ -413,6 +413,7 @@ $$(document).on('page:init', function(e)
 				{
 					ws_user.logout().then(function()
 					{
+						app.methods.load_deconnect_mode()
 						app.panel.close();
 						app.popup.open('#popup_connection', true)
 					});

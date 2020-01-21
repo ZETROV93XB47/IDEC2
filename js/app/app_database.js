@@ -14,6 +14,7 @@ var app_database_class = ws_database_class.extend(
 			this.projets = undefined;
 			this.actions = undefined;
 			this.rexs = undefined;
+			this.nouvelle_idees = undefined;
 			
 			this.servers_class = ws_datatable.extend(
 			{
@@ -86,6 +87,14 @@ var app_database_class = ws_database_class.extend(
 					this._super(db, OSIRI_DATABASE_TABLE_REXS);
 				},
 			});
+
+			this.nouvelle_idees_class = ws_datatable.extend(
+			{
+				constructor: function(db)
+				{
+					this._super(db, OSIRI_DATABASE_TABLE_NOUVELLE_IDEES);
+				},
+			});
 			
 		},
 		
@@ -139,6 +148,9 @@ var app_database_class = ws_database_class.extend(
 	
 				case OSIRI_DATABASE_TABLE_REXS :
 					return this.rexs;
+
+				case OSIRI_DATABASE_TABLE_NOUVELLE_IDEES :
+					return this.nouvelle_idees;
 			}
 			
 			return null;
@@ -165,6 +177,7 @@ var app_database_class = ws_database_class.extend(
 				self.projets = new self.projets_class(self);
 				self.actions = new self.actions_class(self);
 				self.rexs = new self.rexs_class(self);
+				self.nouvelle_idees = new self.nouvelle_idees_class(self);
 				
 				resolve();
 			});

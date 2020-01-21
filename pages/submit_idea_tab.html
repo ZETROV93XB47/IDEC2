@@ -2,24 +2,50 @@
 	<div class="navbar">
 		<div class="navbar-bg"></div>
 		<div class="navbar-inner sliding">
+			<div class="left" style="display: none;">
+				<a href="#" class="link back">
+				<i class="icon icon-back"></i>
+				<span class="if-not-md">Back</span>
+				</a>
+			</div>
 			<div class="title">OSIRI - Idée</div>
 			<div class="right">
-				<a href="#" id="osiri_upload_idea" class="link icon-only"><i class="fa fa-check submit" style="font-size:20px;"></i></a>
+				<!-- <a href="#" id="osiri_upload_idea" class="link icon-only"><i class="fa fa-check" style="font-size:20px;"></i></a> -->
+				<a id="idee_list" href="/nouvelle_idee_list/" class="link icon-only"><i class="fa fa-list" style="font-size:20px;"></i></a>
+				<a id="upload_idea" href="#" class="link icon-only" style="display: none;"><i class="fa fa-paper-plane" style="font-size:20px;"></i></a>
 			</div>
 		</div>
 	</div>
 	<!-- <div>
 		<div id="osiri_upload_idea" class="fab fab-right-bottom">
-			<a href="#"><i class="fa fa-check submit" style="font-size:20px;"></i></a>
+			<a href="#"><i class="fa fa-check" style="font-size:20px;"></i></a>
 		</div>
 	</div> -->
+	<div class="fab fab-right-bottom">
+		<a href="#">
+			<i class="fa fa-arrow-up" style="font-size:20px;"></i>
+			<i class="fa fa-arrow-down" style="font-size:20px;"></i>
+		</a>
+		
+		<!-- FAB speed dial actions with labels -->
+		<div class="fab-buttons fab-buttons-top">
+			<a id="osiri_save_idea" href="#" class="fab-label-button">
+				<i class="fa fa-save" style="font-size:20px;"></i>
+				<span class="fab-label">Enregistrer</span>
+			</a>
+			<a id="osiri_upload_idea" href="#" class="fab-label-button">
+				<i class="fa fa-paper-plane" style="font-size:20px;"></i>
+				<span class="fab-label">Envoyer</span>
+			</a>
+		</div>
+	</div>
 	<style>
 		.item-title.item-label
 		{
 			white-space: normal;
 		}
 	</style>
-	<div class="page-content">
+	<div class="page-content" style="margin-bottom: 20px;">
 		<div class="block-title block-title-medium">Fiche innovation</div>
 		
         <script id="osiri_submit_idea_template" type="text/template7">
@@ -76,7 +102,7 @@
 							<ul style="padding-left: 0px;">
 								<li id="osiri_interet_ergonomie" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
-										<label class="toggle toggle-init color-blue">
+										<label class="toggle toggle-init">
 											<input type="checkbox" {{#if interet_ergonomie}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
@@ -90,7 +116,7 @@
 								</li>
 								<li id="osiri_interet_securite" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
-										<label class="toggle toggle-init color-blue">
+										<label class="toggle toggle-init">
 											<input type="checkbox" {{#if interet_securite}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
@@ -104,7 +130,7 @@
 								</li>
 								<li id="osiri_interet_productivite" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
-										<label class="toggle toggle-init color-blue">
+										<label class="toggle toggle-init">
 											<input type="checkbox" {{#if interet_productivite}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
@@ -118,7 +144,7 @@
 								</li>
 								<li id="osiri_interet_competitivite" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
-										<label class="toggle toggle-init color-blue">
+										<label class="toggle toggle-init">
 											<input type="checkbox" {{#if interet_competitivite}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
@@ -132,7 +158,7 @@
 								</li>
 								<li id="osiri_interet_environnement" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
-										<label class="toggle toggle-init color-blue">
+										<label class="toggle toggle-init">
 											<input type="checkbox" {{#if interet_environnement}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
@@ -146,7 +172,7 @@
 								</li>
 								<li id="osiri_interet_autre" class="item-content item-input">
 									<div class="item-media" style="padding-top: 21px;">
-										<label class="toggle toggle-init color-blue">
+										<label class="toggle toggle-init">
 											<input type="checkbox" {{#if interet_autre}}checked{{/if}}>
 											<span class="toggle-icon"></span>
 										</label>
@@ -188,7 +214,7 @@
 						<div class="item-inner" id="osiri_produit_existant">
 							<div class="item-title item-label">Produit existant</div>
 							<div>
-								<label class="toggle toggle-init color-blue">
+								<label class="toggle toggle-init">
 									<input type="checkbox" {{#if produit_existant}}checked{{/if}}>
 									<span class="toggle-icon"></span>
 								</label>
@@ -409,12 +435,30 @@
 			custom_init: function(page, event, params)
 			{
 				var self = this;
-
-				var idee = ws_storage.get_value(OSIRI_STORAGE_KEY_IDEE);
 				
-				self.template_data = idee ? JSON.parse(idee): {};
-				self.data = idee ? JSON.parse(idee): {};
+				self.id = self.params.id;
+				self.is_new = (self.id == undefined);
 
+				if (!self.is_new) 
+				{
+					$(".left").css('display', 'block');
+					$("#idee_list").css('display', 'none');
+					$(".fab").css('display', 'none');
+					$("#upload_idea").css('display', 'block');
+					
+					ws_database.nouvelle_idees.get_with_id(self.id).then(function(result)
+					{
+						self.idee = result;
+						self.data = JSON.parse(result.data);
+						self.template_data = JSON.parse(result.data);
+					});
+				}
+				else
+				{
+					self.data = {};
+					self.template_data = {};
+				}
+						
 				return self.load_page().then(function()
 				{
 					self.events();
@@ -517,6 +561,11 @@
 				$("#osiri_upload_idea").click(function()
 				{
 					self.upload();
+				});
+
+				$("#osiri_save_idea").click(function()
+				{
+					self.add();
 				});
 
 
@@ -659,17 +708,70 @@
 				{
 					this.data[property_id] = value;
 					
-					return this.save();
+					return this.is_new ? this.save() : this.save_in_db();
 				}
 				
 				return Promise.resolve();
 			},
 
+			add : function()
+			{
+				var self = this;
+
+				var properties = [
+					OSIRI_NOUVELLE_IDEE_PROPERTY_NOM,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_DATE,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_OBJECTIFS,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_DATA,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_SENT,
+				];
+
+				var values = [
+					self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_NOM] ? self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_NOM] : "",
+					ws_tools.get_date_as_string(),
+					self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_OBJECTIFS] ? self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_OBJECTIFS] : "",
+					self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO] ? self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO] : "",
+					JSON.stringify(self.data),
+					false
+				];
+
+				return ws_database.nouvelle_idees.add_with_server(ws_engine.get_server_id(), properties,values).then(function()
+				{
+					ws_tools.toast("l'idée est bien enregister !")
+				});
+			},
+
 			save : function()
 			{
-				var data = JSON.stringify(this.data);
+				var self = this;
 				
-                ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, data);
+				return Promise.resolve();
+			},
+
+			save_in_db : function()
+			{
+				var self = this;
+
+				var properties = [
+					OSIRI_NOUVELLE_IDEE_PROPERTY_NOM,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_DATE,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_OBJECTIFS,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_DATA,
+					OSIRI_NOUVELLE_IDEE_PROPERTY_SENT,
+				];
+
+				var values = [
+					self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_NOM] ? self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_NOM] : "",
+					ws_tools.get_date_as_string(),
+					self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_OBJECTIFS] ? self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_OBJECTIFS] : "",
+					self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO] ? self.data[OSIRI_NOUVELLE_IDEE_PROPERTY_PHOTO] : "",
+					JSON.stringify(self.data),
+					false
+				];
+				
+				return ws_database.nouvelle_idees.set_with_id(self.id, properties, values);
 			},
 
 			upload: function()
@@ -682,9 +784,10 @@
 				{
 					debugger
 					if (typeof result == 'string') throw result;
-					ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, JSON.stringify({}));
 					app.dialog.close();
 					app.dialog.alert("La nouvelle idée est bien envoyé à OSIRI");
+					return ws_database.nouvelle_idees.set_with_id(self.id, [OSIRI_NOUVELLE_IDEE_PROPERTY_SENT], [true]);
+					// ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, JSON.stringify({}));
 				})
 				.catch(function(error)
 				{

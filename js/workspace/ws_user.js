@@ -41,8 +41,11 @@ var ws_user = new function()
 	this.logout = function()
 	{
 		ws_storage.clear_value(WS_STORAGE_KEY_USER_TOKEN);
-				
-		return ws_synchronizer.logout();
+
+		// return ws_engine.reset().then(function()
+		// {
+			return ws_synchronizer.logout();
+		// });
 	};
 	
 	this.change_password = function(password)

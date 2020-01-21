@@ -3,6 +3,8 @@ var routes = [
     { path: '/about/', url: './pages/about.html', },
 
     { path: '/submit_idea_tab/', url: './pages/submit_idea_tab.html' },
+    { path: '/submit_idea_tab/:id', url: './pages/submit_idea_tab.html' },
+    { path: '/nouvelle_idee_list/', url: './pages/nouvelle_idee_list.html' },
 
     { path: '/my_actions_tab/', url: './pages/my_actions_tab.html' },
     { path: '/formulaire_action/', url: './pages/formulaire_action.html' },
