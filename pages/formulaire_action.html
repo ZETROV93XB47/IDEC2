@@ -202,81 +202,24 @@
                                         <div class="item-subtitle">Proposition</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if competitivite}}{{ competitivite.proposition }}{{/if}}</textarea>
                                     </div>
-<<<<<<< HEAD
                                     <div class="item-input-wrap">
                                         <div class="item-subtitle">Commentaire</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if competitivite}}{{ competitivite.commentaire }}{{/if}}</textarea>
-=======
-                                </div>
-                            </div>
-                            <div id="osiri_rex_photos_securite_test" class="actions-grid modal-in" style="display:{{#if securite_test}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if securite_test}}{{#if securite_test.image}}
-                                    <div class="actions-button">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ securite_test.image }}" width="48"></div>
-                                        <div class="actions-button-text dynamic-popover">image</div>
-                                    </div>
-                                    {{/if}}{{/if}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="block-title block-title-medium">PRODUCTIVITE</div>
-            <div class="block-title">GENERAL</div>
-            <div class="list inset">
-                <ul>
-                    <li id="productivite_hardware_configuration">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal;">Configuration matériel</div>
-                            <div class="item-after">
-                                <!-- <p class="segmented segmented-raised segmented-round">
-                                    <button class="button button-round {{#if productivite_hardware_configuration}}{{#js_if "this.productivite_hardware_configuration.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if productivite_hardware_configuration}}{{#js_if "this.productivite_hardware_configuration.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-                                </p> -->
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                            </div>
-                            <div class="item-content item-input" style="display: none;">
-                                <div class="item-inner" style="display: none;">
-                                    <div class="item-input-wrap">
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Proposition">{{#if productivite_hardware_configuration}}{{ productivite_hardware_configuration.text }}{{/if}}</textarea>
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
                                     <div style="height: 65px;">
-<<<<<<< HEAD
                                         <a class="link popover-open add_photo" osiri_prop="competitivite" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-=======
-                                        <a class="link popover-open add_photo" osiri_prop="productivite_hardware_configuration" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                             <i class="f7-icon material-icons md-only">add_a_photo</i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-<<<<<<< HEAD
                             <div id="osiri_rex_photos_competitivite" class="actions-grid modal-in" style="display:{{#if competitivite}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if competitivite}}{{#if competitivite.image}}
                                     <div class="actions-button">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ competitivite.image }}" width="48"></div>
-=======
-                            <div id="osiri_rex_photos_productivite_hardware_configuration" class="actions-grid modal-in" style="display:{{#if productivite_hardware_configuration}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if productivite_hardware_configuration}}{{#if productivite_hardware_configuration.image}}
-                                    <div class="actions-button">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ productivite_hardware_configuration.image }}" width="48"></div>
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
                                     {{/if}}{{/if}}
@@ -284,22 +227,13 @@
                             </div>
                         </div>
                     </li>
-<<<<<<< HEAD
                     <li id="environnement">
-=======
-                    <li id="productivite_time_stage">
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                         <div class="item-content item-input">
                             <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Environnement</div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
-<<<<<<< HEAD
                                     <button class="button button-round {{#if environnement}}{{#js_if "this.environnement.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
                                     <button class="button button-round {{#if environnement}}{{#js_if "this.environnement.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-=======
-                                    <button class="button button-round {{#if productivite_time_stage}}{{#js_if "this.productivite_time_stage.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if productivite_time_stage}}{{#js_if "this.productivite_time_stage.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                 </p> -->
                             </div>
                         </div>
@@ -314,87 +248,27 @@
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none;">
                                     <div class="item-input-wrap">
-<<<<<<< HEAD
                                         <div class="item-subtitle">Proposition</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if environnement}}{{ environnement.proposition }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
                                         <div class="item-subtitle">Commentaire</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if environnement}}{{ environnement.commentaire }}{{/if}}</textarea>
-=======
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Proposition">{{#if productivite_time_stage}}{{ productivite_time_stage.text }}{{/if}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="item-media" style="padding: 0; height: 88px; display: none;">
-                                    <div style="height: 65px;">
-                                        <a class="link popover-open add_photo" osiri_prop="productivite_time_stage" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="osiri_rex_photos_productivite_time_stage" class="actions-grid modal-in" style="display:{{#if productivite_time_stage}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if productivite_time_stage}}{{#if productivite_time_stage.image}}
-                                    <div class="actions-button">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ productivite_time_stage.image }}" width="48"></div>
-                                        <div class="actions-button-text dynamic-popover">image</div>
-                                    </div>
-                                    {{/if}}{{/if}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="productivite_ease_use">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal;">Facilité d'utilisation</div>
-                            <div class="item-after">
-                                <!-- <p class="segmented segmented-raised segmented-round">
-                                    <button class="button button-round {{#if productivite_ease_use}}{{#js_if "this.productivite_ease_use.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if productivite_ease_use}}{{#js_if "this.productivite_ease_use.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-                                </p> -->
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                            </div>
-                            <div class="item-content item-input">
-                                <div class="item-inner" style="display: none;">
-                                    <div class="item-input-wrap">
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Proposition">{{#if productivite_ease_use}}{{ productivite_ease_use.text }}{{/if}}</textarea>
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
                                     <div style="height: 65px;">
-<<<<<<< HEAD
                                         <a class="link popover-open add_photo" osiri_prop="environnement" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-=======
-                                        <a class="link popover-open add_photo" osiri_prop="productivite_ease_use" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                             <i class="f7-icon material-icons md-only">add_a_photo</i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-<<<<<<< HEAD
                             <div id="osiri_rex_photos_environnement" class="actions-grid modal-in" style="display:{{#if environnement}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if environnement}}{{#if environnement.image}}
                                     <div class="actions-button">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ environnement.image }}" width="48"></div>
-=======
-                            <div id="osiri_rex_photos_productivite_ease_use" class="actions-grid modal-in" style="display:{{#if productivite_ease_use}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if productivite_ease_use}}{{#if productivite_ease_use.image}}
-                                    <div class="actions-button">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ productivite_ease_use.image }}" width="48"></div>
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
                                     {{/if}}{{/if}}
@@ -402,27 +276,13 @@
                             </div>
                         </div>
                     </li>
-<<<<<<< HEAD
                     <li id="autre">
-=======
-                </ul>
-            </div>
-            <div class="block-title">SPECIFIQUE</div>
-            <div class="list inset">
-                <ul>
-                    <li id="productivite_test">
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                         <div class="item-content item-input">
                             <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Autre</div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
-<<<<<<< HEAD
                                     <button class="button button-round {{#if autre}}{{#js_if "this.autre.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
                                     <button class="button button-round {{#if autre}}{{#js_if "this.autre.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-=======
-                                    <button class="button button-round {{#if productivite_test}}{{#js_if "this.productivite_test.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if productivite_test}}{{#js_if "this.productivite_test.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                 </p> -->
                             </div>
                         </div>
@@ -437,43 +297,27 @@
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none;">
                                     <div class="item-input-wrap">
-<<<<<<< HEAD
                                         <div class="item-subtitle">Proposition</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if autre}}{{ autre.proposition }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
                                         <div class="item-subtitle">Commentaire</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if autre}}{{ autre.commentaire }}{{/if}}</textarea>
-=======
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Proposition">{{#if productivite_test}}{{ productivite_test.text }}{{/if}}</textarea>
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
                                     <div style="height: 65px;">
-<<<<<<< HEAD
                                         <a class="link popover-open add_photo" osiri_prop="autre" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-=======
-                                        <a class="link popover-open add_photo" osiri_prop="productivite_test" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                             <i class="f7-icon material-icons md-only">add_a_photo</i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-<<<<<<< HEAD
                             <div id="osiri_rex_photos_autre" class="actions-grid modal-in" style="display:{{#if autre}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if autre}}{{#if autre.image}}
                                     <div class="actions-button">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ autre.image }}" width="48"></div>
-=======
-                            <div id="osiri_rex_photos_productivite_test" class="actions-grid modal-in" style="display:{{#if productivite_test}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if productivite_test}}{{#if productivite_test.image}}
-                                    <div class="actions-button">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ productivite_test.image }}" width="48"></div>
->>>>>>> e95cb8cdc40e5642fae71f11f11d386ec9b91652
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
                                     {{/if}}{{/if}}
