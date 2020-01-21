@@ -76,12 +76,14 @@
 						}
 					});
 				});
+
 				$("#admin_reset_all").on('click',function()
 				{
 					app.dialog.confirm("Réinitialiser toute l'application ?", "Admin", function()
 					{
 						ws_engine.reset().then(function()
 						{
+							app.methods.load_deconnect_mode();
 							app.popup.open('#popup_connection', true);
 						});
 					});

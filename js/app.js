@@ -59,7 +59,37 @@ var app = new Framework7(
 			self.$setState({
 				customProperties: globalCustomProperties,
 			});
+		},
+
+		load_deconnect_mode: function()
+		{
+			return new Promise(function(resolve, reject)
+			{
+				$('.views').find('a[href="#view-my-actions"]').css('display', 'none');
+				$('.content_deconnect_mode').css('display', 'block');
+
+				$('.content_connect_mode').css('display', 'none');
+				$('.synchro').css('display', 'none');
+				
+				return resolve();
+			});
+		},
+
+		load_connect_mode: function()
+		{
+			return new Promise(function(resolve, reject)
+			{
+				$('.views').find('a[href="#view-my-actions"]').attr('style', '');
+				$('.content_deconnect_mode').css('display', 'none');
+
+				$('.content_connect_mode').css('display', 'block');
+				$('.synchro').css('display', 'block');
+
+				return resolve();
+			});
 		}
+
+
     },
     // App routes
     routes: routes,
@@ -76,7 +106,8 @@ var app = new Framework7(
     {
         iosOverlaysWebView: true,
         androidOverlaysWebView: false,
-    },
+	},
+	
     on :
     {
         init: function ()
@@ -117,10 +148,13 @@ var app = new Framework7(
             .then(function()
             {
 				//ws_synchronizer.synchro_db_with_server();
-				return connected ? Promise.resolve() : app.popup.open('#popup_connection', true);
+				// return connected ? Promise.resolve() : app.popup.open('#popup_connection', true);
+				
+				return connected ? app.methods.load_connect_mode() : app.methods.load_deconnect_mode();
             })
             .catch(function(error)
             {
+				app.methods.load_deconnect_mode()
 				if (ws_defines.debug) console.log(error);
 				app.dialog.alert(error);
             });
@@ -145,6 +179,8 @@ function app_inited()
 		}, 2000);
 	});
 }
+
+
 
 function is_connected()
 {
@@ -219,96 +255,8 @@ $$('#ws_app_admin_acces').on('click', function ()
 
 $$('#popup_connection').on('popup:open', function (e, popup)
 {
-	$$('#connection_qrcode, #connection_btn').click(function (e)
-	{
-		var connect = function (data)
-		{
-			var qrcode = JSON.parse(data);
-			var startTime;
-			var elapsedTime;
-			
-			db_is_inited = false;
-
-			app.dialog.preloader("Connexion au serveur...");
-				
-			ws_user.connect(qrcode.url, qrcode.token, qrcode.data).then(function(result)
-			{
-				debugger;
-                ws_storage.set_value(OSIRI_STORAGE_KEY_FAMILLES, JSON.stringify(result.familles));
-				startTime = new Date().getTime();
-				elapsedTime = 0;
-				app.dialog.close();			
-
-				if (result == undefined) throw 'Erreur de connexion, données vides.';
-				if (typeof result == 'string') throw result.substring(0,100);
-				if (result.success == false) throw result.error;
-			
-				
-				app.dialog.preloader("Synchronisation en cours...");
-
-				ws_synchronizer.stop();
-				
-				return result.data != undefined ? ws_synchronizer.import_all_data(ws_engine.get_server_id(), result.data) : Promise.resolve();
-			})
-			.then(function()
-			{
-				elapsedTime = new Date().getTime() - startTime;
-				console.log("Temps de chargement : " + elapsedTime + " ms");
-				
-				db_is_inited = true;
-				
-				app.dialog.close();
-				app.popup.close('#popup_connection', true);
-				
-				self.load_home();
-				homeView.router.back();
-			})
-			.catch(function(error)
-			{
-				debugger;
-				
-				app.dialog.close();
-
-				if (error == " (undefined)") error = "Impossible de se connecter.";
-
-				if (ws_defines.debug) console.log(error);
-				
-				app.dialog.alert(error);
-			});
-		}
-		
-		if (connecting) debugger;
-		
-		if (!connecting)
-		{
-			connecting = true;
-					
-			if (app.device.desktop)
-			{
- 				var data = '{"site":"https:\/\/osiri2-dev.workspace-solution.com","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41OGUyNGFmNmU0ZDNiMC4zOTU1Nzk0OTwqIT0\/PiQyeSQxMCRPMWhRbzlEYzlNcTJCU1RhM0ZiaWt1ZW50d1ZqZ0w5RU5VUFhEN01EdklWYTNhcU4xclZScQ=="}';
-
-				connect(data);
-				connecting = false;
-			}
-			else cordova.plugins.barcodeScanner.scan(function(data) 
-			{
-			    if (!data.cancelled && data.format == "QR_CODE")
-		        {
-					console.log(data.text);
-					
-					connect(data.text);
-		        }
-				
-				connecting = false;
-			},
-			function (error) 
-			{
-				if (error) alert("Erreur de lecture du QRCode : " + error);
-				
-				connecting = false;
-			});
-		};
-	});
+	$('#connection_qrcode, #connection_btn').off('click', authentification);
+	$('#connection_qrcode, #connection_btn').on('click', authentification);
 
 	$$('#connection_login_form').submit(function (e)
 	{
@@ -341,6 +289,100 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 		app.popup.close('#popup_connection', true);
 	});
 });
+
+function authentification()
+{
+	var connect = function (data)
+	{
+		var qrcode = JSON.parse(data);
+		var startTime;
+		var elapsedTime;
+		
+		db_is_inited = false;
+
+		app.dialog.preloader("Connexion au serveur...");
+			
+		ws_user.connect(qrcode.url, qrcode.token, qrcode.data).then(function(result)
+		{
+			debugger;
+			ws_storage.set_value(OSIRI_STORAGE_KEY_FAMILLES, JSON.stringify(result.familles));
+			startTime = new Date().getTime();
+			elapsedTime = 0;
+			app.dialog.close();			
+
+			if (result == undefined) throw 'Erreur de connexion, données vides.';
+			if (typeof result == 'string') throw result.substring(0,100);
+			if (result.success == false) throw result.error;
+		
+			
+			app.dialog.preloader("Synchronisation en cours...");
+
+			ws_synchronizer.stop();
+			
+			return result.data != undefined ? ws_synchronizer.import_all_data(ws_engine.get_server_id(), result.data) : Promise.resolve();
+		})
+		.then(function()
+		{
+			elapsedTime = new Date().getTime() - startTime;
+			console.log("Temps de chargement : " + elapsedTime + " ms");
+			
+			db_is_inited = true;
+			
+			app.dialog.close();
+			app.popup.close('#popup_connection', true);
+
+			return app.methods.load_connect_mode().then(function()
+			{
+				self.load_home();
+				homeView.router.back();
+			});
+		})
+		.catch(function(error)
+		{
+			debugger;
+			
+			app.dialog.close();
+
+			if (error == " (undefined)") error = "Impossible de se connecter.";
+
+			if (ws_defines.debug) console.log(error);
+			
+			app.dialog.alert(error);
+		});
+	}
+	
+	if (connecting) debugger;
+	
+	if (!connecting)
+	{
+		connecting = true;
+				
+		if (app.device.desktop)
+		{
+			var data = '{"site":"https:\/\/osiri2-dev.workspace-solution.com","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41OGUyNGFmNmU0ZDNiMC4zOTU1Nzk0OTwqIT0\/PiQyeSQxMCRPMWhRbzlEYzlNcTJCU1RhM0ZiaWt1ZW50d1ZqZ0w5RU5VUFhEN01EdklWYTNhcU4xclZScQ=="}';
+
+			connect(data);
+			connecting = false;
+		}
+		else cordova.plugins.barcodeScanner.scan(function(data) 
+		{
+			if (!data.cancelled && data.format == "QR_CODE")
+			{
+				console.log(data.text);
+				
+				connect(data.text);
+			}
+			
+			connecting = false;
+		},
+		function (error) 
+		{
+			if (error) alert("Erreur de lecture du QRCode : " + error);
+			
+			connecting = false;
+		});
+	};
+}
 
 $$(document).on('page:init', function(e)
 {
