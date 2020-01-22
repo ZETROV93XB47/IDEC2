@@ -69,6 +69,7 @@ var app = new Framework7(
 				$('.content_deconnect_mode').css('display', 'block');
 
 				$('.content_connect_mode').css('display', 'none');
+				$('.content_every_one_mode').css('display', 'none');
 				$('.synchro').css('display', 'none');
 				
 				return resolve();
@@ -81,6 +82,7 @@ var app = new Framework7(
 			{
 				$('.views').find('a[href="#view-my-actions"]').attr('style', '');
 				$('.content_deconnect_mode').css('display', 'none');
+				$('.content_every_one_mode').css('display', 'none');
 
 				$('.content_connect_mode').css('display', 'block');
 				$('.synchro').css('display', 'block');
@@ -150,7 +152,8 @@ var app = new Framework7(
 				//ws_synchronizer.synchro_db_with_server();
 				// return connected ? Promise.resolve() : app.popup.open('#popup_connection', true);
 				
-				return connected ? app.methods.load_connect_mode() : app.methods.load_deconnect_mode();
+				// return connected ? app.methods.load_connect_mode() : app.methods.load_deconnect_mode();
+				return Promise.resolve();
             })
             .catch(function(error)
             {
@@ -179,8 +182,6 @@ function app_inited()
 		}, 2000);
 	});
 }
-
-
 
 function is_connected()
 {
@@ -217,11 +218,62 @@ function onResume()
 function load_home()
 {
 	var self = this;
+
     app_inited().then(function ()
     {
 
     });
 }
+
+function waitting_autorisation ()
+{
+	ws_server.wait_autorisation().then(function(result)
+	{
+		if (typeof result == 'string') throw result;
+		if (result.success)
+		{
+			if (result.autorisation)
+			{
+				app.dialog.close();
+				app.methods.load_deconnect_mode();
+			}
+			else
+			{
+				waitting_autorisation();
+				console.log('waitting ...');
+			}
+		}
+		else
+		{
+			app.dialog.alert('Connect');
+		}
+	});
+}
+
+$$('#send_mail').on('click', function ()
+{
+	var email = $("#verify_mail").val();
+
+	if (email) ws_server.verify_email(email).then(function(result)
+	{
+		if (typeof result == 'string') throw result;
+		if (result.success)
+		{
+			ws_tools.toast('vous allez recevoir un email avec un lien, merci de cliquer dessus', undefined, 5000);
+			app.dialog.preloader("Chargement en cours...");
+
+			setTimeout(function()
+			{
+				waitting_autorisation();
+			}, 3000);
+		}
+	})
+	.catch(function(error)
+	{
+		if (ws_defines.debug) console.log(error);
+	})
+	else app.dialog.alert('Veuillez vous saissir votre mail !'); 
+});
 
 $$('#ws_app_admin_acces').on('click', function ()
 {
