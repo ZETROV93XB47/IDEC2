@@ -250,6 +250,15 @@ function waitting_autorisation ()
 	});
 }
 
+$$('.aaa').on('click', function ()
+{
+	var href = $(this).attr('href');
+	$(".toolbar-inner").removeClass('tab-link-active');
+	$(".toolbar-inner").find("a[href='"+ href +"']").addClass('tab-link-active');
+	if(href == "#view-submit-idea") $(".tab-link-highlight").css('transform', 'translate3d(100%, 0px, 0px)');
+	if(href == "#view-innovations") $(".tab-link-highlight").css('transform', 'translate3d(300%, 0px, 0px)');
+});
+
 $$('#send_mail').on('click', function ()
 {
 	var email = $("#verify_mail").val();
