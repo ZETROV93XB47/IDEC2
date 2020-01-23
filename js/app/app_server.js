@@ -40,18 +40,18 @@ var app_server_class = ws_server_class.extend(
 		return this.api('depose_idee', params);
 	},
 	
-	verify_email: function(email)
+	send_identification_email: function(email)
 	{
 		var params = {email: email};
 		
-		return this.api('verify_email', params);
+		return this.api('send_identification_email', params);
 	},
 
-	wait_autorisation: function()
+	wait_for_identification: function()
 	{
 		var params = {};
 		
-		return this.api('wait_autorisation', params);
+		return this.api('wait_for_identification', params);
 	},
 
 	set_local_ids: function(data)

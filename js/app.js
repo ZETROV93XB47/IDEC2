@@ -227,7 +227,7 @@ function load_home()
 
 function waitting_autorisation ()
 {
-	ws_server.wait_autorisation().then(function(result)
+	ws_server.wait_for_identification().then(function(result)
 	{
 		if (typeof result == 'string') throw result;
 		if (result.success)
@@ -263,8 +263,9 @@ $$('#send_mail').on('click', function ()
 {
 	var email = $("#verify_mail").val();
 
-	if (email) ws_server.verify_email(email).then(function(result)
+	if (email) ws_server.send_identification_email(email).then(function(result)
 	{
+		debugger
 		if (typeof result == 'string') throw result;
 		if (result.success)
 		{
