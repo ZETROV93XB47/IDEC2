@@ -63,7 +63,7 @@
 						<div class="item-inner">
 							<div class="item-title item-label">Objectif</div>
 							<div class="item-input-wrap">
-								<input type="text" placeholder="Problématique" value="{{ objectifs }}">
+								<textarea class="resizable" placeholder="Problématique">{{ objectifs }}</textarea>
 							</div>
 						</div>
 					</li>
@@ -192,9 +192,10 @@
 							<div class="item-title item-label">Maturité de l'idée</div>
 							<div class="item-input-wrap input-dropdown-wrap">
 								<select placeholder="choisir ...">
-									<option value="developement">En développement</option>
-									<option value="idee">Seulement idée</option>
-									<option value="autre">Autre</option>
+									<option value="idee_a_developement">Idée à développer</option>
+									<option value="en_developement">En développement</option>
+									<option value="realise_test">Réalisé, en test</option>
+									<option value="realise_deploiemenet">Réalisé, en déploiement</option>
 								</select>
 							</div>
 						</div>
@@ -204,8 +205,8 @@
 							<div class="item-title item-label">Propriété intellectuelle</div>
 							<div class="item-input-wrap input-dropdown-wrap">
 								<select placeholder="choisir ...">
-									<option value="pas_breveter">Ne pas breveter</option>
-									<option value="autre">Autre</option>
+									<option value="a_breveter">à breveter</option>
+									<option value="ne_pas_breveter">Ne pas breveter</option>
 								</select>
 							</div>
 						</div>
@@ -269,7 +270,7 @@
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title"> {{ provenance_1_nom }} {{ provenance_1_prenom }}</div>
-									<div class="item-after"> {{ provenance_1_metier }} {{ provenance_1_filiale }}</div>
+									<div class="item-after"> {{ provenance_1_metier }} {{ provenance_1_entite }}</div>
 								</div>
 								<div class="item-subtitle">{{ provenance_1_email }}</div>
 							</div>
@@ -285,7 +286,7 @@
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title"> {{ provenance_2_nom }} {{ provenance_2_prenom }}</div>
-									<div class="item-after"> {{ provenance_2_metier }} {{ provenance_2_filiale }}</div>
+									<div class="item-after"> {{ provenance_2_metier }} {{ provenance_2_entite }}</div>
 								</div>
 								<div class="item-subtitle">{{ provenance_2_email }}</div>
 							</div>
@@ -300,7 +301,7 @@
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title"> {{ provenance_3_nom }} {{ provenance_3_prenom }}</div>
-									<div class="item-after"> {{ provenance_3_metier }} {{ provenance_3_filiale }}</div>
+									<div class="item-after"> {{ provenance_3_metier }} {{ provenance_3_entite }}</div>
 								</div>
 								<div class="item-subtitle">{{ provenance_3_email }}</div>
 							</div>
@@ -388,9 +389,9 @@
 							</li>
 							<li class="item-content item-input">
 								<div class="item-inner">
-									<div class="item-title item-label">UO/filiale</div>
+									<div class="item-title item-label">Entité</div>
 									<div class="item-input-wrap">
-										<select id="filiale" placeholder="choisir ...">
+										<select id="entite" placeholder="choisir ...">
 											<option value="undefined">...</option>
 											<option value="BYCN">BYCN</option>
 											<option value="BYUK">BYUK</option>
@@ -415,7 +416,7 @@
 											<option value="BCM / DISTRIMO">BCM / DISTRIMO</option>
 											<option value="BYES">BYES</option>
 										</select>
-										<!-- <input id="filiale" type="text" placeholder="Votre UO/filiale">
+										<!-- <input id="entite" type="text" placeholder="Votre UO/entite">
 										<span class="input-clear-button"></span> -->
 									</div>
 								</div>
@@ -558,10 +559,15 @@
 					self.set_value(id, $(this)[0].checked, OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE);
 				});
 
-				$("#osiri_upload_idea").click(function()
+				$("#osiri_upload_idea, #upload_idea").click(function()
 				{
 					self.upload();
 				});
+
+				// $("#upload_idea").click(function()
+				// {
+				// 	self.upload();
+				// });
 
 				$("#osiri_save_idea").click(function()
 				{
@@ -603,7 +609,7 @@
 								'<div class="item-inner">'+
 									'<div class="item-title-row">'+
 										'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
-										'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +' '+ self.data['provenance_'+nmbre+'_filiale'] +'</div>'+
+										'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +' '+ self.data['provenance_'+nmbre+'_entite'] +'</div>'+
 									'</div>'+
 									'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
 								'</div>'+
@@ -631,7 +637,7 @@
 					self.data['provenance_'+nmbre+'_nom'] = undefined;
 					self.data['provenance_'+nmbre+'_prenom'] = undefined;
 					self.data['provenance_'+nmbre+'_metier'] = undefined;
-					self.data['provenance_'+nmbre+'_filiale'] = undefined;
+					self.data['provenance_'+nmbre+'_entite'] = undefined;
 					self.data['provenance_'+nmbre+'_email'] = undefined;
 
 					var inputs = $('.my-sheet input');
@@ -663,7 +669,7 @@
 							'<div class="item-inner">'+
 								'<div class="item-title-row">'+
 									'<div class="item-title">'+ self.data['provenance_'+nmbre+'_nom'] +' '+ self.data['provenance_'+nmbre+'_prenom'] +'</div>'+
-									'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +'</div>'+
+									'<div class="item-after">'+ self.data['provenance_'+nmbre+'_metier'] +' '+ self.data['provenance_'+nmbre+'_entite'] +'</div>'+
 								'</div>'+
 								'<div class="item-subtitle">'+ self.data['provenance_'+nmbre+'_email'] +'</div>'+
 							'</div>'+
@@ -683,7 +689,7 @@
 					self.data[id+'_prenom'] = undefined;
 					self.data[id+'_email'] = undefined;
 					self.data[id+'_metier'] = undefined;
-					self.data[id+'_filiale'] = undefined;
+					self.data[id+'_entite'] = undefined;
 					
 					return self.save();
 				});
@@ -736,9 +742,11 @@
 					false
 				];
 
-				return ws_database.nouvelle_idees.add_with_server(ws_engine.get_server_id(), properties,values).then(function()
+				return ws_database.nouvelle_idees.add_with_server(ws_engine.get_server_id(), properties,values).then(function(result)
 				{
-					ws_tools.toast("l'idée est bien enregister !")
+					ws_tools.toast("l'idée est bien enregister !");
+					self.id = result;
+					return result;
 				});
 			},
 
@@ -786,7 +794,14 @@
 					if (typeof result == 'string') throw result;
 					app.dialog.close();
 					app.dialog.alert("La nouvelle idée est bien envoyé à OSIRI");
-					return ws_database.nouvelle_idees.set_with_id(self.id, [OSIRI_NOUVELLE_IDEE_PROPERTY_SENT], [true]);
+					if (self.id) self.nouvelle_idee_update(self.id, result[OSIRI_NOUVELLE_IDEE_PROPERTY_SERVER_ID]);
+					else
+					{
+						self.add().then(function(result)
+						{
+							self.nouvelle_idee_update(result, result[OSIRI_NOUVELLE_IDEE_PROPERTY_SERVER_ID]);
+						});
+					}
 					// ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, JSON.stringify({}));
 				})
 				.catch(function(error)
@@ -795,6 +810,11 @@
 					app.dialog.alert("Error : " + error);
 				});
 			},
+
+			nouvelle_idee_update: function(id, server_id)
+			{
+				return ws_database.nouvelle_idees.set_with_id(id, [OSIRI_NOUVELLE_IDEE_PROPERTY_SENT, OSIRI_NOUVELLE_IDEE_PROPERTY_SERVER_ID], [true, server_id]);
+			}
 
 		}));
 	</script>

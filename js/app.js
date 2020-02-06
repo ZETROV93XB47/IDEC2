@@ -47,6 +47,7 @@ var app = new Framework7(
         {
         	app.dialog.alert('Hello World!');
 		},
+
 		setBarsStyle: function (barsStyle)
 		{
 			var self = this;
@@ -65,7 +66,9 @@ var app = new Framework7(
 		{
 			return new Promise(function(resolve, reject)
 			{
-				$('.views').find('a[href="#view-my-actions"]').css('display', 'none');
+				$('.toolbar').css('display', 'block');
+				$('.views').find('a[href="#view-my-actions"]').attr('href', '#');
+				$('.views').find('a[href="#view-home"] span').text('Accueil');
 				$('.content_deconnect_mode').css('display', 'block');
 
 				$('.content_connect_mode').css('display', 'none');
@@ -80,12 +83,29 @@ var app = new Framework7(
 		{
 			return new Promise(function(resolve, reject)
 			{
-				$('.views').find('a[href="#view-my-actions"]').attr('style', '');
+				$('.toolbar').css('display', 'block');
+				$('.views').find('a[href="#view-my-actions"]').attr('href', '#view-my-actions');
+				$('.views').find('a[href="#view-home"] span').text("Tableau de bord");
 				$('.content_deconnect_mode').css('display', 'none');
 				$('.content_every_one_mode').css('display', 'none');
 
 				$('.content_connect_mode').css('display', 'block');
 				$('.synchro').css('display', 'block');
+
+				return resolve();
+			});
+		},
+
+		load_every_one_mode: function()
+		{
+			return new Promise(function(resolve, reject)
+			{
+				$('.synchro').css('display', 'none');
+				$('.toolbar').css('display', 'none');
+
+				$('.content_every_one_mode').css('display', 'block');
+				$('.content_deconnect_mode').css('display', 'none');
+				$('.content_connect_mode').css('display', 'none');
 
 				return resolve();
 			});
@@ -153,11 +173,12 @@ var app = new Framework7(
 				// return connected ? Promise.resolve() : app.popup.open('#popup_connection', true);
 				
 				// return connected ? app.methods.load_connect_mode() : app.methods.load_deconnect_mode();
-				return Promise.resolve();
+				
+				return  connected ? app.methods.load_connect_mode() : ( (ws_storage.get_value(OSIRI_STORAGE_KEY_MODE_DECO) == "true") ? app.methods.load_deconnect_mode() : app.methods.load_every_one_mode());
             })
             .catch(function(error)
             {
-				app.methods.load_deconnect_mode()
+				app.methods.load_every_one_mode()
 				if (ws_defines.debug) console.log(error);
 				app.dialog.alert(error);
             });
@@ -236,6 +257,8 @@ function waitting_autorisation ()
 			{
 				app.dialog.close();
 				app.methods.load_deconnect_mode();
+				
+				ws_storage.set_value(OSIRI_STORAGE_KEY_MODE_DECO, true);
 			}
 			else
 			{
@@ -245,7 +268,16 @@ function waitting_autorisation ()
 		}
 		else
 		{
-			app.dialog.alert('Connect');
+			waitting_autorisation();
+		}
+	})
+	.catch(function()
+	{
+		app.dialog.close();
+		if (ws_defines.debug)
+		{
+			ws_tools.toast('erreur');
+			console.log(error);
 		}
 	});
 }
@@ -280,7 +312,13 @@ $$('#send_mail').on('click', function ()
 	})
 	.catch(function(error)
 	{
-		if (ws_defines.debug) console.log(error);
+		
+		app.dialog.close();
+		if (ws_defines.debug)
+		{
+			ws_tools.toast('erreur');
+			console.log(error);
+		}
 	})
 	else app.dialog.alert('Veuillez vous saissir votre mail !'); 
 });
@@ -475,7 +513,7 @@ $$(document).on('page:init', function(e)
 				{
 					ws_user.logout().then(function()
 					{
-						app.methods.load_deconnect_mode()
+						app.methods.load_every_one_mode()
 						app.panel.close();
 						app.popup.open('#popup_connection', true)
 					});
