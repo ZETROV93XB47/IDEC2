@@ -221,8 +221,6 @@ var submitIdeaView = app.views.create('#view-submit-idea', { url: '/submit_idea_
 var myActionsView = app.views.create('#view-my-actions', { url: '/my_actions_tab/' });
 var innovationsView = app.views.create('#view-innovations', { url: '/innovations_tab/' });
 
-var connecting = false;
-
 document.addEventListener("deviceready", onDeviceReady, false);
 document.addEventListener("resume", onResume, false);
 
@@ -392,6 +390,7 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 
 function authentification()
 {
+	var connecting = false;
 	var connect = function (data)
 	{
 		var qrcode = JSON.parse(data);
@@ -450,17 +449,22 @@ function authentification()
 			app.dialog.alert(error);
 		});
 	}
+
+	var qrcode =  ws_storage.get_value('connection_qrcode');
+	if (qrcode) return connect(qrcode);
 	
 	if (connecting) debugger;
 	
 	if (!connecting)
 	{
+		console.log('connecting : ' + connecting);
 		connecting = true;
-				
+
 		if (app.device.desktop)
 		{
 			var data = '{"site":"https:\/\/osiri2-dev.workspace-solution.com","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41OGUyNGFmNmU0ZDNiMC4zOTU1Nzk0OTwqIT0\/PiQyeSQxMCRPMWhRbzlEYzlNcTJCU1RhM0ZiaWt1ZW50d1ZqZ0w5RU5VUFhEN01EdklWYTNhcU4xclZScQ=="}';
 
+			ws_storage.set_value('connection_qrcode', data);
 			connect(data);
 			connecting = false;
 		}
@@ -468,6 +472,7 @@ function authentification()
 		{
 			if (!data.cancelled && data.format == "QR_CODE")
 			{
+				ws_storage.set_value('connection_qrcode', data.text);
 				console.log(data.text);
 				
 				connect(data.text);

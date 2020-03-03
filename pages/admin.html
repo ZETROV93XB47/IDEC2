@@ -8,13 +8,16 @@
 			<span class="ios-only">Back</span>
 			</a>
 		</div>
-		<div class="title">OP2A Mobile - Admin</div>
+		<div class="title">OSIRI Mobile - Admin</div>
 		</div>
 	</div>
 	<div class="page-content">
 		<div class="block">
 			<p class="row"id="ws_app_restart">
 				<button class="col button button-fill button-big" id="admin_reset_all">Réinitialiser</button>
+			</p>
+			<p class="row"id="ws_app_recharge">
+				<button class="col button button-fill button-big" id="admin_recharge_all">Recharger</button>
 			</p>
 			<p class="row" id="ws_app_informations">
 				<a href="/device_infos/" class="col button button-fill button-big">Informations appareil</a>
@@ -83,6 +86,20 @@
 					{
 						ws_engine.reset().then(function()
 						{
+							app.methods.load_every_one_mode();
+							app.popup.open('#popup_connection', true);
+						});
+					});
+				});
+
+				$("#admin_recharge_all").on('click',function()
+				{
+					app.dialog.confirm("Recharger toute l'application ?", "Admin", function()
+					{
+						var qrcode = ws_storage.get_value('connection_qrcode');
+						ws_engine.reset().then(function()
+						{
+							ws_storage.set_value('connection_qrcode', qrcode);
 							app.methods.load_every_one_mode();
 							app.popup.open('#popup_connection', true);
 						});
