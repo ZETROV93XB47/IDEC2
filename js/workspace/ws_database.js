@@ -523,7 +523,6 @@ var ws_datatable = Class.extend(
 		
 		return self.find(condition, binding).then(function(result)
 		{
-			debugger
 			var ids = ws_engine.get_ids(result);
 			
 			return self.db.query('UPDATE ' + self.table + ' SET ' + properties.join(' = ?, ') + ' = ?' + (condition != undefined ? ' WHERE ' + condition : ''), values).then(function(result)

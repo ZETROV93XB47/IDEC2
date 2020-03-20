@@ -219,6 +219,7 @@ const OSIRI_REX_PROPERTY_PHOTOS = 'photos';
 const OSIRI_REX_PROPERTY_COMMENT = 'comment';
 const OSIRI_REX_PROPERTY_ETAT = 'etat';
 const OSIRI_REX_PROPERTY_DATA = 'data';
+const OSIRI_REX_PROPERTY_MATERIEL_RECEIVED = 'material_received';
 
 const OSIRI_REX_ETAT_FAIT = 'fait';
 const OSIRI_REX_ETAT_NON_FAIT = 'nonfait';

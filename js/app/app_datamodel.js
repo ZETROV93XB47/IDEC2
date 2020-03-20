@@ -107,7 +107,7 @@ var app_datamodel_class = ws_datamodel_class.extend(
 					return {
 						db: ws_database.rexs,
 						table: OSIRI_DATABASE_TABLE_REXS,
-						synch: true, 
+						synch: false, 
 						synch_key: OSIRI_SYNCHRO_DATA_KEY_REXS,
 						synch_mode: WS_SYNC_TABLE_MODE_RECORD
 					};
@@ -273,6 +273,7 @@ var app_datamodel_class = ws_datamodel_class.extend(
 						{id: OSIRI_REX_PROPERTY_COMMENT, type: WS_OBJECT_PROPERTY_TYPE_STRING},
 						{id: OSIRI_REX_PROPERTY_ETAT, type: WS_OBJECT_PROPERTY_TYPE_STRING},
 						{id: OSIRI_REX_PROPERTY_DATA, type: WS_OBJECT_PROPERTY_TYPE_JSON},
+						{id: OSIRI_REX_PROPERTY_MATERIEL_RECEIVED, type: WS_OBJECT_PROPERTY_TYPE_BOOLEAN},
 					];
 
 				case OSIRI_DATAMODEL_ENTITY_NOUVELLE_IDEES :

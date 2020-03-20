@@ -110,8 +110,6 @@ var app = new Framework7(
 				return resolve();
 			});
 		}
-
-
     },
     // App routes
     routes: routes,

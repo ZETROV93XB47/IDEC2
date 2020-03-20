@@ -16,7 +16,7 @@
     </style>
     <div class="page-content">
         
-        <script id="osiri_rex_template" type="text/template7">
+        <script id="osiri_rex_form_template" type="text/template7">
             <div class="popover popover-action-photo">
                 <div class="popover-inner">
                     <div class="list">
@@ -325,7 +325,65 @@
                             </div>
                         </div>
                     </li>
+                    <li id="globale">
+                        <div class="item-content item-input">
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Globale</div>
+                            <div class="item-after">
+                                <!-- <p class="segmented segmented-raised segmented-round">
+                                    <button class="button button-round {{#if globale}}{{#js_if "this.globale.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+                                    <button class="button button-round {{#if globale}}{{#js_if "this.globale.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+                                </p> -->
+                            </div>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
+                                <a class="star item-link"><i class="col fal fa-star"></i></a>
+                                <a class="star item-link"><i class="col fal fa-star"></i></a>
+                                <a class="star item-link"><i class="col fal fa-star"></i></a>
+                                <a class="star item-link"><i class="col fal fa-star"></i></a>
+                                <a class="star item-link"><i class="col fal fa-star"></i></a>
+                            </div>
+                            <div class="item-content item-input" style="margin-bottom: 10px;">
+                                <div class="item-inner" style="display: none; padding-top: 24px;">
+                                    <div class="item-input-wrap" style="margin-bottom: 10px;">
+                                        <div class="item-subtitle">Commentaire</div>
+                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if globale}}{{ globale.commentaire }}{{/if}}</textarea>
+                                    </div>
+                                    <div class="item-input-wrap">
+                                        <div class="item-subtitle">Proposition</div>
+                                        <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if globale}}{{ globale.proposition }}{{/if}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="item-media" style="padding: 0; height: 180px; display: none;">
+                                    <div style="height: 65px;">
+                                        <a class="link popover-open add_photo" osiri_prop="globale" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="osiri_rex_photos_globale" class="actions-grid modal-in" style="display:{{#if globale}}block{{else}}none{{/if}};">
+                                <div class="actions-group">
+                                    {{#if globale}}{{#if globale.image}}
+                                    <div class="actions-button">
+                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ globale.image }}" width="48"></div>
+                                        <div class="actions-button-text dynamic-popover">image</div>
+                                    </div>
+                                    {{/if}}{{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
+            </div>
+        </script>
+
+        <script id="osiri_rex_preform_template" type="text/template7">
+            <div class="block">
+                <div class="row">
+                    <a class="col button" id="recived" href="#">Matériel reçu</a>
+                    <a class="col button" id="not_recived" href="#">Matériel non reçu</a>
+                </div>
             </div>
         </script>
         
@@ -353,6 +411,7 @@
 
                     return ws_database.rexs.get(condition, binding).then(function(result)
                     {
+                        debugger
                         self.is_new = (result == null);
                         if (!self.is_new) 
                         {
@@ -362,13 +421,31 @@
                         }
                         else return self.add_rex().then(function(id)
                         {
-                            self.rex_id = id;
+                            var condition = OSIRI_REX_PROPERTY_ID + " = ?";
+                            var binding = [id];
+
+                            return ws_database.rexs.get(condition, binding).then(function(result)
+                            {
+                                self.rex_id = result.id;
+                                self.rexs = result;
+                            });
                         });
+                    })
+                    .catch(function(error)
+                    {
+                        if (ws_defines.debug) console.log(error);
+                        app.dialog.alert(error);
                     });
                 }
+
                 init_context().then(function()
                 {
                     return self.load_page();
+                })
+                .catch(function(error)
+                {
+                    if (ws_defines.debug) console.log(error);
+                    app.dialog.alert(error);
                 });
             },
 
@@ -383,30 +460,72 @@
                 var prop;
 
                 self.template_data = self.data;
+                if (self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] == "false")
+                return self.apply_template(page, "osiri_rex_preform_template", "osiri_rex_content", self.template_data).then(function()
+                {
+                    $("#recived").click(function()
+                    {
+                        ws_database.rexs.set_with_id(self.rex_id, [OSIRI_REX_PROPERTY_MATERIEL_RECEIVED], [true]).then(function()
+                        {
+                            self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] = true;
+                            return self.load_page();
+                        });
+                    });
 
-                return self.apply_template(page, "osiri_rex_template", "osiri_rex_content", self.template_data).then(function()
+                    $("#not_recived").click(function()
+                    {
+                        ws_tools.toast("Email envoyé au pilote ...")
+                        // return ws_server.send_to_pilote();
+                    });
+                });
+                
+                return self.apply_template(page, "osiri_rex_form_template", "osiri_rex_content", self.template_data).then(function()
 				{
                     var properties = Object.keys(self.data);
                     var color = 'yellow';
-                    var icon = 'col fas fa-star';
+                    var half_icon = 'col fas fa-star-half-alt';
 
                     for (var i = 0; i<properties.length; i++)
                     {
                         var stars_nbr = self.data[properties[i]].action;
+                        var icon = 'col fas fa-star';
+                        debugger
                         if (stars_nbr)
                         {
                             var stars = $('#'+ properties[i]).find('.stars');
                             stars.next().find('.item-inner').css('display', 'block');
                             stars.next().find('.item-media').css('display', 'block');
-                            
-                            var stars_elements = $('#'+ properties[i]).find('.stars').children();
-                            
-                            for ( var j = 0 ; j<stars_nbr; j++)
+                            if (stars_nbr == Math.trunc(stars_nbr))
                             {
-                                $(stars_elements[j]).find('i').removeClass();
-                                $(stars_elements[j]).find('i').addClass(icon);
-                                $(stars_elements[j]).css('color', color);
+                                var stars_elements = $('#'+ properties[i]).find('.stars').children();
+                                
+                                for ( var j = 0 ; j<stars_nbr; j++)
+                                {
+                                    $(stars_elements[j]).find('i').removeClass();
+                                    $(stars_elements[j]).find('i').addClass(icon);
+                                    $(stars_elements[j]).css('color', color);
+                                }
                             }
+                            else
+                            {
+                                debugger
+                                stars_nbr = Math.ceil(stars_nbr);
+
+                                var stars_elements = $('#'+ properties[i]).find('.stars').children();
+                                
+                                for ( var j = 0 ; j<stars_nbr; j++)
+                                {
+                                    if (j == stars_nbr-1)
+                                    {
+                                        icon = half_icon;
+                                    }
+
+                                    $(stars_elements[j]).find('i').removeClass();
+                                    $(stars_elements[j]).find('i').addClass(icon);
+                                    $(stars_elements[j]).css('color', color);
+                                }
+                            }
+                            
                         }
                     }
                     
@@ -465,27 +584,68 @@
                         stars.next().find('.item-media').css('display', 'block');
 
                         var id = stars.parent().parent().attr("id");
+                        var index = $(this).index();
                         var stars_elemnts = stars.children();
                         var color = 'yellow';
+                        var origin_icon = 'col fal fa-star';
                         var icon = 'col fas fa-star';
+                        var half_icon = 'col fas fa-star-half-alt';
 
-                        for (var i = 0; i<stars_elemnts.length; i++)
+                        if (self.data[id] == undefined) self.data[id] = {};
+
+                        if (Math.ceil(self.data[id][OSIRI_NOUVELLE_IDEE_OPTION_KEY_ACTION]) == index+1)
                         {
-                            $(stars_elemnts[i]).find('i').removeClass();
-                            $(stars_elemnts[i]).find('i').addClass(icon);
-                            $(stars_elemnts[i]).css('color', color);
-
-                            if( i == $(this).index())
+                            if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt' && index == 0)
                             {
-                                color = '';
-                                icon = 'col fal fa-star';
-                                var value = i+1;
+                                debugger
+                                var value = self.update_stars(index, stars_elemnts, origin_icon, "", 0);
+                            }
+                            else if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt')
+                            {
+                                debugger
+                                var value = self.update_stars(index, stars_elemnts, icon, color, 1);
+                            }
+                            else
+                            {
+                                var value = self.update_stars(index, stars_elemnts, half_icon, color, 0.5);
+                            }
+                            
+                        }
+                        else
+                        {
+                            for (var i = 0; i<stars_elemnts.length; i++)
+                            {
+                                $(stars_elemnts[i]).find('i').removeClass();
+                                $(stars_elemnts[i]).find('i').addClass(icon);
+                                $(stars_elemnts[i]).css('color', color);
+
+                                if( i == index)
+                                {
+                                    color = '';
+                                    icon = origin_icon;
+                                    var value = i+1;
+                                }
                             }
                         }
                         
 						self.set_value(id, value, OSIRI_NOUVELLE_IDEE_OPTION_KEY_ACTION);
                     });
                 });
+            },
+
+            update_stars: function(index, stars_elemnts, icon, color, factor)
+            {
+                for (var i = 0; i<stars_elemnts.length; i++)
+                {
+                    if( i == index)
+                    {
+                        $(stars_elemnts[i]).find('i').removeClass();
+                        $(stars_elemnts[i]).find('i').addClass(icon);
+                        $(stars_elemnts[i]).css('color', color);
+                        var value = i + factor;
+                    }
+                }
+                return value;
             },
             
             add_rex: function()
@@ -502,7 +662,8 @@
                     OSIRI_REX_PROPERTY_PHOTOS,
                     OSIRI_REX_PROPERTY_COMMENT,
                     OSIRI_REX_PROPERTY_ETAT,
-                    OSIRI_REX_PROPERTY_DATA
+                    OSIRI_REX_PROPERTY_DATA,
+                    OSIRI_REX_PROPERTY_MATERIEL_RECEIVED
                 ];
                 
                 var rex_values = [
@@ -515,7 +676,8 @@
                     "",
                     "",
                     "",
-                    JSON.stringify(self.data)
+                    JSON.stringify(self.data),
+                    false
                 ];
 
                 return ws_database.rexs.add_with_server(ws_engine.get_server_id(), rex_properties, rex_values);
