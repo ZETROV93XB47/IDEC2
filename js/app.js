@@ -11,7 +11,7 @@ var app = new Framework7(
     id: 'com.addona.osiri_rex', // App bundle ID
     name: 'OSIRI REX', // App name
     theme: 'auto', // Automatic theme detection
-
+	
     // App root data
     data: function ()
     {
@@ -46,6 +46,11 @@ var app = new Framework7(
         helloWorld: function ()
         {
         	app.dialog.alert('Hello World!');
+		},
+
+		authentification_form_out: function()
+		{
+			authentification();
 		},
 
 		setBarsStyle: function (barsStyle)
@@ -235,10 +240,19 @@ function onResume()
 function load_home()
 {
 	var self = this;
-
+	var data = this;
+	
     app_inited().then(function ()
     {
+		var rex_action_template = $$('#osiri_rex_action_template').html();
+		osiri_rexs.get_template_data().then(function(rex_actions_data)
+		{
+			data.rex_actions = rex_actions_data;
+			$('#osiri_rex_todo').text(rex_actions_data.length + " REX à réaliser");
 
+			if (typeof rex_action_template == 'string') var rex_actioncompiled_template = Template7.compile(rex_action_template);
+			$$('#osiri_rex_actions_content').html(rex_actioncompiled_template(data));
+		});
     });
 }
 

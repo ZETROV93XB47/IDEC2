@@ -54,6 +54,20 @@ var app_server_class = ws_server_class.extend(
 		return this.api('wait_for_identification', params);
 	},
 
+	send_to_pilote : function()
+	{
+		var params = {};
+		
+		return this.api('notify_rex_materiel_non_recu', params);
+	},
+	
+	send_rex : function()
+	{
+		var params = {};
+		
+		return this.api('send_rex', params);
+	},
+
 	set_local_ids: function(data)
 	{
 		debugger

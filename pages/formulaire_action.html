@@ -9,10 +9,15 @@
                 </a>
             </div>
             <div class="title">OSIRI - Mes actions</div>
+			<div class="right">
+				<a id="upload_action" href="#" class="link icon-only"><i class="fa fa-paper-plane" style="font-size:20px;"></i></a>
+			</div>
         </div>
     </div>
     <style>
-    
+        li{
+            margin-top: 20px;
+        }
     </style>
     <div class="page-content">
         
@@ -27,13 +32,43 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="block-title block-title-medium">ERGONOMIE</div>
-            <div class="block-title">GÉNÉRAL</div> -->
+            <div class="card">
+				<div class="card-content card-content-padding" id="op2a_materiel_infos">
+					<div class="list">
+						<ul>
+						    <li>
+						        <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title">Pilote : Pierre</div>
+                                        <div class="item-after">
+                                            <label osiri_type="Pilote" class="checkbox" style="padding-top: 4px;">
+                                                <input class="name_change" type="checkbox"><i class="icon-checkbox"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+						        </div>
+						    </li>
+						    <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                    <div class="item-title">Contact chantier : Jéremy</div>
+                                        <div class="item-after">
+                                            <label osiri_type="Contact chantier" class="checkbox" style="padding-top: 4px;">
+                                                <input class="name_change" type="checkbox"><i class="icon-checkbox"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+						</ul>
+					</div>
+				</div>
+			</div>
             <div class="list inset">
                 <ul>
                     <li id="ergonomie">
                         <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Ergonomie</div>
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Ergonomie <span style="color:red;">*</span></div></div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
                                     <button class="button button-round {{#if ergonomie}}{{#js_if "this.ergonomie.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
@@ -51,13 +86,13 @@
                             </div>
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 10px;">
-                                        <div class="item-subtitle">Commentaire</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if ergonomie}}{{ ergonomie.commentaire }}{{/if}}</textarea>
+                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
+                                        <div class="item-subtitle"><div>Commentaire <span style="color:red;">*</span></div></div>
+                                        <textarea class="resizable" osiri_validation="not_empty minlength 15" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if ergonomie}}{{ ergonomie.commentaire }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if ergonomie}}{{ ergonomie.proposition }}{{/if}}</textarea>
+                                        <div class="item-subtitle"><div>Proposition <span style="color:red;">*</span></div></div>
+                                        <textarea class="resizable" osiri_validation="not_empty" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if ergonomie}}{{ ergonomie.proposition }}{{/if}}</textarea>
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
@@ -82,7 +117,7 @@
                     </li>
                     <li id="securite">
                         <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Sécurité</div>
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Sécurité <span style="color:red;">*</span></div></div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
                                     <button class="button button-round {{#if securite}}{{#js_if "this.securite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
@@ -100,13 +135,13 @@
                             </div>
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 10px;">
-                                        <div class="item-subtitle">Commentaire</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if securite}}{{ securite.commentaire }}{{/if}}</textarea>
+                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
+                                        <div class="item-subtitle"><div>Commentaire <span style="color:red;">*</span></div></div>
+                                        <textarea class="resizable" osiri_validation="not_empty minlength 15" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if securite}}{{ securite.commentaire }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if securite}}{{ securite.proposition }}{{/if}}</textarea>
+                                        <div class="item-subtitle"><div>Proposition <span style="color:red;">*</span></div></div>
+                                        <textarea class="resizable" osiri_validation="not_empty" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if securite}}{{ securite.proposition }}{{/if}}</textarea>
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
@@ -149,7 +184,7 @@
                             </div>
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 10px;">
+                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
                                         <div class="item-subtitle">Commentaire</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if productivite}}{{ productivite.commentaire }}{{/if}}</textarea>
                                     </div>
@@ -198,7 +233,7 @@
                             </div>
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 10px;">
+                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
                                         <div class="item-subtitle">Commentaire</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if competitivite}}{{ competitivite.commentaire }}{{/if}}</textarea>
                                     </div>
@@ -247,7 +282,7 @@
                             </div>
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 10px;">
+                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
                                         <div class="item-subtitle">Commentaire</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if environnement}}{{ environnement.commentaire }}{{/if}}</textarea>
                                     </div>
@@ -294,9 +329,9 @@
                                 <a class="star item-link"><i class="col fal fa-star"></i></a>
                                 <a class="star item-link"><i class="col fal fa-star"></i></a>
                             </div>
-                            <div class="item-content item-input" style="margin-bottom: 10px;">
+                            <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 10px;">
+                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
                                         <div class="item-subtitle">Commentaire</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if autre}}{{ autre.commentaire }}{{/if}}</textarea>
                                     </div>
@@ -343,9 +378,9 @@
                                 <a class="star item-link"><i class="col fal fa-star"></i></a>
                                 <a class="star item-link"><i class="col fal fa-star"></i></a>
                             </div>
-                            <div class="item-content item-input" style="margin-bottom: 10px;">
+                            <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 10px;">
+                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
                                         <div class="item-subtitle">Commentaire</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if globale}}{{ globale.commentaire }}{{/if}}</textarea>
                                     </div>
@@ -370,6 +405,23 @@
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
                                     {{/if}}{{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li id="complement_infos">
+                        <div class="item-content item-input">
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Complément d'information</div>
+                            <div class="item-after">
+                                
+                            </div>
+                        </div>
+                        <div class="osiri_action_option">
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
+                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -474,8 +526,8 @@
 
                     $("#not_recived").click(function()
                     {
-                        ws_tools.toast("Email envoyé au pilote ...")
-                        // return ws_server.send_to_pilote();
+                        ws_tools.toast("Email envoyé au pilote ...");
+                        return ws_server.send_to_pilote();
                     });
                 });
                 
@@ -487,14 +539,16 @@
 
                     for (var i = 0; i<properties.length; i++)
                     {
+                        var stars = $('#'+ properties[i]).find('.stars');
                         var stars_nbr = self.data[properties[i]].action;
                         var icon = 'col fas fa-star';
                         debugger
                         if (stars_nbr)
                         {
-                            var stars = $('#'+ properties[i]).find('.stars');
                             stars.next().find('.item-inner').css('display', 'block');
                             stars.next().find('.item-media').css('display', 'block');
+                            stars.next().next().css('display', 'block');
+
                             if (stars_nbr == Math.trunc(stars_nbr))
                             {
                                 var stars_elements = $('#'+ properties[i]).find('.stars').children();
@@ -526,6 +580,10 @@
                                 }
                             }
                             
+                        }
+                        else
+                        {
+                            stars.next().next().css('display', 'none');
                         }
                     }
                     
@@ -582,6 +640,7 @@
                         var stars = $(this).parent();
                         stars.next().find('.item-inner').css('display', 'block');
                         stars.next().find('.item-media').css('display', 'block');
+                        stars.next().next().css('display', 'block');
 
                         var id = stars.parent().parent().attr("id");
                         var index = $(this).index();
@@ -599,6 +658,10 @@
                             {
                                 debugger
                                 var value = self.update_stars(index, stars_elemnts, origin_icon, "", 0);
+                                
+                                stars.next().find('.item-inner').css('display', 'none');
+                                stars.next().find('.item-media').css('display', 'none');
+                                stars.next().next().css('display', 'none');
                             }
                             else if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt')
                             {
@@ -630,8 +693,169 @@
                         
 						self.set_value(id, value, OSIRI_NOUVELLE_IDEE_OPTION_KEY_ACTION);
                     });
+
+                    $('textarea').on('input', function()
+                    {
+                        self.validation_required(this);
+                    });
+
+                    $('textarea').focus(function()
+                    {
+                        self.validation_required(this);
+                    });
+
+                    $("#upload_action").click(function()
+                    {
+                        self.upload();
+                    });
+
+                    $('input.name_change').click(function()
+                    {
+                        var self = this;
+
+                        if ($(this)[0].checked) 
+                        {
+                            var type = $(self).parent().attr('osiri_type');
+                            var name = $(self).parent().parent().parent().find('.item-title').text().split(':')[1];
+                            app.dialog.create({
+                                title: app.name,
+                                text: 'Veuillez confirmer le nom du '+ type,
+                                cssClass: 'custom-dialog',
+                                closeByBackdropClick: 'true',
+                                content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="'+name+'"></div>',
+                                buttons: [
+                                    {
+                                        text: 'OK',
+                                        onClick: function () {
+                                            
+                                            var name = $('.dialog-input-field.input input').val();
+                                            var text = $(self).parent().parent().parent().find('.item-title').text(type+' : '+name);
+                                        },
+                                    },
+                                ],
+                            }).open();
+
+                            // app.dialog.confirm('Est ce que c\'est la bonne personne ?', function ()
+                            // {
+                            //     app.dialog.alert('Super !');
+                            // },
+                            // function()
+                            // {
+                            //     app.dialog.prompt('Veuillez saisir son nom et prènom', function (name)
+                            //     {
+                            //         var type = $(self).parent().attr('osiri_type');
+                            //         var text = $(self).parent().parent().parent().find('.item-title').text(type+' : '+name);
+                            //     });
+                            // });
+                        }
+                    });
+
+                    
                 });
             },
+
+            validation_required: function(self)
+            {
+                var conditions = $(self).attr('osiri_validation');
+                var text = $(self).val();
+                if (conditions) 
+                {
+                    var conditions_array = conditions.split(' ');
+                    for (var i = 0;i<conditions_array.length; i++)
+                    {
+                        switch(conditions_array[i])
+                        {
+                            case 'not_empty':
+                                var message = 'Veuillez renseigner ce champ';
+                                if (text.length == 0)
+                                {
+                                    if ($(self).parent().children().length <= 2) 
+                                    {
+                                        var message_error = '<div class="item-input-error-message" style="display: block;">'+message+'</div>';
+                                        $(self).parent().append(message_error);
+                                    }
+                                    else
+                                    {
+                                        $(self).parent().find(".item-input-error-message").text(message);
+                                        $($(self).parent().find(".item-input-error-message")[0]).css('display', 'block');
+                                    }
+                                }
+                                else $($(self).parent().find(".item-input-error-message")[0]).css('display', 'none');
+                                break;
+                            case 'minlength':
+                                i++;
+                                var minlength = parseInt(conditions_array[i]);
+                                var message = 'Veuillez saisir plus de '+ conditions_array[i] +' caractères';
+                                if (text.length <= minlength)
+                                {
+                                    if ($(self).parent().children().length <= 2) 
+                                    {
+                                        var message_error = '<div class="item-input-error-message" style="display: block;">'+ message +'</div>';
+                                        // $(this).parent().css('background', 'var(--f7-input-invalid-border-color,var(--f7-input-error-text-color))');
+                                        $(self).parent().append(message_error);
+                                    }
+                                    else
+                                    {
+                                        $(self).parent().find(".item-input-error-message").text(message);
+                                        $($(self).parent().find(".item-input-error-message")[0]).css('display', 'block');
+                                    }
+                                }
+                                else
+                                {
+                                    $($(self).parent().find(".item-input-error-message")[0]).css('display', 'none');
+                                }
+                                break;
+                        }
+                    }
+                }
+            },
+
+            upload: function()
+			{
+				var self = this;
+
+				app.dialog.preloader("Envoie en cours...");
+				debugger
+                if (self.data.ergonomie == undefined)
+                {
+                    app.dialog.close();
+                    app.dialog.alert("Veuillez renseigner les champs de l'ergonomie !");
+                    return true;
+                }
+
+                if (self.data.securite == undefined)
+                {
+                    app.dialog.close();
+                    app.dialog.alert("Veuillez renseigner les champs de sécurite !");
+                    return true;
+                }
+
+                app.dialog.close();
+				app.dialog.alert("La nouvelle idée est bien envoyé à OSIRI");
+                return true;
+                debugger
+				ws_server.depose_idee(self.data).then(function(result)
+				{
+					debugger
+					if (typeof result == 'string') throw result;
+					app.dialog.close();
+					app.dialog.alert("La nouvelle idée est bien envoyé à OSIRI");
+					if (self.id) self.nouvelle_idee_update(self.id, result[OSIRI_NOUVELLE_IDEE_PROPERTY_SERVER_ID]);
+					else
+					{
+						self.add().then(function(result)
+						{
+							self.nouvelle_idee_update(result, result[OSIRI_NOUVELLE_IDEE_PROPERTY_SERVER_ID]);
+						});
+					}
+					// ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, JSON.stringify({}));
+				})
+				.catch(function(error)
+				{
+					app.dialog.close();
+					app.dialog.alert("Error : " + error);
+				});
+			},
 
             update_stars: function(index, stars_elemnts, icon, color, factor)
             {

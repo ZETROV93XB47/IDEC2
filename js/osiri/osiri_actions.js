@@ -57,7 +57,7 @@ var osiri_actions = new function()
         {
             function change_value(i, actions)
             {
-                return osiri_projects.get_projet(actions[i][OSIRI_ACTION_PROPERTY_PROJET]).then(function(name)
+                return osiri_projects.get_projet_name(actions[i][OSIRI_ACTION_PROPERTY_PROJET]).then(function(name)
                 {
                     actions[i][OSIRI_ACTION_PROPERTY_PHASE] = self.get_phase_as_string(actions[i][OSIRI_ACTION_PROPERTY_PHASE]);
                     actions[i].nom = name;

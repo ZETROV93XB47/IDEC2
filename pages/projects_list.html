@@ -58,6 +58,7 @@
 
                 return osiri_projects.get_template_data(self.phase, self.famille).then(function(result)
                 {
+                    debugger
                     self.data.projects_list = result;
 
                     return self.apply_template(page, "osiri_project_template", "osiri_projects_list_content", self.data);

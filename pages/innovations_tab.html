@@ -3,37 +3,68 @@
 		<div class="navbar-bg"></div>
 		<div class="navbar-inner sliding">
 			<div class="title">OSIRI - Les innovations</div>
+			<div class="subnavbar">
+				<!-- Searchbar with auto init -->
+				<form id="op2a_search_bar" class="searchbar">
+					<div class="searchbar-inner">
+						<div class="searchbar-input-wrap">
+							<input type="search" placeholder="Chercher...">
+							<i class="searchbar-icon"></i>
+							<span class="input-clear-button"></span>
+						</div>
+						<span class="searchbar-disable-button">Annuler</span>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 	<div class="page-content infinite-scroll-content">
-		<!-- <div class="list media-list">
-			<ul>
-				<li>
-					<div href="#" class="item-content">
-						<div class="item-inner">
-							<div class="item-title-row">
-								<div class="item-title">Yahya SAMADI</div>
-								<div class="item-after">Métier | UO/filiale</div>
-							</div>
-							<div class="item-subtitle">yasamadi@hotmail.com</div>
+		<script id="op2a_search_list_template" type="text/template7">			
+			{{#each search_items}}
+			<li>
+				<a href="/project/{{ id }}" class="item-content item-link">
+					<div class="item-media"><img src="../img/projet_img.png" width="80"/></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title" style="white-space: normal;">{{ nom }}</div>
+							<div class="item-after"></div>
 						</div>
+						<div class="item-subtitle">{{ responsable }}</div>
 					</div>
-				</li>
+				</a>
+			</li>
+			{{/each}}
+		</script>
+		
+		<script id="op2a_not_found_search_list_template" type="text/template7">
+		</script>
+
+		<div class="list media-list searchbar-found" id="op2a_search_list">
+			<ul id="op2a_search_list_content">
+				
 			</ul>
-		</div> -->
-		<div class="card" style="padding-top: 10px;">
-			<div class="card-content">
-				<div class="list links-list">
-				<ul>
-					<li style="background:#e75113; margin-bottom: 5px;"><a href="/innovations_familles/" class="text-color-white">Déploiement</a></li>
-					<li style="background:#85c744; margin-bottom: 5px;"><a href="/projects_list/preserie"class="text-color-white">Préserie</a></li>
-					<li style="background:#ffd726; margin-bottom: 5px;"><a href="/projects_list/prototype" class="text-color-white">Prototype</a></li>
-					<li style="background:#6666ff; margin-bottom: 5px;"><a href="/projects_list/etude" class="text-color-white">Étude</a></li>
-					<!-- <li style="background:#ff66cc"><a href="/projects_list/idee" class="text-color-white">Idée</a></li> -->
-				</ul>
+		</div>
+		
+		<!-- Nothing found message -->
+		<div class="block searchbar-not-found">
+			<div class="block-inner">Résultat vide.</div>
+		</div>
+		<div class="ws_app_page_header_block searchbar-hide-on-search">
+			<div class="card" style="padding-top: 10px;">
+				<div class="card-content">
+					<div class="list links-list">
+					<ul>
+						<li style="background:#e75113; margin-bottom: 5px;"><a href="/innovations_familles/" class="text-color-white">Déploiement</a></li>
+						<li style="background:#85c744; margin-bottom: 5px;"><a href="/projects_list/preserie"class="text-color-white">Préserie</a></li>
+						<li style="background:#ffd726; margin-bottom: 5px;"><a href="/projects_list/prototype" class="text-color-white">Prototype</a></li>
+						<li style="background:#6666ff; margin-bottom: 5px;"><a href="/projects_list/etude" class="text-color-white">Étude</a></li>
+						<!-- <li style="background:#ff66cc"><a href="/projects_list/idee" class="text-color-white">Idée</a></li> -->
+					</ul>
+					</div>
 				</div>
 			</div>
 		</div>
+		
 	</div>
 	<script type="text/javascript" ws_script="page">
 		ws_engine.register_page("innovation-tab", ws_page.extend(
@@ -42,6 +73,39 @@
 			{
 				var self = this;
 
+				var searchbar = app.searchbar.create(
+				{
+					el: '#op2a_search_bar',
+					searchContainer: '#op2a_search_list',
+					searchIn: '.item-title',
+					customSearch: true,
+					on: {
+						search(sb, query, previousQuery)
+						{
+							var data = { search_items: [] };
+								
+							if (query.length >= 2)
+							{
+								ws_database.projets.search(query, [OSIRI_PROJET_PROPERTY_NOM]).then(function(projets)
+								{
+									return osiri_projects.get_projets_search_list_template_data(projets);
+								})
+								.then(function(projets_template_data)
+								{
+									data.search_items = data.search_items.concat(projets_template_data);
+									
+									// if (data.search_items) data.search_items.sort((a,b) => (a.libelle > b.libelle ? 1 : (a.libelle < b.libelle ? -1 : 0 )));
+									
+									self.apply_template(page, "op2a_search_list_template", "op2a_search_list_content", data);
+								});	
+							}
+							else
+							{
+								self.apply_template(page, "op2a_not_found_search_list_template", "op2a_search_list_content", data);
+							}			
+						}
+					}
+				});
 				return self.load_page();
 			},
 			

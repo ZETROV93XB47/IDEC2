@@ -228,6 +228,38 @@
                         </div>
                         <!-- Scrollable page content-->
                         <div class="page-content">
+                            <script id="osiri_rex_action_template" type="text/template7">
+                                <div class="list">
+                                    <ul>
+                                        {{#each rex_actions}}
+                                        <li>
+                                            <a href="/formulaire_action/" class="item-link item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                {{ name }}
+                                                <div class="item-header">{{ description }}</div>
+                                                </div>
+                                                <div class="item-after"></div>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        {{else}}
+                                        <li class="item-content">Aucun REX</li>
+                                        <li>
+                                            <a href="/formulaire_action/" class="item-link item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                REX Test
+                                                <div class="item-header">{{ description }}</div>
+                                                </div>
+                                                <div class="item-after"></div>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </script>
                             <div class="content_every_one_mode" style="margin-top: 20%;">
                                 <img src="./img/logo_osiri_300.png" style="display: block; margin: auto; width: 50%;"/>
                                 <div class="block block-strong inset">
@@ -263,41 +295,13 @@
                                 <div class="card-expandable" style="height: 150px;">
                                     <div class="card-content">
                                         <div class="bg-color-blue" style="height: 150px">
-                                        <div class="card-header text-color-white">
-                                                2 REX à réaliser
-                                            <br>
-                                        </div>
+                                        <div id="osiri_rex_todo" class="card-header text-color-white">0 REX à réaliser</div>
                                         <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
                                             <i class="icon f7-icons">multiply_circle_fill</i>
                                         </a>
                                         </div>
-                                        <div class="card-content-padding">
-                                            <div class="list">
-                                                <ul>
-                                                    <li>
-                                                        <a href="/formulaire_action/" class="item-link item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-title">
-                                                            Ancrage de pied pour 1/2 pied de reprise
-                                                            <div class="item-header">Validation</div>
-                                                            </div>
-                                                            <div class="item-after">Idée</div>
-                                                        </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/formulaire_action/" class="item-link item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-title">ETUDE : Passage en phase étude
-                                                            <div class="item-header">Validation</div>
-                                                            
-                                                            </div>
-                                                            <div class="item-after">deploiement</div>
-                                                        </div>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                        <div id="osiri_rex_actions_content" class="card-content-padding">
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -491,6 +495,7 @@
 
         <!-- Custom scripts -->
         <script type="text/javascript" src="js/osiri/osiri_actions.js"></script>
+        <script type="text/javascript" src="js/osiri/osiri_rexs.js"></script>
         <script type="text/javascript" src="js/osiri/osiri_projects.js"></script>
         <script type="text/javascript" src="js/osiri/osiri_photos.js"></script>
         

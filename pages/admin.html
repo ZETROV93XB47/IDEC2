@@ -101,7 +101,9 @@
 						{
 							ws_storage.set_value('connection_qrcode', qrcode);
 							app.methods.load_every_one_mode();
-							app.popup.open('#popup_connection', true);
+							
+							app.methods.authentification_form_out();
+							// app.popup.open('#popup_connection', true);
 						});
 					});
 				});

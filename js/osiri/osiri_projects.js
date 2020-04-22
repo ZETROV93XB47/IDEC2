@@ -49,13 +49,54 @@ var osiri_projects = new function()
         })
     }
 
-    this.get_projet = function(id)
+    this.get_projet_name = function(id)
     {
         return ws_database.projets.get_with_id(id).then(function(projet)
         {
             if (projet != null) return projet[OSIRI_PROJET_PROPERTY_NOM];
         })
     }
+
+    this.get_projet = function(id)
+    {
+        return ws_database.projets.get_with_id(id);
+    }
+
+    this.get_projets_search_list_template_data = function(projets)
+	{
+        // var result = [];
+        var self = this;
+        var promises = [];
+
+		if (projets)
+		{
+			projets.sort((a,b) => (a[OSIRI_PROJET_PROPERTY_NOM] > b[OSIRI_PROJET_PROPERTY_NOM]) ? 1 : (a[OSIRI_PROJET_PROPERTY_NOM] < b[OSIRI_PROJET_PROPERTY_NOM] ? -1 : 0 ));
+		}
+        
+        function change_value(i, projects)
+        {
+            return self.get_collaborateur(projects[i][OSIRI_PROJET_PROPERTY_PILOTE]).then(function(name)
+            {
+                projects[i][OSIRI_PROJET_PROPERTY_DATE_DEBUT] = ws_tools.get_date_as_string(projects[i][OSIRI_PROJET_PROPERTY_DATE_DEBUT]);
+
+                if( name == undefined) return self.get_collaborateur(projects[i][OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT]).then(function(name)
+                {
+                    projects[i].responsable = name;
+                });
+                projects[i].responsable = name;
+            });
+        }
+
+        for (var i = 0; i<projets.length; i++)
+        {
+            promises.push(change_value(i, projets));
+        }
+
+        return Promise.all(promises).then(function(result)
+        {
+            return projets;
+        });
+	}
 
     this.get_phase_color = function(phase)
 	{
