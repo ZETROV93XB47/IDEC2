@@ -30,9 +30,9 @@ var ws_user = new function()
 		});
 	};
 	
-	this.login = function(login, password)
+	this.login = function(url, login, password)
 	{
-		return ws_server.login(login, password).then(function(result)
+		return ws_server.login(url, login, password).then(function(result)
 		{
 			return ws_engine.connect_to_server(url, result);
 		});

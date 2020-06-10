@@ -339,6 +339,18 @@
 			
 			load_page: function()
 			{
+				this.get_template_data().then((result) =>
+				{
+					this.apply_template(page, "osiri_infos_templete_script", "osiri_infos_templete_content", this.data);
+					this.apply_template(page, "osiri_cdc_templete_script", "osiri_cdc_templete_content", this.data);
+					this.apply_template(page, "osiri_interlocuteurs_templete_script", "osiri_interlocuteurs_templete_content", this.data);
+					this.apply_template(page, "osiri_documents_templete_script", "osiri_documents_templete_content", this.data);
+					this.apply_template(page, "osiri_rexs_templete_script", "osiri_rexs_templete_content", this.data);
+				});
+			},
+
+			/*load_page: function()
+			{
 				var self = this;
 				
 				self.get_template_data().then(function()
@@ -349,9 +361,24 @@
 					self.apply_template(page, "osiri_documents_templete_script", "osiri_documents_templete_content", self.data);
 					self.apply_template(page, "osiri_rexs_templete_script", "osiri_rexs_templete_content", self.data);
 				});
+			},*/
+
+			get_template_data: async function()
+			{
+				this.data = await ws_database.projets.get_with_id(this.id);
+
+				var name = await osiri_projects.get_collaborateur(this.data[OSIRI_PROJET_PROPERTY_PILOTE]);
+				
+				this.data[OSIRI_PROJET_PROPERTY_DATE_DEBUT] = ws_tools.get_date_as_string(this.data[OSIRI_PROJET_PROPERTY_DATE_DEBUT]);
+				this.data[OSIRI_PROJET_PROPERTY_PHASE] = osiri_actions.get_phase_as_string_ma(this.data[OSIRI_PROJET_PROPERTY_PHASE]);
+
+				if (name) return this.data[OSIRI_PROJET_PROPERTY_PILOTE] = name;
+				
+				var name = await osiri_projects.get_collaborateur(this.data[OSIRI_PROJET_PROPERTY_PILOTE])
+				this.data[OSIRI_PROJET_PROPERTY_PILOTE] = name;
 			},
 
-			get_template_data: function()
+			/*get_template_data: function()
 			{
 				var self = this;
 
@@ -370,7 +397,7 @@
 						self.data[OSIRI_PROJET_PROPERTY_PILOTE] = name;
 					});
 				});
-			}
+			}*/
 			
 		}));
 	</script>

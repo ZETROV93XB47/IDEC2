@@ -377,7 +377,7 @@ var ws_server_class = Class.extend(
 		return this.api('connect', { code: code, data: data, device: device }, url);
 	},
 	
-	login : function(login, password, qrcode)
+	login : function(url, login, password)
 	{
 		var device = {};
 		
@@ -386,7 +386,7 @@ var ws_server_class = Class.extend(
 		device[WS_DEVICE_INFO_SYSTEM] = ws_platform.get_system();
 		device[WS_DEVICE_INFO_BROWSER] = ws_platform.get_browser();
 
-		return self.api('login', { login: login, password: password, device: device }, url);		
+		return this.api('login', { login: login, password: password, device: device }, url);		
 	},
 	
 	change_password : function(token, password)

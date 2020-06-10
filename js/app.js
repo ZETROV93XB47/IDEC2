@@ -370,6 +370,7 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 
 	$$('#connection_login_form').submit(function (e)
 	{
+		debugger
 		var form = $(this);
 		
 		e.preventDefault();
@@ -378,13 +379,15 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 		{
 			app.dialog.preloader("Chargement en cours...");
 			
-			return ws_user.login(data.username, data.password, undefined)
+			return ws_user.login(ws_defines.SERVER_API_URL, data.username, data.password)
 		})
-		.then(function(user)
+		.then(function(result)
 		{
-			app.dialog.close();
-			
-			app.popup.close('#popup_connection',true)
+			return self.apply_connection_data(result);
+		})
+		.then(function(result)
+		{
+			app.dialog.alert(result);
 		})
 		.catch(function(error)
 		{
@@ -400,39 +403,30 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 	});
 });
 
-function authentification()
+
+function apply_connection_data(result)
 {
-	var connecting = false;
-	var connect = function (data)
+	debugger
+	var startTime;
+	var elapsedTime;
+
+	ws_storage.set_value(OSIRI_STORAGE_KEY_FAMILLES, JSON.stringify(result.familles));
+	startTime = new Date().getTime();
+	elapsedTime = 0;
+	app.dialog.close();			
+
+	if (result == undefined) throw 'Erreur de connexion, données vides.';
+	if (typeof result == 'string') throw result.substring(0,100);
+	if (result.success == false) throw result.error;
+
+	
+	app.dialog.preloader("Synchronisation en cours...");
+
+	ws_synchronizer.stop();
+	
+	if (result.data != undefined)
 	{
-		var qrcode = JSON.parse(data);
-		var startTime;
-		var elapsedTime;
-		
-		db_is_inited = false;
-
-		app.dialog.preloader("Connexion au serveur...");
-			
-		ws_user.connect(qrcode.url, qrcode.token, qrcode.data).then(function(result)
-		{
-			debugger;
-			ws_storage.set_value(OSIRI_STORAGE_KEY_FAMILLES, JSON.stringify(result.familles));
-			startTime = new Date().getTime();
-			elapsedTime = 0;
-			app.dialog.close();			
-
-			if (result == undefined) throw 'Erreur de connexion, données vides.';
-			if (typeof result == 'string') throw result.substring(0,100);
-			if (result.success == false) throw result.error;
-		
-			
-			app.dialog.preloader("Synchronisation en cours...");
-
-			ws_synchronizer.stop();
-			
-			return result.data != undefined ? ws_synchronizer.import_all_data(ws_engine.get_server_id(), result.data) : Promise.resolve();
-		})
-		.then(function()
+		return ws_synchronizer.import_all_data(ws_engine.get_server_id(), result.data).then(function()
 		{
 			elapsedTime = new Date().getTime() - startTime;
 			console.log("Temps de chargement : " + elapsedTime + " ms");
@@ -446,7 +440,39 @@ function authentification()
 			{
 				self.load_home();
 				homeView.router.back();
+				
+				return Promise.resolve('Chargement terminer !');
 			});
+		});
+	}
+	else
+	{
+		return Promise.resolve('Data undefined !');
+	}
+}
+
+function authentification()
+{
+	debugger
+	var connecting = false;
+	var connect = function (data)
+	{
+		var qrcode = JSON.parse(data);
+		var startTime;
+		var elapsedTime;
+		
+		db_is_inited = false;
+
+		app.dialog.preloader("Connexion au serveur...");
+		debugger
+		ws_user.connect(qrcode.url, qrcode.token, qrcode.data).then(function(result)
+		{
+			debugger;
+			return self.apply_connection_data(result);
+		})
+		.then(function(result)
+		{
+			app.dialog.alert(result);
 		})
 		.catch(function(error)
 		{
@@ -474,8 +500,8 @@ function authentification()
 
 		if (app.device.desktop)
 		{
-			var data = '{"site":"https:\/\/osiri2-dev.workspace-solution.com","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41OGUyNGFmNmU0ZDNiMC4zOTU1Nzk0OTwqIT0\/PiQyeSQxMCRPMWhRbzlEYzlNcTJCU1RhM0ZiaWt1ZW50d1ZqZ0w5RU5VUFhEN01EdklWYTNhcU4xclZScQ=="}';
-
+			var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41Nzc2NmEzNGQyNTgyNy4wMDk3NTI5NTwqIT0\/PiQyeSQxMCRpclVnWXVCMDJMRXJibmRQWFd6LzllUDRKVzkyLndPMWJBa3BBRXkyTEFkNzZ6TUZLaWl0Mg=="}';
+			debugger
 			ws_storage.set_value('connection_qrcode', data);
 			connect(data);
 			connecting = false;
