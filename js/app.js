@@ -495,7 +495,7 @@ function apply_connection_data(result)
 				self.load_home();
 				homeView.router.back();
 				
-				return Promise.resolve('Chargement terminer !');
+				return Promise.resolve('Chargement terminé !');
 			});
 		});
 	}

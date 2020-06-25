@@ -814,7 +814,7 @@
 			{
 				var self = this;
 
-				app.dialog.preloader("Envoie en cours...");
+				app.dialog.preloader("Envoi en cours...");
 				debugger
                 if (self.data.ergonomie == undefined)
                 {
@@ -831,7 +831,7 @@
                 }
 
                 app.dialog.close();
-				app.dialog.alert("La nouvelle idée est bien envoyé à OSIRI");
+				app.dialog.alert("La nouvelle idée a bien été envoyée à OSIRI");
                 return true;
                 debugger
 				ws_server.depose_idee(self.data).then(function(result)
@@ -839,7 +839,7 @@
 					debugger
 					if (typeof result == 'string') throw result;
 					app.dialog.close();
-					app.dialog.alert("La nouvelle idée est bien envoyé à OSIRI");
+					app.dialog.alert("La nouvelle idée a bien été envoyée à OSIRI");
 					if (self.id) self.nouvelle_idee_update(self.id, result[OSIRI_NOUVELLE_IDEE_PROPERTY_SERVER_ID]);
 					else
 					{
