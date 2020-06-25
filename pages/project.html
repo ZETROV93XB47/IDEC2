@@ -8,7 +8,7 @@
                 <span class="if-not-md">Back</span>
                 </a>
             </div>
-			<div class="title">OSIRI - Projet</div>
+			<div class="title">OSIRI - <span id="project-title"></span></div>
 		</div>
 	</div>
 	<div class="toolbar tabbar toolbar-top-md">
@@ -166,19 +166,52 @@
 
 		<script id="osiri_interlocuteurs_templete_script" type="text/template7">
 			
-			<div class="block block-strong">
-				<div class="block-title block-title-medium">Interlocuteurs étude</div>
-				<div type="text" class="title" style="font-size: 15px;">{{ pilote }}</div>
+			<div class="block-title block-title-medium">Interlocuteurs étude</div>
+			<div class="card-content card-content-padding" id="op2a_chantier_infos">
+				<div class="list">
+					<ul>
+						{{#each interlocuteurs_etude}}
+						<li>
+							<div class="item-content">
+								<div class="item-inner">
+								<div class="item-title" style="white-space: normal;">{{#if leader}}<i class="fas fa-user-tie"></i>{{else}}<i class="fas fa-user"></i>{{/if}} {{ name }}</div>
+								<div class="item-after">{{ metier }}</div>
+								</div>
+							</div>
+						</li>
+						{{/each}}
+					</ul>
+				</div>
 			</div>
+			<!-- {{#each interlocuteurs_etude}}
+			<div type="text" class="title" style="font-size: 15px;">{{#if leader}}<i class="fas fa-user-tie"></i>{{else}}<i class="fas fa-user"></i>{{/if}} {{ name }} - {{ metier }}</div>
+			{{/each}} -->
 			
 			<div class="block block-strong">
 				<div class="block-title block-title-medium">Pilotes</div>
-				<div type="text" class="title" style="font-size: 15px;">{{ pilote }}</div>
+				<div type="text" class="title" style="font-size: 15px;"><i class="fas fa-user"></i> {{ pilote }}</div>
 			</div>
 			
-			<div class="block block-strong">
-				<div class="block-title block-title-medium">Interlocuteurs REX</div>
+			<div class="block-title block-title-medium">Interlocuteurs REX</div>
+			<div class="card-content card-content-padding" id="op2a_chantier_infos">
+				<div class="list">
+					<ul>
+						{{#each interlocuteurs_rex}}
+						<li>
+							<div class="item-content">
+								<div class="item-inner">
+								<div class="item-title" style="white-space: normal;">{{ name }}</div>
+								<div class="item-after">{{ metier }}</div>
+								</div>
+							</div>
+						</li>
+						{{/each}}
+					</ul>
+				</div>
 			</div>
+			<!-- {{#each interlocuteurs_rex}}
+			<div type="text" class="title" style="font-size: 15px;">{{ name }} - {{ metier }}</div>
+			{{/each}} -->
 		</script>
 
 		<script id="osiri_documents_templete_script" type="text/template7">
@@ -367,11 +400,20 @@
 			{
 				this.data = await ws_database.projets.get_with_id(this.id);
 
+				$('#project-title').text(this.data.nom);
+
+				this.data.interlocuteurs_etude = await ws_database.interlocuteurs_etude.find(OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_PROJET + ' = ?', [this.id]);
+				for (var i = 0; i<this.data.interlocuteurs_etude.length; i++)
+				{
+					if (this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] == "true") this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] = true;
+					if (this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] == "false") this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] = false;
+				}
+				this.data.interlocuteurs_rex = await ws_database.interlocuteurs_rex.find(OSIRI_INTERLOCUTEUR_REX_PROPERTY_PROJET + ' = ?', [this.id]);
+				
 				var name = await osiri_projects.get_collaborateur(this.data[OSIRI_PROJET_PROPERTY_PILOTE]);
 				
 				this.data[OSIRI_PROJET_PROPERTY_DATE_DEBUT] = ws_tools.get_date_as_string(this.data[OSIRI_PROJET_PROPERTY_DATE_DEBUT]);
 				this.data[OSIRI_PROJET_PROPERTY_PHASE] = osiri_actions.get_phase_as_string_ma(this.data[OSIRI_PROJET_PROPERTY_PHASE]);
-
 				if (name) return this.data[OSIRI_PROJET_PROPERTY_PILOTE] = name;
 				
 				var name = await osiri_projects.get_collaborateur(this.data[OSIRI_PROJET_PROPERTY_PILOTE])

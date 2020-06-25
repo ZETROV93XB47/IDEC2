@@ -253,5 +253,102 @@ var osiri_projects = new function()
         }
     }
 
+    this.get_mes_projets_template_data = function ()
+    {
+        var self = this;
+        var promises = [];
+
+        return ws_database.projets.find(OSIRI_PROJET_PROPERTY_MES_PROJETS + " = ?", [true]).then(function(mes_projets)
+		{
+            function change_value(i, mes_projets)
+            {
+                return self.get_collaborateur(mes_projets[i][OSIRI_PROJET_PROPERTY_PILOTE]).then(function(name)
+                {
+                    mes_projets[i][OSIRI_PROJET_PROPERTY_DATE_DEBUT] = ws_tools.get_date_as_string(mes_projets[i][OSIRI_PROJET_PROPERTY_DATE_DEBUT]);
+                    mes_projets[i][OSIRI_PROJET_PROPERTY_ETAPE] = osiri_projects.get_etape_name(mes_projets[i][OSIRI_PROJET_PROPERTY_PHASE], mes_projets[i][OSIRI_PROJET_PROPERTY_ETAPE]);
+                    mes_projets[i][OSIRI_PROJET_PROPERTY_PHASE] = osiri_actions.get_phase_as_string(mes_projets[i][OSIRI_PROJET_PROPERTY_PHASE]);
+
+                    if( name == undefined) return self.get_collaborateur(mes_projets[i][OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT]).then(function(name)
+                    {
+                        mes_projets[i].responsable = name;
+                    });
+                    mes_projets[i].responsable = name;
+                });
+            }
+
+            for (var i = 0; i<mes_projets.length; i++)
+            {
+                promises.push(change_value(i, mes_projets));
+            }
+
+            return Promise.all(promises).then(function(result)
+            {
+                mes_projets.sort((a,b) => (a[OSIRI_PROJET_PROPERTY_NOM] > b[OSIRI_PROJET_PROPERTY_NOM]) ? 1 : (a[OSIRI_PROJET_PROPERTY_NOM] < b[OSIRI_PROJET_PROPERTY_NOM] ? -1 : 0 ));
+                
+                return mes_projets;
+            });
+        });
+    }
+
+    //! phase change
+
+    this.get_phase_change_template_data = function ()
+    {
+        var self = this;
+        var promises = [];
+
+        return ws_database.phase_changes.all(undefined, 'ORDER BY vers DESC').then(function(phase_changes)
+        {
+            function change_value(i, phase_changes)
+            {
+                return osiri_projects.get_projet_name(phase_changes[i][OSIRI_PHASE_CHANGE_PROPERTY_PROJET]).then(function(name)
+                {
+                    phase_changes[i][OSIRI_PHASE_CHANGE_PROPERTY_DATE] = ws_tools.get_date_as_string(phase_changes[i][OSIRI_PHASE_CHANGE_PROPERTY_DATE]);
+                    phase_changes[i].nom = name;
+                });
+            }
+
+            for (var i = 0; i<phase_changes.length; i++)
+            {
+                promises.push(change_value(i, phase_changes));
+            }
+
+            return Promise.all(promises).then(function(result)
+            {
+                return phase_changes;
+            });
+        });
+    }
+
+    //! last event
+
+    this.get_last_event_template_data = function ()
+    {
+        var self = this;
+        var promises = [];
+
+        return ws_database.last_events.all(undefined, 'ORDER BY date DESC').then(function(last_events)
+        {
+            function change_value(i, last_events)
+            {
+                return osiri_projects.get_projet_name(last_events[i][OSIRI_LAST_EVENT_PROPERTY_PROJET]).then(function(name)
+                {
+                    last_events[i][OSIRI_LAST_EVENT_PROPERTY_DATE] = ws_tools.get_date_as_string(last_events[i][OSIRI_LAST_EVENT_PROPERTY_DATE]);
+                    last_events[i].nom = name;
+                });
+            }
+
+            for (var i = 0; i<last_events.length; i++)
+            {
+                promises.push(change_value(i, last_events));
+            }
+
+            return Promise.all(promises).then(function(result)
+            {
+                return last_events;
+            });
+        });
+    }
+
 }
 

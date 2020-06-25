@@ -59,6 +59,7 @@ var osiri_actions = new function()
             {
                 return osiri_projects.get_projet_name(actions[i][OSIRI_ACTION_PROPERTY_PROJET]).then(function(name)
                 {
+                    actions[i][OSIRI_ACTION_PROPERTY_DATE] = ws_tools.get_date_as_string(actions[i][OSIRI_ACTION_PROPERTY_DATE]);
                     actions[i][OSIRI_ACTION_PROPERTY_PHASE] = self.get_phase_as_string(actions[i][OSIRI_ACTION_PROPERTY_PHASE]);
                     actions[i].nom = name;
                 });
@@ -72,6 +73,37 @@ var osiri_actions = new function()
             return Promise.all(promises).then(function(result)
             {
                 return actions;
+            });
+        });
+    }
+
+    this.get_revu_template_data = function ()
+    {
+        var self = this;
+        var promises = [];
+
+        return ws_database.actions.find(OSIRI_ACTION_PROPERTY_ACTION + " = ?", [OSIRI_ACTION_ACTION_REVU]).then(function(rex_actions)
+		{
+            function change_value(i, actions)
+            {
+                var action = actions[i];
+                return osiri_projects.get_projet_name(action[OSIRI_ACTION_PROPERTY_PROJET]).then(function(name)
+                {
+                    action[OSIRI_ACTION_PROPERTY_DATE] = ws_tools.get_date_as_string(action[OSIRI_ACTION_PROPERTY_DATE]);
+                    action[OSIRI_ACTION_PROPERTY_ETAPE] = osiri_projects.get_etape_name(action[OSIRI_ACTION_PROPERTY_PHASE], action[OSIRI_ACTION_PROPERTY_ETAPE]);
+                    action[OSIRI_ACTION_PROPERTY_PHASE] = osiri_actions.get_phase_as_string(action[OSIRI_ACTION_PROPERTY_PHASE]);
+                    action.nom = name;
+                });
+            }
+
+            for (var i = 0; i<rex_actions.length; i++)
+            {
+                promises.push(change_value(i, rex_actions));
+            }
+
+            return Promise.all(promises).then(function(result)
+            {
+                return rex_actions;
             });
         });
     }

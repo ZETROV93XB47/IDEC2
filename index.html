@@ -190,7 +190,7 @@
                         <a href="#view-submit-idea" class="tab-link">
                             <i class="icon f7-icons if-not-md">square_list_fill</i>
                             <i class="icon material-icons if-md">view_list</i>
-                            <span class="tabbar-label">Déposer un idée</span>
+                            <span class="tabbar-label">Déposer idée</span>
                         </a>
                         <a href="#view-my-actions" class="tab-link">
                             <i class="icon f7-icons if-not-md">square_list_fill</i>
@@ -236,10 +236,10 @@
                                             <a href="/formulaire_action/" class="item-link item-content">
                                             <div class="item-inner">
                                                 <div class="item-title">
-                                                {{ name }}
+                                                {{ nom }}
                                                 <div class="item-header">{{ description }}</div>
                                                 </div>
-                                                <div class="item-after"></div>
+                                                <div class="item-after">{{ date }}</div>
                                             </div>
                                             </a>
                                         </li>
@@ -256,6 +256,111 @@
                                             </div>
                                             </a>
                                         </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </script>
+                            <script id="osiri_revu_template" type="text/template7">
+                                <div class="list">
+                                    <ul>
+                                        {{#each revus}}
+                                        <li>
+                                            <a href="/formulaire_action/" class="item-link item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                {{ nom }}
+                                                <div class="item-header">{{ etape }}</div>
+                                                </div>
+                                                <div class="item-after">{{ phase }}</div>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        {{else}}
+                                        <li class="item-content">Aucune revu</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </script>
+                            <script id="osiri_mes_actions_template" type="text/template7">
+                                <div class="list">
+                                    <ul>
+                                        {{#each mes_actions}}
+                                        <li>
+                                            <a href="/formulaire_action/" class="item-link item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                {{ nom }}
+                                                <div class="item-header">{{ etape }}</div>
+                                                </div>
+                                                <div class="item-after">{{ phase }}</div>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        {{else}}
+                                        <li class="item-content">Aucune action</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </script>
+                            <script id="osiri_mes_projets_template" type="text/template7">
+                                <div class="list">
+                                    <ul>
+                                        {{#each mes_projets}}
+                                        <li>
+                                            <a href="/project/{{ id }}" class="item-link item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                {{ nom }}
+                                                <div class="item-header">{{ etape }}</div>
+                                                </div>
+                                                <div class="item-after">{{ phase }}</div>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        {{else}}
+                                        <li class="item-content">Aucun projet</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </script>
+                            <script id="osiri_phase_change_template" type="text/template7">
+                                <div class="list">
+                                    <ul>
+                                        {{#each phase_changes}}
+                                        <li>
+                                            <a href="/project/{{ projet }}" class="item-link item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                {{ nom }}
+                                                <div class="item-header">{{ de }} -> {{ vers }}</div>
+                                                </div>
+                                                <div class="item-after">{{ date }}</div>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        {{else}}
+                                        <li class="item-content">Aucun changement de phase</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </script>
+                            <script id="osiri_last_event_template" type="text/template7">
+                                <div class="list">
+                                    <ul>
+                                        {{#each last_events}}
+                                        <li>
+                                            <a href="/project/{{ projet }}" class="item-link item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">
+                                                {{ nom }}
+                                                <div class="item-header">{{ date }}</div>
+                                                </div>
+                                                <div class="item-after">{{ event }}</div>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        {{else}}
+                                        <li class="item-content">Aucun événement</li>
                                         {{/each}}
                                     </ul>
                                 </div>
@@ -292,10 +397,10 @@
                                 </div>
                             </div>
                             <div class="content_connect_mode" style="display: none;">
-                                <div class="card-expandable" style="height: 150px;">
+                                <!-- <div class="card-expandable" style="height: 150px;">
                                     <div class="card-content">
                                         <div class="bg-color-blue" style="height: 150px">
-                                        <div id="osiri_rex_todo" class="card-header text-color-white">0 REX à réaliser</div>
+                                        <div id="osiri_rex_todo" class="card-header text-color-white">REX à réaliser</div>
                                         <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
                                             <i class="icon f7-icons">multiply_circle_fill</i>
                                         </a>
@@ -308,111 +413,61 @@
                                 <div class="card-expandable" style="height: 150px;">
                                     <div class="card-content">
                                         <div class="bg-color-green" style="height: 150px">
-                                        <div class="card-header text-color-white">
-                                            1 revue à organiser
-                                            <br>
-                                        </div>
+                                        <div id="osiri_revu_todo" class="card-header text-color-white">Revue à organiser</div>
                                         <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
                                             <i class="icon f7-icons">multiply_circle_fill</i>
                                         </a>
                                         </div>
-                                        <div class="card-content-padding">
-                                            <div class="list">
-                                                <ul>
-                                                    <li>
-                                                        <a href="" class="item-link item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-title">revue
-                                                            <div class="item-header"></div>
-                                                            
-                                                            </div>
-                                                            <div class="item-after">Organiser</div>
-                                                        </div>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                        <div id="osiri_revu_content" class="card-content-padding">
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="card-expandable" style="height: 150px;">
+                                    <div class="card-content">
+                                        <div class="bg-color-blue" style="height: 150px">
+                                        <div id="osiri_rex_todo" class="card-header text-color-white">Mes projets</div>
+                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
+                                            <i class="icon f7-icons">multiply_circle_fill</i>
+                                        </a>
+                                        </div>
+                                        <div id="osiri_mes_projets_content" class="card-content-padding">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-expandable" style="height: 150px;">
+                                    <div class="card-content">
+                                        <div class="bg-color-green" style="height: 150px">
+                                        <div id="osiri_revu_todo" class="card-header text-color-white">Mes actions</div>
+                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
+                                            <i class="icon f7-icons">multiply_circle_fill</i>
+                                        </a>
+                                        </div>
+                                        <div id="osiri_mes_actions_content" class="card-content-padding">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-expandable" style="height: 150px;">
                                     <div class="card-content">
                                         <div class="bg-color-orange" style="height: 150px">
-                                        <div class="card-header text-color-white">
-                                                3 projets en déploiement ce mois-ci
-                                            <br>
-                                        </div>
+                                        <div id="osiri_phase_change_todo" class="card-header text-color-white">Changements de phases (mois passé)</div>
                                         <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
                                             <i class="icon f7-icons">multiply_circle_fill</i>
                                         </a>
                                         </div>
-                                        <div class="card-content-padding">
-                                            <div class="list">
-                                                <ul>
-                                                    <li>
-                                                        <a href="/project/1" class="item-link item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-title">Ancrage de pied pour 1/2 pied de reprise
-                                                            <div class="item-header">Validation</div>
-                                                            
-                                                            </div>
-                                                            <div class="item-after">deploiement</div>
-                                                        </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/project/1" class="item-link item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-title">DEPLOIEMENT : Mise à disposition et informations
-                                                            <div class="item-header">Validation</div>
-                                                            
-                                                            </div>
-                                                            <div class="item-after">deploiement</div>
-                                                        </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/project/1" class="item-link item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-title">DEPLOIEMENT : Mise à disposition et informations
-                                                            <div class="item-header">Validation</div>
-                                                            </div>
-                                                            <div class="item-after">deploiement</div>
-                                                        </div>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                        <div id="osiri_phase_change_content" class="card-content-padding">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-expandable" style="height: 150px;">
                                     <div class="card-content">
                                         <div class="bg-color-yellow" style="height: 150px">
-                                        <div class="card-header text-color-white">
-                                            1 revue à organiser
-                                            <br>
-                                        </div>
+                                        <div id="osiri_last_event_todo" class="card-header text-color-white">Derniers événements (30 derniers jours)</div>
                                         <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
                                             <i class="icon f7-icons">multiply_circle_fill</i>
                                         </a>
                                         </div>
-                                        <div class="card-content-padding">
-                                            <div class="list">
-                                                <ul>
-                                                    <li>
-                                                        <a href="" class="item-link item-content">
-                                                        <div class="item-inner">
-                                                            <div class="item-title">revue
-                                                            <div class="item-header"></div>
-                                                            
-                                                            </div>
-                                                            <div class="item-after">Organiser</div>
-                                                        </div>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                        <div id="osiri_last_event_content" class="card-content-padding">
                                         </div>
                                     </div>
                                 </div>

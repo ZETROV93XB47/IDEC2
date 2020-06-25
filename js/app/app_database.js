@@ -15,6 +15,10 @@ var app_database_class = ws_database_class.extend(
 			this.actions = undefined;
 			this.rexs = undefined;
 			this.nouvelle_idees = undefined;
+			this.last_events = undefined;
+			this.phase_changes = undefined;
+			this.interlocuteurs_etude = undefined;
+			this.interlocuteurs_rex = undefined;
 			
 			this.servers_class = ws_datatable.extend(
 			{
@@ -96,6 +100,37 @@ var app_database_class = ws_database_class.extend(
 				},
 			});
 			
+			this.last_events_class = ws_datatable.extend(
+			{
+				constructor: function(db)
+				{
+					this._super(db, OSIRI_DATABASE_TABLE_LAST_EVENTS);
+				},
+			});
+
+			this.phase_changes_class = ws_datatable.extend(
+			{
+				constructor: function(db)
+				{
+					this._super(db, OSIRI_DATABASE_TABLE_PHASE_CHANGES);
+				},
+			});
+
+			this.interlocuteurs_etude_class = ws_datatable.extend(
+			{
+				constructor: function(db)
+				{
+					this._super(db, OSIRI_DATABASE_TABLE_INTERLOCUTEURS_ETUDE);
+				},
+			});
+			
+			this.interlocuteurs_rex_class = ws_datatable.extend(
+			{
+				constructor: function(db)
+				{
+					this._super(db, OSIRI_DATABASE_TABLE_INTERLOCUTEURS_REX);
+				},
+			});
 		},
 		
 		get_name: function()
@@ -151,11 +186,23 @@ var app_database_class = ws_database_class.extend(
 
 				case OSIRI_DATABASE_TABLE_NOUVELLE_IDEES :
 					return this.nouvelle_idees;
+
+				case OSIRI_DATABASE_TABLE_LAST_EVENTS :
+					return this.last_events;
+
+				case OSIRI_DATABASE_TABLE_PHASE_CHANGES :
+					return this.phase_changes;
+
+				case OSIRI_DATABASE_TABLE_INTERLOCUTEURS_ETUDE :
+					return this.interlocuteurs_etude;
+
+				case OSIRI_DATABASE_TABLE_INTERLOCUTEURS_REX :
+					return this.interlocuteurs_rex;
 			}
 			
 			return null;
 		},
-		
+
 		is_data_table: function(name)
 		{
 			return name != WS_DATABASE_TABLE_SERVERS;
@@ -178,6 +225,10 @@ var app_database_class = ws_database_class.extend(
 				self.actions = new self.actions_class(self);
 				self.rexs = new self.rexs_class(self);
 				self.nouvelle_idees = new self.nouvelle_idees_class(self);
+				self.last_events = new self.last_events_class(self);
+				self.phase_changes = new self.phase_changes_class(self);
+				self.interlocuteurs_etude = new self.interlocuteurs_etude_class(self);
+				self.interlocuteurs_rex = new self.interlocuteurs_rex_class(self);
 				
 				resolve();
 			});

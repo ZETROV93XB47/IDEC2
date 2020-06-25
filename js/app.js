@@ -240,19 +240,76 @@ function onResume()
 function load_home()
 {
 	var self = this;
-	var data = this;
+	var data = [];
 	
     app_inited().then(function ()
     {
 		var rex_action_template = $$('#osiri_rex_action_template').html();
-		osiri_rexs.get_template_data().then(function(rex_actions_data)
-		{
-			data.rex_actions = rex_actions_data;
-			$('#osiri_rex_todo').text(rex_actions_data.length + " REX à réaliser");
+		var revu_template = $$('#osiri_revu_template').html();
+		
+		var mes_projets_template = $$('#osiri_mes_projets_template').html();
+		var mes_actions_template = $$('#osiri_mes_actions_template').html();
+		var phase_change_template = $$('#osiri_phase_change_template').html();
+		var last_event_template = $$('#osiri_last_event_template').html();
+		
+		// osiri_rexs.get_template_data().then(function(rex_actions_data)
+		// {
+		// 	data.rex_actions = rex_actions_data;
+		// 	// $('#osiri_rex_todo').text(rex_actions_data.length + " REX à réaliser");
 
-			if (typeof rex_action_template == 'string') var rex_actioncompiled_template = Template7.compile(rex_action_template);
-			$$('#osiri_rex_actions_content').html(rex_actioncompiled_template(data));
-		});
+		// 	if (typeof rex_action_template == 'string') var rex_action_compiled_template = Template7.compile(rex_action_template);
+		// 	$$('#osiri_rex_actions_content').html(rex_action_compiled_template(data));
+
+		// 	return osiri_actions.get_revu_template_data();
+		// })
+		// .then(function(revus_data)
+		// {
+		// 	data.revus = revus_data;
+		// 	// $('#osiri_revu_todo').text(revus_data.length + " revue à organiser");
+
+		// 	if (typeof revu_template == 'string') var revu_compiled_template = Template7.compile(revu_template);
+		// 	$$('#osiri_revu_content').html(revu_compiled_template(data));
+
+		// 	return osiri_projects.get_phase_change_template_data();
+		// })
+		osiri_projects.get_mes_projets_template_data().then(function(mes_projets_data)
+		{
+			data.mes_projets = mes_projets_data;
+			// $('#osiri_rex_todo').text(rex_actions_data.length + " REX à réaliser");
+
+			if (typeof mes_projets_template == 'string') var mes_projets_compiled_template = Template7.compile(mes_projets_template);
+			$$('#osiri_mes_projets_content').html(mes_projets_compiled_template(data));
+
+			return osiri_actions.get_revu_template_data();
+		})
+		.then(function(mes_actions_data)
+		{
+			data.mes_actions = mes_actions_data;
+			// $('#osiri_revu_todo').text(revus_data.length + " revue à organiser");
+
+			if (typeof mes_actions_template == 'string') var mes_actions_compiled_template = Template7.compile(mes_actions_template);
+			$$('#osiri_mes_actions_content').html(mes_actions_compiled_template(data));
+
+			return osiri_projects.get_phase_change_template_data();
+		})
+		.then(function(phase_change_data)
+		{
+			data.phase_changes = phase_change_data;
+			// $('#osiri_phase_change_todo').text(phase_change_data.length + " changement de phase");
+
+			if (typeof phase_change_template == 'string') var phase_change_compiled_template = Template7.compile(phase_change_template);
+			$$('#osiri_phase_change_content').html(phase_change_compiled_template(data));
+
+			return osiri_projects.get_last_event_template_data();
+		})
+		.then(function(last_event_data)
+		{
+			data.last_events = last_event_data;
+			// $('#osiri_last_event_todo').text(last_event_data.length + " dernier événement");
+
+			if (typeof last_event_template == 'string') var last_event_compiled_template = Template7.compile(last_event_template);
+			$$('#osiri_last_event_content').html(last_event_compiled_template(data));
+		})
     });
 }
 
@@ -307,7 +364,6 @@ $$('#send_mail').on('click', function ()
 
 	if (email) ws_server.send_identification_email(email).then(function(result)
 	{
-		debugger
 		if (typeof result == 'string') throw result;
 		if (result.success)
 		{
@@ -370,7 +426,6 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 
 	$$('#connection_login_form').submit(function (e)
 	{
-		debugger
 		var form = $(this);
 		
 		e.preventDefault();
@@ -406,7 +461,6 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 
 function apply_connection_data(result)
 {
-	debugger
 	var startTime;
 	var elapsedTime;
 
@@ -453,7 +507,6 @@ function apply_connection_data(result)
 
 function authentification()
 {
-	debugger
 	var connecting = false;
 	var connect = function (data)
 	{
@@ -464,7 +517,7 @@ function authentification()
 		db_is_inited = false;
 
 		app.dialog.preloader("Connexion au serveur...");
-		debugger
+		
 		ws_user.connect(qrcode.url, qrcode.token, qrcode.data).then(function(result)
 		{
 			debugger;
@@ -501,7 +554,7 @@ function authentification()
 		if (app.device.desktop)
 		{
 			var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41Nzc2NmEzNGQyNTgyNy4wMDk3NTI5NTwqIT0\/PiQyeSQxMCRpclVnWXVCMDJMRXJibmRQWFd6LzllUDRKVzkyLndPMWJBa3BBRXkyTEFkNzZ6TUZLaWl0Mg=="}';
-			debugger
+			
 			ws_storage.set_value('connection_qrcode', data);
 			connect(data);
 			connecting = false;

@@ -13,7 +13,7 @@ var osiri_rexs = new function()
                 {
                     // action[OSIRI_ACTION_PROPERTY_ETAPE] = osiri_projects.get_etape_name(action[OSIRI_ACTION_PROPERTY_PHASE], action[OSIRI_ACTION_PROPERTY_ETAPE]);
                     // action[OSIRI_ACTION_PROPERTY_PHASE] = osiri_actions.get_phase_as_string(action[OSIRI_ACTION_PROPERTY_PHASE]);
-                    action.name = name;
+                    action.nom = name;
                 });
             }
 

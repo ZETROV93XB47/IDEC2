@@ -342,7 +342,7 @@ var ws_datatable = Class.extend(
 		var what = properties != undefined ? properties.join(',') : '*';
 		var query = 'SELECT ' + what + ' FROM ' + this.table;
 		
-		if (extra != undefined) query = query + ' WHERE ' + extra;
+		if (extra != undefined) query = query + ' ' + extra;
 		
 		return self.db.query(query).then(function(result)
 		{
