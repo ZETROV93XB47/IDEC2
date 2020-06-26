@@ -37,9 +37,10 @@ var app_datamodel_class = ws_datamodel_class.extend(
 				OSIRI_DATAMODEL_ENTITY_PHASE_CHANGES,
 				OSIRI_DATAMODEL_ENTITY_INTERLOCUTEURS_ETUDE,
 				OSIRI_DATAMODEL_ENTITY_INTERLOCUTEURS_REX,
+				OSIRI_DATAMODEL_ENTITY_DOCUMENTS_LIST,
 			];
 		},
-		
+
 		get_entity_infos: function(entity)
 		{
 			switch (entity)
@@ -160,9 +161,18 @@ var app_datamodel_class = ws_datamodel_class.extend(
 					synch_key: OSIRI_SYNCHRO_DATA_KEY_INTERLOCUTEURS_REX,
 					synch_mode: WS_SYNC_TABLE_MODE_RECORD
 				};
+					
+			case OSIRI_DATAMODEL_ENTITY_DOCUMENTS_LIST :
+				return {
+					db: ws_database.documents_list,
+					table: OSIRI_DATABASE_TABLE_DOCUMENTS_LIST,
+					synch: true, 
+					synch_key: OSIRI_SYNCHRO_DATA_KEY_DOCUMENTS_LIST,
+					synch_mode: WS_SYNC_TABLE_MODE_RECORD
+				};
 			}
 		},
-	
+
 		get_entity_structure: function(entity)
 		{
 			switch (entity)
@@ -379,8 +389,21 @@ var app_datamodel_class = ws_datamodel_class.extend(
 						{id: OSIRI_INTERLOCUTEUR_REX_PROPERTY_PROJET, type: WS_OBJECT_PROPERTY_TYPE_LINK, entity: OSIRI_DATAMODEL_ENTITY_PROJETS},
 						{id: OSIRI_INTERLOCUTEUR_REX_PROPERTY_METIER, type: WS_OBJECT_PROPERTY_TYPE_STRING},
 					];
+	
+				case OSIRI_DATAMODEL_ENTITY_DOCUMENTS_LIST :
+					return [
+						{id: OSIRI_DOCUMENT_LIST_PROPERTY_ID, type: WS_OBJECT_PROPERTY_TYPE_UNIQUE_ID},
+						{id: OSIRI_DOCUMENT_LIST_PROPERTY_SERVER, type: WS_OBJECT_PROPERTY_TYPE_LINK, entity: WS_DATAMODEL_ENTITY_SERVERS},
+						{id: OSIRI_DOCUMENT_LIST_PROPERTY_SERVER_ID, type: WS_OBJECT_PROPERTY_TYPE_ID},
+						{id: OSIRI_DOCUMENT_LIST_PROPERTY_SYNC_TIMESTAMP, type: WS_OBJECT_PROPERTY_TYPE_STRING},
+						{id: OSIRI_DOCUMENT_LIST_PROPERTY_NAME, type: WS_OBJECT_PROPERTY_TYPE_STRING},
+						{id: OSIRI_DOCUMENT_LIST_PROPERTY_URL, type: WS_OBJECT_PROPERTY_TYPE_STRING},
+						{id: OSIRI_DOCUMENT_LIST_PROPERTY_PROJET, type: WS_OBJECT_PROPERTY_TYPE_LINK, entity: OSIRI_DATAMODEL_ENTITY_PROJETS},
+						{id: OSIRI_DOCUMENT_LIST_PROPERTY_TYPE, type: WS_OBJECT_PROPERTY_TYPE_STRING},
+						{id: OSIRI_DOCUMENT_LIST_PROPERTY_COMMENT, type: WS_OBJECT_PROPERTY_TYPE_STRING},
+					];
 			}
 		},
 	});
-	
+
 	var ws_datamodel = new app_datamodel_class();

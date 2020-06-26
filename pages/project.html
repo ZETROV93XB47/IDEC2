@@ -215,14 +215,22 @@
 		</script>
 
 		<script id="osiri_documents_templete_script" type="text/template7">
-			<div class="block block-strong">
-				<div class="block-title block-title-medium">Étude</div>
-				
-			</div>
-			
-			<div class="block block-strong">
-				<div class="block-title block-title-medium">Prototype</div>
-				
+			<div class="block-title block-title-medium">Documents</div>
+			<div class="card-content card-content-padding" id="op2a_chantier_infos">
+				<div class="list">
+					<ul>
+						{{#each documents_list}}
+						<li>
+							<a  class="link external item-content" href="{{ url }}">
+								<div class="item-inner">
+								<div class="item-title" style="white-space: normal;">{{ name }}</div>
+								<div class="item-after">{{ type }}</div>
+								</div>
+							</a>
+						</li>
+						{{/each}}
+					</ul>
+				</div>
 			</div>
 		</script>
 
@@ -409,6 +417,8 @@
 					if (this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] == "false") this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] = false;
 				}
 				this.data.interlocuteurs_rex = await ws_database.interlocuteurs_rex.find(OSIRI_INTERLOCUTEUR_REX_PROPERTY_PROJET + ' = ?', [this.id]);
+				
+				this.data.documents_list = await ws_database.documents_list.find(OSIRI_DOCUMENT_LIST_PROPERTY_PROJET + ' = ?', [this.id]);
 				
 				var name = await osiri_projects.get_collaborateur(this.data[OSIRI_PROJET_PROPERTY_PILOTE]);
 				

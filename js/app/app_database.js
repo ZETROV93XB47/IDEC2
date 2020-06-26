@@ -19,6 +19,7 @@ var app_database_class = ws_database_class.extend(
 			this.phase_changes = undefined;
 			this.interlocuteurs_etude = undefined;
 			this.interlocuteurs_rex = undefined;
+			this.documents_list = undefined;
 			
 			this.servers_class = ws_datatable.extend(
 			{
@@ -131,6 +132,14 @@ var app_database_class = ws_database_class.extend(
 					this._super(db, OSIRI_DATABASE_TABLE_INTERLOCUTEURS_REX);
 				},
 			});
+			
+			this.documents_list_class = ws_datatable.extend(
+			{
+				constructor: function(db)
+				{
+					this._super(db, OSIRI_DATABASE_TABLE_DOCUMENTS_LIST);
+				},
+			});
 		},
 		
 		get_name: function()
@@ -198,6 +207,9 @@ var app_database_class = ws_database_class.extend(
 
 				case OSIRI_DATABASE_TABLE_INTERLOCUTEURS_REX :
 					return this.interlocuteurs_rex;
+
+				case OSIRI_DATABASE_TABLE_DOCUMENTS_LIST :
+					return this.documents_list;
 			}
 			
 			return null;
@@ -229,6 +241,7 @@ var app_database_class = ws_database_class.extend(
 				self.phase_changes = new self.phase_changes_class(self);
 				self.interlocuteurs_etude = new self.interlocuteurs_etude_class(self);
 				self.interlocuteurs_rex = new self.interlocuteurs_rex_class(self);
+				self.documents_list = new self.documents_list_class(self);
 				
 				resolve();
 			});
