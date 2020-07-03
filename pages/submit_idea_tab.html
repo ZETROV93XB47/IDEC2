@@ -63,7 +63,7 @@
 						<div class="item-inner">
 							<div class="item-title item-label">Objectif</div>
 							<div class="item-input-wrap">
-								<textarea class="resizable" placeholder="Problématique">{{ objectifs }}</textarea>
+								<textarea class="resizable" placeholder="Problématique">{{ objectifs_text }}</textarea>
 							</div>
 						</div>
 					</li>
@@ -188,25 +188,25 @@
 						</div>
 					</li>
 					<li class="item-content item-input">
-						<div class="item-inner">
+						<div class="item-inner" id="osiri_maturite">
 							<div class="item-title item-label">Maturité de l'idée</div>
 							<div class="item-input-wrap input-dropdown-wrap">
-								<select placeholder="choisir ...">
-									<option value="idee_a_developement">Idée à développer</option>
-									<option value="en_developement">En développement</option>
-									<option value="realise_test">Réalisé, en test</option>
-									<option value="realise_deploiemenet">Réalisé, en déploiement</option>
+								<select class="property" placeholder="choisir ...">
+									<option value="idee_a_developement" {{#js_if "this.maturite == 'idee_a_developement'"}}selected{{/js_if}}>Idée à développer</option>
+									<option value="en_developement" {{#js_if "this.maturite == 'en_developement'"}}selected{{/js_if}}>En développement</option>
+									<option value="realise_test" {{#js_if "this.maturite == 'realise_test'"}}selected{{/js_if}}>Réalisé, en test</option>
+									<option value="realise_deploiemenet" {{#js_if "this.maturite == 'realise_deploiemenet'"}}selected{{/js_if}}>Réalisé, en déploiement</option>
 								</select>
 							</div>
 						</div>
 					</li>
 					<li class="item-content item-input">
-						<div class="item-inner">
+						<div class="item-inner" id="osiri_propriete_intellectuelle">
 							<div class="item-title item-label">Propriété intellectuelle</div>
 							<div class="item-input-wrap input-dropdown-wrap">
-								<select placeholder="choisir ...">
-									<option value="a_breveter">À breveter</option>
-									<option value="ne_pas_breveter">Ne pas breveter</option>
+								<select class="property" placeholder="choisir ...">
+									<option value="a_breveter" {{#js_if "this.propriete_intellectuelle == 'a_breveter'"}}selected{{/js_if}}>À breveter</option>
+									<option value="ne_pas_breveter" {{#js_if "this.propriete_intellectuelle == 'ne_pas_breveter'"}}selected{{/js_if}}>Ne pas breveter</option>
 								</select>
 							</div>
 						</div>
@@ -234,7 +234,7 @@
 									<a class="smart-select smart-select-init list-button popover-close item-link" data-open-in="popup" data-searchbar="true" data-close-on-select="true" data-searchbar-placeholder="Chercher un collaborateur ...">
 										<select name="collaborateur">
 											{{#each collaborateurs}}
-												<option value="{{id}}" ws_email="{{email}}" ws_nom="{{nom}}" ws_prenom="{{prenom}}">{{ nom }} {{ prenom }}</option>
+												<option value="{{id}}" ws_email="{{email}}" ws_nom="{{nom}}" ws_prenom="{{prenom}}" ws_entite="{{entite}}" ws_metier="{{metier}}">{{ nom }} {{ prenom }}</option>
 											{{/each}}
 										</select>
 										Depuis la base de donnée
@@ -319,7 +319,7 @@
 							<a class="item-link smart-select smart-select-init" data-open-in="popup" data-searchbar="true" data-close-on-select="true" data-searchbar-placeholder="Chercher un collaborateur ...">
 								<select name="collaborateur">
 									{{#each collaborateurs}}
-										<option value="{{id}}" ws_email="{{email}}" ws_nom="{{nom}}" ws_prenom="{{prenom}}">{{ nom }} {{ prenom }}</option>
+										<option value="{{id}}" ws_email="{{email}}" ws_nom="{{nom}}" ws_prenom="{{prenom}}" ws_entite="{{entite}}" ws_metier="{{metier}}">{{ nom }} {{ prenom }}</option>
 									{{/each}}
 								</select>
 								Contacts
@@ -466,17 +466,38 @@
 				});
 			},
 
-			// custom_tabshow: function(page, event, params)
-			// {
-			// 	var self = this;
-
-			// 	var idee = ws_storage.get_value(OSIRI_STORAGE_KEY_IDEE);
+			custom_tabshow: function(page, event, params)
+			{
+				var self = this;
 				
-			// 	self.template_data = idee ? JSON.parse(idee): {};
-			// 	self.data = idee ? JSON.parse(idee): {};
+				self.id = self.params.id;
+				self.is_new = (self.id == undefined);
 
-			// 	return self.load_page();
-			// },
+				if (!self.is_new) 
+				{
+					$(".left").css('display', 'block');
+					$("#idee_list").css('display', 'none');
+					$(".fab").css('display', 'none');
+					$("#upload_idea").css('display', 'block');
+					
+					ws_database.nouvelle_idees.get_with_id(self.id).then(function(result)
+					{
+						self.idee = result;
+						self.data = JSON.parse(result.data);
+						self.template_data = JSON.parse(result.data);
+					});
+				}
+				else
+				{
+					self.data = {};
+					self.template_data = {};
+				}
+						
+				return self.load_page().then(function()
+				{
+					self.events();
+				});
+			},
 
 			get_collaborateurs_list: function()
 			{
@@ -541,7 +562,7 @@
 				$("#osiri_submit_idea_content input[type='text']").change(function()
 				{
 					var id = $(this).parent().parent().parent().attr('id').substring(6);
-					
+
 					self.set_value(id, $$(this).val(), OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT);
 				});
 
@@ -557,6 +578,13 @@
 					var id = $(this).parent().parent().parent().attr('id').substring(6);
 
 					self.set_value(id, $(this)[0].checked, OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE);
+				});
+
+				$("#osiri_submit_idea_content select.property").change(function()
+				{
+					var id = $(this).parent().parent().attr('id').substring(6);
+					
+					self.set_value(id, $$(this).val(), OSIRI_NOUVELLE_IDEE_OPTION_KEY_TEXT);
 				});
 
 				$("#osiri_upload_idea, #upload_idea").click(function()
@@ -660,10 +688,12 @@
 								self.set_value('provenance_'+nmbre+'_nom', $(element[i]).attr('ws_nom'));
 								self.set_value('provenance_'+nmbre+'_email', $(element[i]).attr('ws_email'));
 								self.set_value('provenance_'+nmbre+'_prenom', $(element[i]).attr('ws_prenom'));
+								self.set_value('provenance_'+nmbre+'_metier', $(element[i]).attr('ws_metier'));
+								self.set_value('provenance_'+nmbre+'_entite', $(element[i]).attr('ws_entite'));
 								break;
 							}
 						}
-
+						
 						var a = '<li id="provenance_'+nmbre+'" class="swipeout deleted-callback">'+
 						'<div class="item-content swipeout-content">'+
 							'<div class="item-inner">'+
@@ -788,6 +818,8 @@
 
 				app.dialog.preloader("Envoi en cours...");
 				
+				debugger
+
 				ws_server.depose_idee(self.data).then(function(result)
 				{
 					if (typeof result == 'string') throw result;
@@ -815,7 +847,6 @@
 			{
 				return ws_database.nouvelle_idees.set_with_id(id, [OSIRI_NOUVELLE_IDEE_PROPERTY_SENT, OSIRI_NOUVELLE_IDEE_PROPERTY_SERVER_ID], [true, server_id]);
 			}
-
 		}));
 	</script>
 </div>

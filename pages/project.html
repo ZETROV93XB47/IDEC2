@@ -200,8 +200,7 @@
 						<li>
 							<div class="item-content">
 								<div class="item-inner">
-								<div class="item-title" style="white-space: normal;">{{ name }}</div>
-								<div class="item-after">{{ metier }}</div>
+								<div class="item-title" style="white-space: normal;"><i class="fas fa-user"></i> {{ interlocuteur_rex_name }}</div>
 								</div>
 							</div>
 						</li>
@@ -238,10 +237,11 @@
 			<div class="block-title block-title-medium">Chantiers</div>
 			<div class="list accordion-list">
 				<ul>
+					{{#each phase_chantiers}}
 					<li class="accordion-item">
 						<a href="#" class="item-content item-link" style="background-color: #e6e6e6;">
 							<div class="item-inner">
-							<div class="item-title">Montigny-lès-Cormeilles DP3 (B09X.PS0505)</div>
+							<div class="item-title">{{ chantier }}</div>
 							</div>
 						</a>
 						<div class="accordion-item-content">
@@ -252,7 +252,7 @@
 											<div class="item-content">
 												<div class="item-inner">
 												<div class="item-title">Interlocuteur REX</div>
-												<div class="item-after">Christophe LOUIS</div>
+												<div class="item-after">{{ interlocuteur_rex_name }}</div>
 												</div>
 											</div>
 										</li>
@@ -260,7 +260,15 @@
 											<div class="item-content">
 												<div class="item-inner">
 												<div class="item-title">Début et fin des tests</div>
-												<div class="item-after">01/08/18 - 03/08/18</div>
+												<div class="item-after">{{ date_debut }} - {{ date_fin }}</div>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="item-content">
+												<div class="item-inner">
+												<div class="item-title">Date rex previsionnelle</div>
+												<div class="item-after">{{ date_rex_previsionnelle }}</div>
 												</div>
 											</div>
 										</li>
@@ -268,7 +276,7 @@
 											<div class="item-content">
 												<div class="item-inner">
 												<div class="item-title">Quantité</div>
-												<div class="item-after">1</div>
+												<div class="item-after">{{ quantite }}</div>
 												</div>
 											</div>
 										</li>
@@ -276,7 +284,7 @@
 											<div class="item-content">
 												<div class="item-inner">
 												<div class="item-title">Commentaire</div>
-												<div class="item-after"></div>
+												<div class="item-after">{{ comment }}</div>
 												</div>
 											</div>
 										</li>
@@ -285,53 +293,7 @@
 							</div>
 						</div>
 					</li>
-					<li class="accordion-item">
-						<a href="#" class="item-content item-link" style="background-color: #e6e6e6;">
-							<div class="item-inner">
-							<div class="item-title">Bois Colombes ZAC Pompidou (PS0489)</div>
-							</div>
-						</a>
-						<div class="accordion-item-content">
-							<div class="card-content card-content-padding" id="op2a_chantier_infos">
-								<div class="list">
-									<ul>
-										<li>
-											<div class="item-content">
-												<div class="item-inner">
-												<div class="item-title">Interlocuteur REX</div>
-												<div class="item-after">David SALOME</div>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="item-content">
-												<div class="item-inner">
-												<div class="item-title">Début et fin des tests</div>
-												<div class="item-after">26/04/18 - 15/06/18</div>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="item-content">
-												<div class="item-inner">
-												<div class="item-title">Quantité</div>
-												<div class="item-after">1</div>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="item-content">
-												<div class="item-inner">
-												<div class="item-title">Commentaire</div>
-												<div class="item-after"></div>
-												</div>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</li>
+					{{/each}}
 				</ul>
 			</div>
 		</script>
@@ -409,6 +371,7 @@
 				this.data = await ws_database.projets.get_with_id(this.id);
 
 				$('#project-title').text(this.data.nom);
+				// interlocuteurs_etude
 
 				this.data.interlocuteurs_etude = await ws_database.interlocuteurs_etude.find(OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_PROJET + ' = ?', [this.id]);
 				for (var i = 0; i<this.data.interlocuteurs_etude.length; i++)
@@ -416,9 +379,36 @@
 					if (this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] == "true") this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] = true;
 					if (this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] == "false") this.data.interlocuteurs_etude[i][OSIRI_INTERLOCUTEUR_ETUDE_PROPERTY_LEADER] = false;
 				}
-				this.data.interlocuteurs_rex = await ws_database.interlocuteurs_rex.find(OSIRI_INTERLOCUTEUR_REX_PROPERTY_PROJET + ' = ?', [this.id]);
+
+				// this.data.interlocuteurs_rex = await ws_database.interlocuteurs_rex.find(OSIRI_INTERLOCUTEUR_REX_PROPERTY_PROJET + ' = ?', [this.id]);
+				
+				// documents_list
 				
 				this.data.documents_list = await ws_database.documents_list.find(OSIRI_DOCUMENT_LIST_PROPERTY_PROJET + ' = ?', [this.id]);
+				
+				var phase_chantiers = await ws_database.phase_chantiers.find(OSIRI_PHASE_CHANTIER_PROPERTY_PROJET + ' = ?', [this.id]);
+
+				// interlocuteurs_rex
+
+				this.data.interlocuteurs_rex = phase_chantiers;
+
+				// phase chantiers
+				
+				for (var i = 0; i<phase_chantiers.length; i++)
+				{
+					var phase_chantier = phase_chantiers[i];
+					var chantier = await ws_database.chantiers.get_with_id(phase_chantier.chantier);
+					var rex = await ws_database.rexs.get_with_id(phase_chantier.rex);
+					
+
+					if (phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT] != "null") phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_DEBUT]);
+					if (phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN] != "null") phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_FIN]);
+					if (phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE] != "null") phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE]);
+
+					if (chantier) phase_chantier.chantier = chantier.nom;
+				}
+
+				this.data.phase_chantiers = phase_chantiers;
 				
 				var name = await osiri_projects.get_collaborateur(this.data[OSIRI_PROJET_PROPERTY_PILOTE]);
 				

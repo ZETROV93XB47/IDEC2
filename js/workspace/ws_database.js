@@ -445,6 +445,10 @@ var ws_datatable = Class.extend(
 
 		var ids = Object.keys(data);
 		var ids_lenght = length;
+		for (var i = index; i < ids_lenght; i++)
+		{
+			data[ids[i]][WS_OBJECT_PROPERTY_SERVER] = ws_engine.get_server_id();
+		}
 		var properties = Object.keys(data[ids[0]]);
 		var propertie_lenght = properties.length;
 		var bindings = [];

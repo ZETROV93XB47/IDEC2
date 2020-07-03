@@ -280,7 +280,7 @@ function load_home()
 			if (typeof mes_projets_template == 'string') var mes_projets_compiled_template = Template7.compile(mes_projets_template);
 			$$('#osiri_mes_projets_content').html(mes_projets_compiled_template(data));
 
-			return osiri_actions.get_revu_template_data();
+			return osiri_actions.get_template_data();
 		})
 		.then(function(mes_actions_data)
 		{

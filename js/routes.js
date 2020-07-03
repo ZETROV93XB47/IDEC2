@@ -8,7 +8,7 @@ var routes = [
 
     { path: '/my_actions_tab/', url: './pages/my_actions_tab.html' },
     { path: '/formulaire_action/', url: './pages/formulaire_action.html' },
-    { path: '/formulaire_action/:action_id/:chantier_id/:projet_id', url: './pages/formulaire_action.html' },
+    { path: '/formulaire_action/:chantier_id/:projet_id', url: './pages/formulaire_action.html' },
 
     { path: '/innovations_tab/', url: './pages/innovations_tab.html' },
     { path: '/innovations_familles/', url: './pages/innovations_familles.html' },

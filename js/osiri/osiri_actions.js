@@ -53,15 +53,17 @@ var osiri_actions = new function()
         var self = this;
         var promises = [];
 
-        return ws_database.actions.all().then(function(actions)
+        return ws_database.actions.all(undefined, 'ORDER BY phase ASC').then(function(actions)
         {
             function change_value(i, actions)
             {
-                return osiri_projects.get_projet_name(actions[i][OSIRI_ACTION_PROPERTY_PROJET]).then(function(name)
+                var action = actions[i];
+                return osiri_projects.get_projet_name(action[OSIRI_ACTION_PROPERTY_PROJET]).then(function(name)
                 {
-                    actions[i][OSIRI_ACTION_PROPERTY_DATE] = ws_tools.get_date_as_string(actions[i][OSIRI_ACTION_PROPERTY_DATE]);
-                    actions[i][OSIRI_ACTION_PROPERTY_PHASE] = self.get_phase_as_string(actions[i][OSIRI_ACTION_PROPERTY_PHASE]);
-                    actions[i].nom = name;
+                    action[OSIRI_ACTION_PROPERTY_DATE] = ws_tools.get_date_as_string(action[OSIRI_ACTION_PROPERTY_DATE]);
+                    action[OSIRI_ACTION_PROPERTY_ETAPE] = osiri_projects.get_etape_name(action[OSIRI_ACTION_PROPERTY_PHASE], action[OSIRI_ACTION_PROPERTY_ETAPE]);
+                    action[OSIRI_ACTION_PROPERTY_PHASE] = self.get_phase_as_string(action[OSIRI_ACTION_PROPERTY_PHASE]);
+                    action.nom = name;
                 });
             }
 

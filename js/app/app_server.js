@@ -61,10 +61,11 @@ var app_server_class = ws_server_class.extend(
 		return this.api('notify_rex_materiel_non_recu', params);
 	},
 	
-	send_rex : function()
+	send_rex : function(rex)
 	{
-		var params = {};
+		var params = { token: ws_engine.get_user_token(), device : ws_engine.get_device_id(), rex: rex};
 		
+		debugger
 		return this.api('send_rex', params);
 	},
 

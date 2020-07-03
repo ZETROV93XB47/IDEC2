@@ -51,7 +51,7 @@
 						    <li>
                                 <div class="item-content">
                                     <div class="item-inner">
-                                    <div class="item-title">Contact chantier : Jéremy</div>
+                                        <div class="item-title">Contact chantier : Jéremy</div>
                                         <div class="item-after">
                                             <label osiri_type="Contact chantier" class="checkbox" style="padding-top: 4px;">
                                                 <input class="name_change" type="checkbox"><i class="icon-checkbox"></i>
@@ -66,6 +66,24 @@
 			</div>
             <div class="list inset">
                 <ul>
+                    <li id="accompangement_bcm_fournisseur">
+                        <div class="item-content item-input">
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Conditions de test</div></div>
+                            <div class="item-after"></div>
+                        </div>
+                        <div class="osiri_action_option">
+                            <label class="item-checkbox item-content">
+                                <div class="item-inner">
+                                    <div class="item-title">Accompagnement BCM Fournisseur</div>
+                                    <div class="item-after">
+                                        <label class="checkbox" style="padding-top: 4px;">
+                                            <input type="checkbox"><i class="icon-checkbox"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                              </label>
+                        </div>
+                    </li>
                     <li id="ergonomie">
                         <div class="item-content item-input">
                             <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Ergonomie <span style="color:red;">*</span></div></div>
@@ -381,23 +399,19 @@
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
                                     <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Commentaire</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if globale}}{{ globale.commentaire }}{{/if}}</textarea>
+                                        <div class="item-subtitle">Complément d'information</div>
+                                        <textarea class="resizable" style="height: 70px;" placeholder="Complément d'information" osiri_content="conmplement_information">{{#if globale}}{{ globale.conmplement_information }}{{/if}}</textarea>
                                     </div>
-                                    <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if globale}}{{ globale.proposition }}{{/if}}</textarea>
-                                    </div>
-                                </div>
+                                <!-- </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
                                     <div style="height: 65px;">
                                         <a class="link popover-open add_photo" osiri_prop="globale" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
                                             <i class="f7-icon material-icons md-only">add_a_photo</i>
                                         </a>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
-                            <div id="osiri_rex_photos_globale" class="actions-grid modal-in" style="display:{{#if globale}}block{{else}}none{{/if}};">
+                            <!-- <div id="osiri_rex_photos_globale" class="actions-grid modal-in" style="display:{{#if globale}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if globale}}{{#if globale.image}}
                                     <div class="actions-button">
@@ -406,24 +420,7 @@
                                     </div>
                                     {{/if}}{{/if}}
                                 </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="complement_infos">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Complément d'information</div>
-                            <div class="item-after">
-                                
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="item-content item-input">
-                                <div class="item-inner">
-                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire"></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                            </div> -->
                         </div>
                     </li>
                 </ul>
@@ -448,7 +445,7 @@
             {
                 var self = this;
 
-			    self.action_id = self.params.action_id;
+			    // self.action_id = self.params.action_id;
 			    self.chantier_id = self.params.chantier_id;
 			    self.projet_id = self.params.projet_id;
 
@@ -458,30 +455,43 @@
                 
                 function init_context()
                 {
-                    var condition = OSIRI_REX_PROPERTY_CHANTIER_ID+" = ? AND "+ OSIRI_REX_PROPERTY_PROJET_ID+" = ?";
+                    var condition = OSIRI_PHASE_CHANTIER_PROPERTY_CHANTIER+" = ? AND "+ OSIRI_PHASE_CHANTIER_PROPERTY_PROJET+" = ?";
                     var binding = [self.chantier_id, self.projet_id];
 
-                    return ws_database.rexs.get(condition, binding).then(function(result)
+                    return ws_database.phase_chantiers.get(condition, binding).then(function(result)
                     {
-                        debugger
-                        self.is_new = (result == null);
-                        if (!self.is_new) 
+                        if (result)
                         {
-                            self.rexs = result;
-                            self.rex_id = result.id;
-                            self.data = JSON.parse(result.data);
-                        }
-                        else return self.add_rex().then(function(id)
-                        {
-                            var condition = OSIRI_REX_PROPERTY_ID + " = ?";
-                            var binding = [id];
-
-                            return ws_database.rexs.get(condition, binding).then(function(result)
+                            self.phase_chantier_id = result[OSIRI_PHASE_CHANTIER_PROPERTY_ID];
+                            self.phase_chantier = result;
+                            self.is_new = (result[OSIRI_PHASE_CHANTIER_PROPERTY_REX] == "null");
+                            debugger
+                            if (!self.is_new) 
                             {
-                                self.rex_id = result.id;
-                                self.rexs = result;
+                                return ws_database.rexs.get_with_id(result[OSIRI_PHASE_CHANTIER_PROPERTY_REX]).then(function(result)
+                                {
+                                    self.rexs = result;
+                                    self.rex_id = result.id;
+                                    self.data = JSON.parse(result.data);
+                                });
+                            }
+                            else return self.add_rex().then(function(id)
+                            {
+                                var condition = OSIRI_REX_PROPERTY_ID + " = ?";
+                                var binding = [id];
+
+                                return ws_database.rexs.get(condition, binding).then(function(result)
+                                {
+                                    self.rex_id = result.id;
+                                    self.rexs = result;
+                                    return ws_database.phase_chantiers.set_with_id(self.phase_chantier_id, [OSIRI_PHASE_CHANTIER_PROPERTY_REX], [self.rex_id]);
+                                });
                             });
-                        });
+                        }
+                        else
+                        {
+                            app.dialog.alert('Problème de creation du REX (phase chantier introuvable )!');
+                        }
                     })
                     .catch(function(error)
                     {
@@ -540,7 +550,7 @@
                     for (var i = 0; i<properties.length; i++)
                     {
                         var stars = $('#'+ properties[i]).find('.stars');
-                        var stars_nbr = self.data[properties[i]].action;
+                        var stars_nbr = self.data[properties[i]][OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE];
                         var icon = 'col fas fa-star';
                         debugger
                         if (stars_nbr)
@@ -622,6 +632,13 @@
                         
 						self.set_value(id, $$(this).val(), content);
                     });
+
+                    $("#accompangement_bcm_fournisseur input").change(function()
+					{   
+                        var id = 'accompangement_bcm_fournisseur';
+                        debugger
+						self.set_value(id, $$(this)[0].checked, OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE);
+                    });
                     
                     $('.list li .item-content button').click(function(e)
                     {
@@ -632,7 +649,7 @@
                         buttons.removeClass("button-active");
                         $$(this).parent().find(".button[value='"+ value +"']").addClass("button-active");
 
-						self.set_value(id, value, OSIRI_NOUVELLE_IDEE_OPTION_KEY_ACTION);
+						self.set_value(id, value, OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE);
                     });
 
                     $('.star').click(function()
@@ -652,7 +669,7 @@
 
                         if (self.data[id] == undefined) self.data[id] = {};
 
-                        if (Math.ceil(self.data[id][OSIRI_NOUVELLE_IDEE_OPTION_KEY_ACTION]) == index+1)
+                        if (Math.ceil(self.data[id][OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE]) == index+1)
                         {
                             if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt' && index == 0)
                             {
@@ -691,7 +708,7 @@
                             }
                         }
                         
-						self.set_value(id, value, OSIRI_NOUVELLE_IDEE_OPTION_KEY_ACTION);
+						self.set_value(id, value, OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE);
                     });
 
                     $('textarea').on('input', function()
@@ -713,10 +730,12 @@
                     {
                         var self = this;
 
+                        debugger
                         if ($(this)[0].checked) 
                         {
                             var type = $(self).parent().attr('osiri_type');
                             var name = $(self).parent().parent().parent().find('.item-title').text().split(':')[1];
+                            
                             app.dialog.create({
                                 title: app.name,
                                 text: 'Veuillez confirmer le nom du '+ type,
@@ -749,8 +768,6 @@
                             // });
                         }
                     });
-
-                    
                 });
             },
 
@@ -814,8 +831,8 @@
 			{
 				var self = this;
 
-				app.dialog.preloader("Envoi en cours...");
-				debugger
+                app.dialog.preloader("Envoi en cours...");
+                
                 if (self.data.ergonomie == undefined)
                 {
                     app.dialog.close();
@@ -830,11 +847,11 @@
                     return true;
                 }
 
-                app.dialog.close();
-				app.dialog.alert("La nouvelle idée a bien été envoyée à OSIRI");
-                return true;
-                debugger
-				ws_server.depose_idee(self.data).then(function(result)
+                // app.dialog.close();
+				// app.dialog.alert("La REX a bien été envoyée à OSIRI");
+                // return true;
+                
+				ws_server.send_rex(self.data).then(function(result)
 				{
 					debugger
 					if (typeof result == 'string') throw result;
@@ -877,8 +894,6 @@
                 var self = this;
 
                 var rex_properties = [
-                    OSIRI_REX_PROPERTY_CHANTIER_ID,
-                    OSIRI_REX_PROPERTY_PROJET_ID,
                     OSIRI_REX_PROPERTY_VERSION,
                     OSIRI_REX_PROPERTY_DATE_DEBUT,
                     OSIRI_REX_PROPERTY_DATE_FIN,
@@ -891,12 +906,10 @@
                 ];
                 
                 var rex_values = [
-                    self.chantier_id,
-                    self.projet_id,
                     1,
-                    ws_tools.get_date_as_string(),
-                    "",
-                    ws_tools.get_date_as_string(),
+                    self.phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT],
+                    self.phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN],
+                    ws_tools.get_date_with_default_format(),
                     "",
                     "",
                     "",

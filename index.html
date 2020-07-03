@@ -187,11 +187,11 @@
                             <i class="icon material-icons if-md">home</i>
                             <span class="tabbar-label">Tableau de bord</span>
                         </a>
-                        <a href="#view-submit-idea" class="tab-link">
+                        <!-- <a href="#view-submit-idea" class="tab-link">
                             <i class="icon f7-icons if-not-md">square_list_fill</i>
                             <i class="icon material-icons if-md">view_list</i>
                             <span class="tabbar-label">Déposer idée</span>
-                        </a>
+                        </a> -->
                         <a href="#view-my-actions" class="tab-link">
                             <i class="icon f7-icons if-not-md">square_list_fill</i>
                             <i class="icon material-icons if-md">view_list</i>
@@ -286,7 +286,7 @@
                                     <ul>
                                         {{#each mes_actions}}
                                         <li>
-                                            <a href="/formulaire_action/" class="item-link item-content">
+                                            <a href="{{#js_if "this.action == 'prototype_tests_chantiers'"}}/formulaire_action/{{ chantier }}/{{ projet }}{{else}}/project/{{ projet }}{{/js_if}}" class="item-link item-content">
                                             <div class="item-inner">
                                                 <div class="item-title">
                                                 {{ nom }}
