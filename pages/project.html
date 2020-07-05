@@ -402,8 +402,11 @@
 					
 
 					if (phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT] != "null") phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_DEBUT]);
+					else phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT] = '';
 					if (phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN] != "null") phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_FIN]);
+					else phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN] = '';
 					if (phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE] != "null") phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE]);
+					else phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE] = '';
 
 					if (chantier) phase_chantier.chantier = chantier.nom;
 				}

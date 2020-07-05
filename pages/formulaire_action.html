@@ -77,7 +77,7 @@
                                     <div class="item-title">Accompagnement BCM Fournisseur</div>
                                     <div class="item-after">
                                         <label class="checkbox" style="padding-top: 4px;">
-                                            <input type="checkbox"><i class="icon-checkbox"></i>
+                                            <input type="checkbox" {{#if accompangement_bcm_fournisseur}}{{#if accompangement_bcm_fournisseur.value}}checked{{/if}}{{/if}}><i class="icon-checkbox"></i>
                                         </label>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                             <div id="osiri_rex_photos_ergonomie" class="actions-grid modal-in" style="display:{{#if ergonomie}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if ergonomie}}{{#if ergonomie.image}}
-                                    <div class="actions-button">
+                                    <div class="actions-button" style="margin-left: 30%">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ ergonomie.image }}" width="48"></div>
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
@@ -173,7 +173,7 @@
                             <div id="osiri_rex_photos_securite" class="actions-grid modal-in" style="display:{{#if securite}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if securite}}{{#if securite.image}}
-                                    <div class="actions-button">
+                                    <div class="actions-button" style="margin-left: 30%">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ securite.image }}" width="48"></div>
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
@@ -222,7 +222,7 @@
                             <div id="osiri_rex_photos_productivite" class="actions-grid modal-in" style="display:{{#if productivite}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if productivite}}{{#if productivite.image}}
-                                    <div class="actions-button">
+                                    <div class="actions-button" style="margin-left: 30%">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ productivite.image }}" width="48"></div>
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
@@ -271,7 +271,7 @@
                             <div id="osiri_rex_photos_competitivite" class="actions-grid modal-in" style="display:{{#if competitivite}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if competitivite}}{{#if competitivite.image}}
-                                    <div class="actions-button">
+                                    <div class="actions-button" style="margin-left: 30%">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ competitivite.image }}" width="48"></div>
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
@@ -320,7 +320,7 @@
                             <div id="osiri_rex_photos_environnement" class="actions-grid modal-in" style="display:{{#if environnement}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if environnement}}{{#if environnement.image}}
-                                    <div class="actions-button">
+                                    <div class="actions-button" style="margin-left: 30%">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ environnement.image }}" width="48"></div>
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
@@ -369,7 +369,7 @@
                             <div id="osiri_rex_photos_autre" class="actions-grid modal-in" style="display:{{#if autre}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if autre}}{{#if autre.image}}
-                                    <div class="actions-button">
+                                    <div class="actions-button" style="margin-left: 30%">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ autre.image }}" width="48"></div>
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
@@ -414,7 +414,7 @@
                             <!-- <div id="osiri_rex_photos_globale" class="actions-grid modal-in" style="display:{{#if globale}}block{{else}}none{{/if}};">
                                 <div class="actions-group">
                                     {{#if globale}}{{#if globale.image}}
-                                    <div class="actions-button">
+                                    <div class="actions-button" style="margin-left: 30%">
                                         <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ globale.image }}" width="48"></div>
                                         <div class="actions-button-text dynamic-popover">image</div>
                                     </div>
@@ -609,7 +609,7 @@
 						osiri_photos.take_photo(Camera.PictureSourceType.CAMERA).then(function(base64)
 						{
 							option_element.find("#osiri_rex_photos_"+ prop)[0].style.display = "block";
-                            $('#osiri_rex_photos_'+ prop +' div.actions-group').append('<div class="actions-button"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div>');
+                            $('#osiri_rex_photos_'+ prop +' div.actions-group').html('<div class="actions-button" style="margin-left: 30%"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div>');
 							self.set_value(prop, base64, OSIRI_NOUVELLE_IDEE_OPTION_KEY_IMAGE);
 						});
                     });
@@ -620,11 +620,21 @@
 						osiri_photos.take_photo(Camera.PictureSourceType.PHOTOLIBRARY).then(function(base64)
 						{
                             option_element.find("#osiri_rex_photos_"+ prop)[0].style.display = "block";
-                            $('#osiri_rex_photos_'+ prop +' div.actions-group').append('<div class="actions-button"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div>');
+                            $('#osiri_rex_photos_'+ prop +' div.actions-group').html('<div class="actions-button" style="margin-left: 30%"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div>');
 							self.set_value(prop, base64, OSIRI_NOUVELLE_IDEE_OPTION_KEY_IMAGE);
 						});
                     });
                     
+                    option_element.find(".actions-button-media img").click(function()
+                    {
+                        var image = [$(this).attr('src')];
+                        var myPhotoBrowserPopup = app.photoBrowser.create({
+							photos : image,
+						    type: 'standalone',
+						});
+				        myPhotoBrowserPopup.open();
+                    });
+
                     $("#osiri_rex_content textarea").change(function()
 					{   
                         var id = $(this).parent().parent().parent().parent().parent().attr('id');
@@ -833,39 +843,42 @@
 
                 app.dialog.preloader("Envoi en cours...");
                 
-                if (self.data.ergonomie == undefined)
+                if (self.data.ergonomie == undefined || self.data.ergonomie[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0)
                 {
                     app.dialog.close();
                     app.dialog.alert("Veuillez renseigner les champs de l'ergonomie !");
                     return true;
                 }
 
-                if (self.data.securite == undefined)
+                if (self.data.securite == undefined || self.data.securite[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0)
                 {
                     app.dialog.close();
                     app.dialog.alert("Veuillez renseigner les champs de sécurite !");
                     return true;
                 }
 
-                // app.dialog.close();
-				// app.dialog.alert("La REX a bien été envoyée à OSIRI");
-                // return true;
-                
-				ws_server.send_rex(self.data).then(function(result)
+                if (self.data.globale == undefined || self.data.globale[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0)
+                {
+                    app.dialog.close();
+                    app.dialog.alert("Veuillez renseigner les champs de globale !");
+                    return true;
+                }
+                debugger
+				ws_server.send_rex(self.data, self.phase_chantier.server_id).then(function(result)
 				{
 					debugger
-					if (typeof result == 'string') throw result;
-					app.dialog.close();
-					app.dialog.alert("La nouvelle idée a bien été envoyée à OSIRI");
-					if (self.id) self.nouvelle_idee_update(self.id, result[OSIRI_NOUVELLE_IDEE_PROPERTY_SERVER_ID]);
-					else
-					{
-						self.add().then(function(result)
-						{
-							self.nouvelle_idee_update(result, result[OSIRI_NOUVELLE_IDEE_PROPERTY_SERVER_ID]);
-						});
-					}
-					// ws_storage.set_value(OSIRI_STORAGE_KEY_IDEE, JSON.stringify({}));
+                    if (typeof result == 'string') throw result;
+                    if (result.success)
+                    {
+                        app.dialog.close();
+                        app.dialog.alert("La REX a été bien envoyée à OSIRI");
+                        ws_database.rexs.set_with_id(self.rex_id, [OSIRI_REX_PROPERTY_SERVER_ID], [result.server_id]);
+                    }
+                    else
+                    {
+                        app.dialog.close();
+                        app.dialog.alert(result.error);
+                    }
 				})
 				.catch(function(error)
 				{
