@@ -94,6 +94,14 @@
 								{
 									data.search_items = data.search_items.concat(projets_template_data);
 									
+									for (var i = 0; i<data.search_items.length; i++)
+									{
+										if (data.search_items[i][OSIRI_PROJET_PROPERTY_IMAGE] == "null" || data.search_items[i][OSIRI_PROJET_PROPERTY_IMAGE] == "undefined") 
+										{
+											data.search_items[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
+										}
+									}
+					
 									// if (data.search_items) data.search_items.sort((a,b) => (a.libelle > b.libelle ? 1 : (a.libelle < b.libelle ? -1 : 0 )));
 									
 									self.apply_template(page, "op2a_search_list_template", "op2a_search_list_content", data);

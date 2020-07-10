@@ -50,7 +50,7 @@ var app = new Framework7(
 
 		authentification_form_out: function()
 		{
-			authentification();
+			authentification(event, true);
 		},
 
 		setBarsStyle: function (barsStyle)
@@ -505,9 +505,14 @@ function apply_connection_data(result)
 	}
 }
 
-function authentification()
+function authentification(event, connect_with_old_qrcode)
 {
+	console.log('authentification');
+	debugger
+	if (!connect_with_old_qrcode) connect_with_old_qrcode = false;
+
 	var connecting = false;
+
 	var connect = function (data)
 	{
 		var qrcode = JSON.parse(data);
@@ -520,7 +525,6 @@ function authentification()
 		
 		ws_user.connect(qrcode.url, qrcode.token, qrcode.data).then(function(result)
 		{
-			debugger;
 			return self.apply_connection_data(result);
 		})
 		.then(function(result)
@@ -542,7 +546,11 @@ function authentification()
 	}
 
 	var qrcode =  ws_storage.get_value('connection_qrcode');
-	if (qrcode) return connect(qrcode);
+	if (qrcode && connect_with_old_qrcode)
+	{
+		console.log('recharge');
+		return connect(qrcode);
+	}
 	
 	if (connecting) debugger;
 	
@@ -561,8 +569,12 @@ function authentification()
 		}
 		else cordova.plugins.barcodeScanner.scan(function(data) 
 		{
+			console.log('start');
+			console.log('start : '+data.cancelled);
+			console.log('start : '+data.format);
 			if (!data.cancelled && data.format == "QR_CODE")
 			{
+				console.log('start/enter');
 				ws_storage.set_value('connection_qrcode', data.text);
 				console.log(data.text);
 				
@@ -573,7 +585,9 @@ function authentification()
 		},
 		function (error) 
 		{
-			if (error) alert("Erreur de lecture du QRCode : " + error);
+			console.log('error');
+			
+			app.dialog.alert("Erreur de lecture du QRCode : " + error ? error : 'pas de messgae');
 			
 			connecting = false;
 		});

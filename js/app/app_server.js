@@ -61,9 +61,9 @@ var app_server_class = ws_server_class.extend(
 		return this.api('notify_rex_materiel_non_recu', params);
 	},
 	
-	send_rex : function(rex, phase_chantier)
+	send_rex : function(rex, phase_chantier, date)
 	{
-		var params = { token: ws_engine.get_user_token(), device : ws_engine.get_device_id(), rex: rex, phase_chantier_id :phase_chantier };
+		var params = { token: ws_engine.get_user_token(), device : ws_engine.get_device_id(), rex: rex, phase_chantier_id :phase_chantier , date: date };
 		
 		return this.api('send_rex', params);
 	},

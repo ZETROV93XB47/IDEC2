@@ -8,7 +8,7 @@
                 <span class="if-not-md">Back</span>
                 </a>
             </div>
-            <div class="title">OSIRI - Mes actions</div>
+            <div class="title">OSIRI - Formulaire REX</div>
 			<div class="right">
 				<a id="upload_action" href="#" class="link icon-only"><i class="fa fa-paper-plane" style="font-size:20px;"></i></a>
 			</div>
@@ -397,7 +397,7 @@
                                 <a class="star item-link"><i class="col fal fa-star"></i></a>
                             </div>
                             <div class="item-content item-input">
-                                <div class="item-inner" style="display: none; padding-top: 24px;">
+                                <div class="item-inner" style="display: block; padding-top: 24px;">
                                     <div class="item-input-wrap" style="margin-bottom: 30px;">
                                         <div class="item-subtitle">Complément d'information</div>
                                         <textarea class="resizable" style="height: 70px;" placeholder="Complément d'information" osiri_content="conmplement_information">{{#if globale}}{{ globale.conmplement_information }}{{/if}}</textarea>
@@ -446,8 +446,8 @@
                 var self = this;
 
 			    // self.action_id = self.params.action_id;
-			    self.chantier_id = self.params.chantier_id;
-			    self.projet_id = self.params.projet_id;
+			    self.phase_chantier = self.params.phase_chantier;
+			    // self.projet_id = self.params.projet_id;
 
                 self.data = {};
                 self.template_data = {};
@@ -455,17 +455,14 @@
                 
                 function init_context()
                 {
-                    var condition = OSIRI_PHASE_CHANTIER_PROPERTY_CHANTIER+" = ? AND "+ OSIRI_PHASE_CHANTIER_PROPERTY_PROJET+" = ?";
-                    var binding = [self.chantier_id, self.projet_id];
-
-                    return ws_database.phase_chantiers.get(condition, binding).then(function(result)
+                    return ws_database.phase_chantiers.get_with_id(self.phase_chantier).then(function(result)
                     {
                         if (result)
                         {
                             self.phase_chantier_id = result[OSIRI_PHASE_CHANTIER_PROPERTY_ID];
                             self.phase_chantier = result;
                             self.is_new = (result[OSIRI_PHASE_CHANTIER_PROPERTY_REX] == "null");
-                            debugger
+                            
                             if (!self.is_new) 
                             {
                                 return ws_database.rexs.get_with_id(result[OSIRI_PHASE_CHANTIER_PROPERTY_REX]).then(function(result)
@@ -502,7 +499,7 @@
 
                 init_context().then(function()
                 {
-                    return self.load_page();
+                    return self.load_page(page);
                 })
                 .catch(function(error)
                 {
@@ -516,21 +513,27 @@
                 var properties = Object.keys(this.data);
             },
             
-            load_page: function()
+            load_page: function(page)
             {
                 var self = this;
                 var prop;
 
                 self.template_data = self.data;
-                if (self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] == "false")
+                if (!self.rexs)
+                {
+                    app.dialog.alert('REX non crée');
+                    return page.view.router.back();
+                }
+                if (self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] == "null")
                 return self.apply_template(page, "osiri_rex_preform_template", "osiri_rex_content", self.template_data).then(function()
                 {
                     $("#recived").click(function()
                     {
-                        ws_database.rexs.set_with_id(self.rex_id, [OSIRI_REX_PROPERTY_MATERIEL_RECEIVED], [true]).then(function()
+                        var date = ws_tools.get_date_with_default_format();
+                        ws_database.rexs.set_with_id(self.rex_id, [OSIRI_REX_PROPERTY_MATERIEL_RECEIVED], [date]).then(function()
                         {
-                            self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] = true;
-                            return self.load_page();
+                            self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] = date;
+                            return self.load_page(page);
                         });
                     });
 
@@ -552,7 +555,7 @@
                         var stars = $('#'+ properties[i]).find('.stars');
                         var stars_nbr = self.data[properties[i]][OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE];
                         var icon = 'col fas fa-star';
-                        debugger
+                        
                         if (stars_nbr)
                         {
                             stars.next().find('.item-inner').css('display', 'block');
@@ -572,7 +575,6 @@
                             }
                             else
                             {
-                                debugger
                                 stars_nbr = Math.ceil(stars_nbr);
 
                                 var stars_elements = $('#'+ properties[i]).find('.stars').children();
@@ -683,7 +685,6 @@
                         {
                             if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt' && index == 0)
                             {
-                                debugger
                                 var value = self.update_stars(index, stars_elemnts, origin_icon, "", 0);
                                 
                                 stars.next().find('.item-inner').css('display', 'none');
@@ -692,7 +693,6 @@
                             }
                             else if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt')
                             {
-                                debugger
                                 var value = self.update_stars(index, stars_elemnts, icon, color, 1);
                             }
                             else
@@ -740,7 +740,6 @@
                     {
                         var self = this;
 
-                        debugger
                         if ($(this)[0].checked) 
                         {
                             var type = $(self).parent().attr('osiri_type');
@@ -864,7 +863,7 @@
                     return true;
                 }
                 debugger
-				ws_server.send_rex(self.data, self.phase_chantier.server_id).then(function(result)
+				ws_server.send_rex(self.data, self.phase_chantier.server_id, self.rexs.date).then(function(result)
 				{
 					debugger
                     if (typeof result == 'string') throw result;
@@ -927,7 +926,7 @@
                     "",
                     "",
                     JSON.stringify(self.data),
-                    false
+                    "null"
                 ];
 
                 return ws_database.rexs.add_with_server(ws_engine.get_server_id(), rex_properties, rex_values);

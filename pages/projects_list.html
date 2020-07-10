@@ -58,9 +58,16 @@
 
                 return osiri_projects.get_template_data(self.phase, self.famille).then(function(result)
                 {
-                    debugger
                     self.data.projects_list = result;
 
+                    for (var i = 0; i<self.data.projects_list.length; i++)
+                    {
+                        if (self.data.projects_list[i][OSIRI_PROJET_PROPERTY_IMAGE] == "null" || self.data.projects_list[i][OSIRI_PROJET_PROPERTY_IMAGE] == "undefined") 
+                        {
+                            self.data.projects_list[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
+                        }
+                    }
+                
                     return self.apply_template(page, "osiri_project_template", "osiri_projects_list_content", self.data);
                 });
             },

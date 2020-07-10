@@ -127,7 +127,7 @@ var cordovaApp = {
     cordovaApp.handleAndroidBackButton();
 
     // Handle Splash Screen
-    cordovaApp.handleSplashscreen();
+    // cordovaApp.handleSplashscreen();
 
     // Handle Keyboard
     cordovaApp.handleKeyboard();

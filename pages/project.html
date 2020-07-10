@@ -51,7 +51,7 @@
 		</div>
 		<script id="osiri_infos_templete_script" type="text/template7">
 			<div class="osiri_project_img" style="text-align: center;">
-				<img data-swiper-parallax="-325" src="../img/projet_img.png" height="150" style="padding-top: 20px;">
+				<img data-swiper-parallax="-325" src="../img/projet_img.png" height="280" style="padding-top: 20px;">
 			</div>
 			<div class="osiriç_project_description">
 				<div class="block block-strong" style="margin-top: 0px; margin-bottom: 0px;">
@@ -369,6 +369,14 @@
 			get_template_data: async function()
 			{
 				this.data = await ws_database.projets.get_with_id(this.id);
+
+				for (var i = 0; i<this.data.length; i++)
+				{
+					if (this.data[i][OSIRI_PROJET_PROPERTY_IMAGE] == "null" || self.data[i][OSIRI_PROJET_PROPERTY_IMAGE] == "undefined")
+					{
+						this.data[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
+					}
+				}
 
 				$('#project-title').text(this.data.nom);
 				// interlocuteurs_etude
