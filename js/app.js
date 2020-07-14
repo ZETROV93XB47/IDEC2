@@ -561,17 +561,21 @@ function authentification(event, connect_with_old_qrcode)
 
 		if (app.device.desktop)
 		{
-			var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41Nzc2NmEzNGQyNTgyNy4wMDk3NTI5NTwqIT0\/PiQyeSQxMCRpclVnWXVCMDJMRXJibmRQWFd6LzllUDRKVzkyLndPMWJBa3BBRXkyTEFkNzZ6TUZLaWl0Mg=="}';
-			
+			// Jerome
+			// var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41Nzc2NmEzNGQyNTgyNy4wMDk3NTI5NTwqIT0\/PiQyeSQxMCRpclVnWXVCMDJMRXJibmRQWFd6LzllUDRKVzkyLndPMWJBa3BBRXkyTEFkNzZ6TUZLaWl0Mg=="}';
+			// Jeremy
+			// var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41OGUyNGFmNmU0ZDNiMC4zOTU1Nzk0OTwqIT0\/PiQyeSQxMCRTT1c0cHJPU3pCTGVtZDhVenRLN3kuZDRXQm92dHR4eG91cGx6bkNSTXcvcUxrek13bW9laQ=="}';
+			// Aimeric DROUIN
+			var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41YjJiODgzODQwZjRhNi40MTcwMDY3NzwqIT0\/PiQyeSQxMCRLWEVGQW93OGJFNzd3bExFMUJnVkQuMDY1MzdSLmtvQlRYdkx6VHJKOVZkZ2JIVmE3bzFLVw=="}';
+
 			ws_storage.set_value('connection_qrcode', data);
 			connect(data);
 			connecting = false;
 		}
 		else cordova.plugins.barcodeScanner.scan(function(data) 
 		{
-			console.log('start');
-			console.log('start : '+data.cancelled);
-			console.log('start : '+data.format);
+			console.log('cordova.plugins.barcodeScanner.scan start');
+
 			if (!data.cancelled && data.format == "QR_CODE")
 			{
 				console.log('start/enter');

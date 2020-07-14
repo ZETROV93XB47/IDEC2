@@ -86,7 +86,7 @@
                     </li>
                     <li id="ergonomie">
                         <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Ergonomie <span style="color:red;">*</span></div></div>
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Ergonomie {{#if interet_ergonomie}}<span style="color:red;">*</span>{{/if}}</div></div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
                                     <button class="button button-round {{#if ergonomie}}{{#js_if "this.ergonomie.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
@@ -105,12 +105,12 @@
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
                                     <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle"><div>Commentaire <span style="color:red;">*</span></div></div>
-                                        <textarea class="resizable" osiri_validation="not_empty minlength 15" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if ergonomie}}{{ ergonomie.commentaire }}{{/if}}</textarea>
+                                        <div class="item-subtitle"><div>Commentaire {{#if interet_ergonomie}}<span style="color:red;">*</span>{{/if}}</div></div>
+                                        <textarea class="resizable" {{#if interet_ergonomie}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if ergonomie}}{{ ergonomie.commentaire }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
-                                        <div class="item-subtitle"><div>Proposition <span style="color:red;">*</span></div></div>
-                                        <textarea class="resizable" osiri_validation="not_empty" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if ergonomie}}{{ ergonomie.proposition }}{{/if}}</textarea>
+                                        <div class="item-subtitle"><div>Proposition {{#if interet_ergonomie}}<span style="color:red;">*</span>{{/if}}</div></div>
+                                        <textarea class="resizable" {{#if interet_ergonomie}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if ergonomie}}{{ ergonomie.proposition }}{{/if}}</textarea>
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
@@ -135,7 +135,7 @@
                     </li>
                     <li id="securite">
                         <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Sécurité <span style="color:red;">*</span></div></div>
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Sécurité {{#if interet_securite}}<span style="color:red;">*</span>{{/if}}</div></div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
                                     <button class="button button-round {{#if securite}}{{#js_if "this.securite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
@@ -154,12 +154,12 @@
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
                                     <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle"><div>Commentaire <span style="color:red;">*</span></div></div>
-                                        <textarea class="resizable" osiri_validation="not_empty minlength 15" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if securite}}{{ securite.commentaire }}{{/if}}</textarea>
+                                        <div class="item-subtitle"><div>Commentaire {{#if interet_securite}}<span style="color:red;">*</span>{{/if}}</div></div>
+                                        <textarea class="resizable" {{#if interet_securite}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if securite}}{{ securite.commentaire }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
-                                        <div class="item-subtitle"><div>Proposition <span style="color:red;">*</span></div></div>
-                                        <textarea class="resizable" osiri_validation="not_empty" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if securite}}{{ securite.proposition }}{{/if}}</textarea>
+                                        <div class="item-subtitle"><div>Proposition {{#if interet_securite}}<span style="color:red;">*</span>{{/if}}</div></div>
+                                        <textarea class="resizable" {{#if interet_securite}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if securite}}{{ securite.proposition }}{{/if}}</textarea>
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
@@ -184,7 +184,7 @@
                     </li>
                     <li id="productivite">
                         <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Productivité</div>
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Productivité {{#if interet_productivite}}<span style="color:red;">*</span>{{/if}}</div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
                                     <button class="button button-round {{#if productivite}}{{#js_if "this.productivite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
@@ -203,12 +203,12 @@
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
                                     <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Commentaire</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if productivite}}{{ productivite.commentaire }}{{/if}}</textarea>
+                                        <div class="item-subtitle">Commentaire {{#if interet_productivite}}<span style="color:red;">*</span>{{/if}}</div>
+                                        <textarea class="resizable" {{#if interet_productivite}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if productivite}}{{ productivite.commentaire }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if productivite}}{{ productivite.proposition }}{{/if}}</textarea>
+                                        <div class="item-subtitle">Proposition {{#if interet_productivite}}<span style="color:red;">*</span>{{/if}}</div>
+                                        <textarea class="resizable" {{#if interet_productivite}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if productivite}}{{ productivite.proposition }}{{/if}}</textarea>
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
@@ -233,7 +233,7 @@
                     </li>
                     <li id="competitivite">
                         <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Compétitivité</div>
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Compétitivité {{#if interet_competitivite}}<span style="color:red;">*</span>{{/if}}</div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
                                     <button class="button button-round {{#if competitivite}}{{#js_if "this.competitivite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
@@ -252,12 +252,12 @@
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
                                     <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Commentaire</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if competitivite}}{{ competitivite.commentaire }}{{/if}}</textarea>
+                                        <div class="item-subtitle">Commentaire {{#if interet_competitivite}}<span style="color:red;">*</span>{{/if}}</div>
+                                        <textarea class="resizable" {{#if interet_competitivite}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if competitivite}}{{ competitivite.commentaire }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if competitivite}}{{ competitivite.proposition }}{{/if}}</textarea>
+                                        <div class="item-subtitle">Proposition {{#if interet_competitivite}}<span style="color:red;">*</span>{{/if}}</div>
+                                        <textarea class="resizable" {{#if interet_competitivite}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if competitivite}}{{ competitivite.proposition }}{{/if}}</textarea>
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
@@ -282,7 +282,7 @@
                     </li>
                     <li id="environnement">
                         <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Environnement</div>
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Environnement {{#if interet_environnement}}<span style="color:red;">*</span>{{/if}}</div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
                                     <button class="button button-round {{#if environnement}}{{#js_if "this.environnement.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
@@ -301,12 +301,12 @@
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
                                     <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Commentaire</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if environnement}}{{ environnement.commentaire }}{{/if}}</textarea>
+                                        <div class="item-subtitle">Commentaire {{#if interet_environnement}}<span style="color:red;">*</span>{{/if}}</div>
+                                        <textarea class="resizable" {{#if interet_environnement}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if environnement}}{{ environnement.commentaire }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if environnement}}{{ environnement.proposition }}{{/if}}</textarea>
+                                        <div class="item-subtitle">Proposition {{#if interet_environnement}}<span style="color:red;">*</span>{{/if}}</div>
+                                        <textarea class="resizable" {{#if interet_environnement}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if environnement}}{{ environnement.proposition }}{{/if}}</textarea>
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
@@ -331,7 +331,7 @@
                     </li>
                     <li id="autre">
                         <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Autre</div>
+                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Autre {{#if interet_complementaires}}<span style="color:red;">*</span>{{/if}}</div>
                             <div class="item-after">
                                 <!-- <p class="segmented segmented-raised segmented-round">
                                     <button class="button button-round {{#if autre}}{{#js_if "this.autre.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
@@ -350,12 +350,12 @@
                             <div class="item-content item-input">
                                 <div class="item-inner" style="display: none; padding-top: 24px;">
                                     <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Commentaire</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if autre}}{{ autre.commentaire }}{{/if}}</textarea>
+                                        <div class="item-subtitle">Commentaire {{#if interet_complementaires}}<span style="color:red;">*</span>{{/if}}</div>
+                                        <textarea class="resizable" {{#if interet_complementaires}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if autre}}{{ autre.commentaire }}{{/if}}</textarea>
                                     </div>
                                     <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if autre}}{{ autre.proposition }}{{/if}}</textarea>
+                                        <div class="item-subtitle">Proposition {{#if interet_complementaires}}<span style="color:red;">*</span>{{/if}}</div>
+                                        <textarea class="resizable" {{#if interet_complementaires}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if autre}}{{ autre.proposition }}{{/if}}</textarea>
                                     </div>
                                 </div>
                                 <div class="item-media" style="padding: 0; height: 180px; display: none;">
@@ -452,6 +452,7 @@
                 self.data = {};
                 self.template_data = {};
                 self.template_data.imgs = [];
+                debugger
                 
                 function init_context()
                 {
@@ -499,6 +500,20 @@
 
                 init_context().then(function()
                 {
+                    return ws_database.projets.get_with_id(self.phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_PROJET]);
+                })
+                .then(function(projet)
+                {
+                    if (projet)
+                    {
+                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_ERGONOMIE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_ERGONOMIE] = true;
+                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_SECURITE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_SECURITE] = true;
+                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_PRODUCTIVITE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_PRODUCTIVITE] = true;
+                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_COMPETITIVITE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_COMPETITIVITE] = true;
+                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_ENVIRENEMENT] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_ENVIRENEMENT] = true;
+                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_COMPLEMENTAIRES] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_COMPLEMENTAIRES] = true;
+                    }
+
                     return self.load_page(page);
                 })
                 .catch(function(error)
@@ -842,17 +857,38 @@
 
                 app.dialog.preloader("Envoi en cours...");
                 
-                if (self.data.ergonomie == undefined || self.data.ergonomie[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0)
+                if (self.data.interet_ergonomie && (self.data.ergonomie == undefined || self.data.ergonomie[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
                 {
                     app.dialog.close();
                     app.dialog.alert("Veuillez renseigner les champs de l'ergonomie !");
                     return true;
                 }
 
-                if (self.data.securite == undefined || self.data.securite[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0)
+                if (self.data.interet_securite && (self.data.securite == undefined || self.data.securite[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
                 {
                     app.dialog.close();
                     app.dialog.alert("Veuillez renseigner les champs de sécurite !");
+                    return true;
+                }
+
+                if (self.data.interet_competitivite && (self.data.competitivite == undefined || self.data.competitivite[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
+                {
+                    app.dialog.close();
+                    app.dialog.alert("Veuillez renseigner les champs de compétitivité !");
+                    return true;
+                }
+
+                if (self.data.interet_environnement && (self.data.environnement == undefined || self.data.environnement[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
+                {
+                    app.dialog.close();
+                    app.dialog.alert("Veuillez renseigner les champs d'environnement !");
+                    return true;
+                }
+
+                if (self.data.interet_complementaires && (self.data.autre == undefined || self.data.autre[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
+                {
+                    app.dialog.close();
+                    app.dialog.alert("Veuillez renseigner les champs d'autre !");
                     return true;
                 }
 
