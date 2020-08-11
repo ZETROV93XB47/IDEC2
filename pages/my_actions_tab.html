@@ -13,7 +13,7 @@
 					{{#each actions}}
 					<li>
 						<a href="{{#js_if "this.action == 'prototype_tests_chantiers' || this.action == 'preserie_tests_chantiers'"}}/formulaire_action/{{ phase_chantier }}{{else}}/project/{{ projet }}{{/js_if}}" class="item-content item-link">
-                            <div class="item-media"><img src="../img/projet_img.png" width="80"/></div>
+                            <div class="item-media"><img src="{{ image }}" width="80"/></div>
 							<div class="item-inner">
 								<div class="item-title-row">
 									<div class="item-title" style="white-space: normal;">{{ nom }}</div>
@@ -64,7 +64,7 @@
 					for (var i = 0; i<self.data.actions.length; i++)
                     {
 						var projet = await ws_database.projets.get_with_id(self.data.actions[i][OSIRI_ACTION_PROPERTY_PROJET]);
-						if (projet[OSIRI_PROJET_PROPERTY_IMAGE] == "null" || projet[OSIRI_PROJET_PROPERTY_IMAGE] == "undefined") 
+						if (!projet[OSIRI_PROJET_PROPERTY_IMAGE]) 
                         {
 							self.data.actions[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
 						}

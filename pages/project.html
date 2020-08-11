@@ -51,7 +51,7 @@
 		</div>
 		<script id="osiri_infos_templete_script" type="text/template7">
 			<div class="osiri_project_img" style="text-align: center;">
-				<img data-swiper-parallax="-325" src="../img/projet_img.png" height="280" style="padding-top: 20px;">
+				<img data-swiper-parallax="-325" src="{{ image }}" height="280" style="padding-top: 20px;">
 			</div>
 			<div class="osiriç_project_description">
 				<div class="block block-strong" style="margin-top: 0px; margin-bottom: 0px;">
@@ -372,7 +372,7 @@
 
 				for (var i = 0; i<this.data.length; i++)
 				{
-					if (this.data[i][OSIRI_PROJET_PROPERTY_IMAGE] == "null" || self.data[i][OSIRI_PROJET_PROPERTY_IMAGE] == "undefined")
+					if (!this.data[i][OSIRI_PROJET_PROPERTY_IMAGE])
 					{
 						this.data[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
 					}
@@ -409,11 +409,11 @@
 					var rex = await ws_database.rexs.get_with_id(phase_chantier.rex);
 					
 
-					if (phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT] != "null") phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_DEBUT]);
+					if (phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT]) phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_DEBUT]);
 					else phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT] = '';
-					if (phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN] != "null") phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_FIN]);
+					if (phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN]) phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_FIN]);
 					else phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN] = '';
-					if (phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE] != "null") phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE]);
+					if (phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE]) phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE] = ws_tools.get_date_as_string(phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE]);
 					else phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_DATE_REX_PREVISIONNELLE] = '';
 
 					if (chantier) phase_chantier.chantier = chantier.nom;

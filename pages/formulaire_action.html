@@ -462,7 +462,7 @@
                         {
                             self.phase_chantier_id = result[OSIRI_PHASE_CHANTIER_PROPERTY_ID];
                             self.phase_chantier = result;
-                            self.is_new = (result[OSIRI_PHASE_CHANTIER_PROPERTY_REX] == "null");
+                            self.is_new = (result[OSIRI_PHASE_CHANTIER_PROPERTY_REX] == null);
                             
                             if (!self.is_new) 
                             {
@@ -539,7 +539,7 @@
                     app.dialog.alert('REX non crée');
                     return page.view.router.back();
                 }
-                if (self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] == "null")
+                if (self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] == null)
                 return self.apply_template(page, "osiri_rex_preform_template", "osiri_rex_content", self.template_data).then(function()
                 {
                     $("#recived").click(function()
@@ -962,7 +962,7 @@
                     "",
                     "",
                     JSON.stringify(self.data),
-                    "null"
+                    null
                 ];
 
                 return ws_database.rexs.add_with_server(ws_engine.get_server_id(), rex_properties, rex_values);

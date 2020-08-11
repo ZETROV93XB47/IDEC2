@@ -23,7 +23,7 @@
 			{{#each search_items}}
 			<li>
 				<a href="/project/{{ id }}" class="item-content item-link">
-					<div class="item-media"><img src="../img/projet_img.png" width="80"/></div>
+					<div class="item-media"><img src="{{ image }}" width="80"/></div>
 					<div class="item-inner">
 						<div class="item-title-row">
 							<div class="item-title" style="white-space: normal;">{{ nom }}</div>
@@ -96,7 +96,7 @@
 									
 									for (var i = 0; i<data.search_items.length; i++)
 									{
-										if (data.search_items[i][OSIRI_PROJET_PROPERTY_IMAGE] == "null" || data.search_items[i][OSIRI_PROJET_PROPERTY_IMAGE] == "undefined") 
+										if (!data.search_items[i][OSIRI_PROJET_PROPERTY_IMAGE]) 
 										{
 											data.search_items[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
 										}

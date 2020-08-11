@@ -652,85 +652,78 @@ var ws_synchronizer_class = Class.extend(
 	},
 	
 	
-	synchro_db_with_server: function()
+	synchro_db_with_server: async function()
 	{
 		var self = this;
-		self.startTime;
-		self.elapsedTime;
+		var startTime;
+		var elapsedTime;
 		
-		var map;
-		var update = [];
 		var params = {};
-		
-		return self.get_local_map().then(function(map_from_db)
+
+		params.updates = [];		
+		try
 		{
-			map = map_from_db;
+			// Map
+			params.map = await self.get_local_map();
 			
-			return self.get_updates()
-		})
-		.then(function(update_from_db)
-		{
+			// Updates
+			var update_from_db = await self.get_updates();
 
 			if (update_from_db.length > 0) for(var i = 0; i<update_from_db.length; i++)
 			{
 				update_from_db[i].data = (update_from_db[i].action != "delete") ? JSON.parse(update_from_db[i].data) : [];
-				update.push(update_from_db[i]);
+				params.updates.push(update_from_db[i]);
 			}
-			
-			params.map = map;
-			params.updates = update;
+
 			debugger
-			self.startTime = new Date().getTime();
-			self.elapsedTime = 0;
-			return ws_server.synchronize_all_data(params);
-		})
-		.then(function(status)
-		{
-			self.elapsedTime = new Date().getTime() - self.startTime;
-			console.log("Temps réponse de serveur (synchronisation) : " + self.elapsedTime + " ms");
+
+			// Start synchronisation
+			startTime = new Date().getTime();
+			elapsedTime = 0;
+
+			var status = await ws_server.synchronize_all_data(params);
+			
+			elapsedTime = new Date().getTime() - startTime;
+			console.log("Temps réponse de serveur (synchronisation) : " + elapsedTime + " ms");
 			debugger;
 			
-			self.startTime;
-			self.elapsedTime;
 			if (status.success) 
 			{
-				self.startTime = new Date().getTime();
-				self.elapsedTime = 0;
-				if (status.updates) return self.apply_synchro_update(status.updates).then(function(result)
-				{
-					if (update != undefined) return ws_database.synchro_event.delete_all();
-				})
-				.then(function()
-				{
-					return ws_server.get_files(status.updates);
-				})
-				.then(function()
-				{
-					self.elapsedTime = new Date().getTime() - self.startTime;
-					console.log("Temps de chargement (synchronisation) : " + self.elapsedTime + " ms");
-					return Promise.resolve(true);
-				})
-				.catch(function(error)
-				{
-					if (ws_defines.debug) console.log(error);
-				});
+				startTime = new Date().getTime();
+				elapsedTime = 0;
+
+				var result = await self.apply_synchro_update(status.updates);
+				
+				if (params.updates) var result = await ws_database.synchro_event.delete_all();
+				
+				var result = await ws_server.get_files(status.updates);
+				
+				elapsedTime = new Date().getTime() - startTime;
+				ws_tools.toast("Temps de chargement (synchronisation) : " + elapsedTime + " ms", undefined, 5000);
+				console.log("Temps de chargement (synchronisation) : " + elapsedTime + " ms");
+
 				return Promise.resolve(true);
 			}
-			else if( typeof status == "string")
+			else if (typeof status == "string")
 			{
-				throw status;
+				throw status.substring(0,100);
 			}
 			else
 			{
 				app.dialog.close();
-				app.dialog.alert("Synchronisation non terminée !");
+				app.dialog.alert("Erreur de synchronisation : " + status.error);
 				return Promise.resolve(false);
 			}
-		})
-		.catch(function(error)
+		}
+		catch (error)
 		{
-			if (ws_defines.debug) console.error(error);
-		});
+			app.dialog.close();
+			if (ws_defines.debug)
+			{
+				console.log(error);
+				app.dialog.alert(error);
+			}
+		}
 	},
 	
 	apply_synchro_update: function(updates)

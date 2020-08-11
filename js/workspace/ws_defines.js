@@ -67,7 +67,7 @@ const WS_OBJECT_PROPERTY_ID = 'id';
 const WS_OBJECT_PROPERTY_SERVER = 'server';
 const WS_OBJECT_PROPERTY_SERVER_ID = 'server_id';
 
-const WS_OBJECT_PROPERTY_SYNC_TIMESTAMP = 'server_timestamp';
+const WS_OBJECT_PROPERTY_SYNC_TIMESTAMP = 'server_ts';
 const WS_OBJECT_PROPERTY_SYNC_STATUS = 'sync_status';
 
 const WS_OBJECT_TIMESTAMP_FORCE_UPDATE = 'force_update';

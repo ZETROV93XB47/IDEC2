@@ -473,36 +473,44 @@ var ws_server_class = Class.extend(
 		
 	},
 	
-	get_files: function(update)
+	get_files: async function(update)
 	{
-        var self = this;
-		var promises = [];
-		
 		app.dialog.preloader("Télechargement en cours...");
 		
-		function prepare_file(update)
+		try
 		{
-            debugger
-			return ws_server.get_file(update.server_id).then(function(resource_base64)
+			for (var i = 0; i<update.length; i++)
 			{
-				var resource_binary = btoa(resource_base64);
-                return op2a_documents.set_file_path(update.server_id, update.data.name, "application/pdf", resource_binary, update.data.chantier_id, update.data.metier, update.data.materiel_id, update.data.operation_id);
-			});
-		}
-        
-		for (var i = 0; i<update.length; i++)
-		{
-			if (update[i].entity == "files")
-			{
-				if (update[i].server_id && update[i].action != "delete") promises.push(prepare_file(update[i]));
+				if (update[i].entity == "files" && update[i].server_id && update[i].action != "delete")
+				{
+					var file = await ws_server.get_file(update[i].server_id);
+					debugger
+					if (typeof file == "string") throw file;
+					if (file.success)
+					{
+						var resource_binary = btoa(file.data);
+						await op2a_documents.set_file_path(update[i].server_id, update[i].data.name, "application/pdf", resource_binary, update[i].data.chantier_id, update[i].data.metier, update[i].data.materiel_id, update[i].data.operation_id);
+					}
+					else
+					{
+						app.dialog.alert(file.error);
+					}
+				}
 			}
 		}
-		
-		return Promise.all(promises).then(function()
+		catch (error)
 		{
 			app.dialog.close();
-			return Promise.resolve(true);
-		});
+			if (ws_defines.debug)
+			{
+				console.log(error);
+				app.dialog.alert(error);
+			}
+			return Promise.resolve(false);
+		}
+		
+		app.dialog.close();
+		return Promise.resolve(true);
 	},
 	
 	prepare_download: function(server_id)

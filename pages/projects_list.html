@@ -18,7 +18,7 @@
                     {{#each projects_list}}
                     <li>
                         <a href="/project/{{ id }}" class="item-content item-link">
-                            <div class="item-media"><img src="../img/projet_img.png" width="80"/></div>
+                            <div class="item-media"><img src="{{ image }}" width="80"/></div>
                             <div class="item-inner">
                                 <div class="item-title-row">
                                     <div class="item-title" style="white-space: normal;">{{ nom }}</div>
@@ -62,7 +62,7 @@
 
                     for (var i = 0; i<self.data.projects_list.length; i++)
                     {
-                        if (self.data.projects_list[i][OSIRI_PROJET_PROPERTY_IMAGE] == "null" || self.data.projects_list[i][OSIRI_PROJET_PROPERTY_IMAGE] == "undefined") 
+                        if (!self.data.projects_list[i][OSIRI_PROJET_PROPERTY_IMAGE]) 
                         {
                             self.data.projects_list[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
                         }

@@ -450,29 +450,41 @@ var ws_datatable = Class.extend(
 			data[ids[i]][WS_OBJECT_PROPERTY_SERVER] = ws_engine.get_server_id();
 		}
 		var properties = Object.keys(data[ids[0]]);
-		var propertie_lenght = properties.length;
+		var properties_length = properties.length;
 		var bindings = [];
-		var values = '';
 
 		for (var i = index; i < ids_lenght; i++)
 		{
-			for (var j = 0;j<propertie_lenght; j ++)
+			for (var j = 0; j < properties_length; j ++)
 			{
-				if (typeof data[ids[i]][properties[j]] == "object")
+				var type_of = typeof data[ids[i]][properties[j]];
+
+				if (type_of == "boolean")
+				{
+					data[ids[i]][properties[j]] = data[ids[i]][properties[j]] ? 1 : 0;
+				}
+				else if (type_of == "undefined")
+				{
+					data[ids[i]][properties[j]] = null;
+				}
+				else if (data[ids[i]][properties[j]] == null)
+				{
+					
+				}
+				else if (type_of == "object")
 				{
 					data[ids[i]][properties[j]] = JSON.stringify(data[ids[i]][properties[j]]);
 				}
 
 				bindings.push(data[ids[i]][properties[j]]);
-
-				if (j == 0) values += '(?,';
-				else if (j == propertie_lenght-1) values +='?)';
-				else values += '?,';
 			}
-			if (i < ids_lenght-1 ) values += ',';
 		}
 
-		return self.db.query('INSERT INTO ' + self.table + ' (' + properties.join(',') + ') VALUES ' + values, bindings).catch(function(error)
+		var binding_row = '('+self.filler.substr(0, (2 * properties_length) - 1)+'),';
+		var binding_rows = binding_row.repeat(ids_lenght-index);
+		binding_rows = binding_rows.substr(0, binding_rows.length-1);
+		
+		return self.db.query('INSERT INTO ' + self.table + ' (' + properties.join(',') + ') VALUES '+ binding_rows, bindings).catch(function(error)
 		{
 			if (ws_defines.debug) console.log(error);
 			throw error;

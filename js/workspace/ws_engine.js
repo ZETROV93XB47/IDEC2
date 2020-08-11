@@ -230,6 +230,10 @@ var ws_engine_class = Class.extend(
 		.then(function()
 		{
 			return ws_storage.reset();
+		})
+		.then(function()
+		{
+			return ws_filesystem.clear();
 		});
 	},
 
