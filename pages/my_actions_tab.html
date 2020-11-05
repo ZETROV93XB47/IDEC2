@@ -37,42 +37,36 @@
 		{
 			custom_tabshow: function(page, event, params)
 			{
-				var self = this;
-
-				self.data = {};
+				this.data = {};
 				
-				return self.load_page();
+				return this.load_page();
 			},
 
 			custom_init: function(page, event, params)
 			{
-				var self = this;
-
-				self.data = {};
+				this.data = {};
 				
-				return self.load_page();
+				return this.load_page();
 			},
 			
-			load_page: function()
+			load_page: async function()
 			{
-				var self = this;
-
-                return osiri_actions.get_template_data().then(async function(result)
-                {
-					self.data.actions = result;
-
-					for (var i = 0; i<self.data.actions.length; i++)
-                    {
-						var projet = await ws_database.projets.get_with_id(self.data.actions[i][OSIRI_ACTION_PROPERTY_PROJET]);
-						if (!projet[OSIRI_PROJET_PROPERTY_IMAGE]) 
-                        {
-							self.data.actions[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
-						}
-						else self.data.actions[i][OSIRI_PROJET_PROPERTY_IMAGE] = projet[OSIRI_PROJET_PROPERTY_IMAGE];
+				this.data.actions = await osiri_actions.get_template_data();
+				
+				for (let i = 0; i<this.data.actions.length; i++)
+				{
+					let action_projet_id = this.data.actions[i][OSIRI_ACTION_PROPERTY_PROJET];
+					let projet = await ws_database.projets.get_with_id(action_projet_id);
+					
+					if (!projet[OSIRI_PROJET_PROPERTY_IMAGE]) 
+					{
+						this.data.actions[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
 					}
+					else this.data.actions[i][OSIRI_PROJET_PROPERTY_IMAGE] = projet[OSIRI_PROJET_PROPERTY_IMAGE];
+				}
 
-                    return self.apply_template(page, "osiri_action_template", "osiri_actions_list_content", self.data);
-                });
+                return this.apply_template(page, "osiri_action_template", "osiri_actions_list_content", this.data);
+                
 			},
 		}));
 	</script>

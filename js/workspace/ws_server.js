@@ -365,7 +365,7 @@ var ws_server_class = Class.extend(
 		});
 	},
 	
-	connect : function(url, code, data)
+	connect : function(url, token, data)
 	{
 		var device = {};
 		
@@ -374,7 +374,7 @@ var ws_server_class = Class.extend(
 		device[WS_DEVICE_INFO_SYSTEM] = ws_platform.get_system();
 		device[WS_DEVICE_INFO_BROWSER] = ws_platform.get_browser();
 
-		return this.api('connect', { code: code, data: data, device: device }, url);
+		return this.api('connect', { code: token, data: data, device: device }, url);
 	},
 	
 	login : function(url, login, password)

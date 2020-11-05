@@ -31,6 +31,13 @@ var app_server_class = ws_server_class.extend(
 		return this.api('get_file', params, ws_engine.get_server_url());
 	},
 	
+	connect_with_device_id: function()
+	{
+		var params = {};
+		debugger
+		return this.api('connect_with_device_id', params);
+	},
+
 	//! Idee
 	
 	depose_idee: function(idee)
@@ -70,7 +77,7 @@ var app_server_class = ws_server_class.extend(
 
 	set_local_ids: function(data)
 	{
-		debugger
+		var server_id = ws_engine.get_server_id();
 		var self = this;
 		var server_ids = {};
 		var _data = data;
@@ -78,15 +85,27 @@ var app_server_class = ws_server_class.extend(
 		
 		if (data.chantier_id)
 		{
-			server_ids[OP2A_DOCUMENT_PROPERTY_CHANTIER_ID] = { server: ws_engine.get_server_id(), entity: OP2A_DATAMODEL_ENTITY_CHANTIERS, id: data[OP2A_DOCUMENT_PROPERTY_CHANTIER_ID]};
-			if (data.materiel_id) server_ids[OP2A_DOCUMENT_PROPERTY_MATERIEL_ID] = { server: ws_engine.get_server_id(), entity: OP2A_DATAMODEL_ENTITY_MATERIELS, id: data[OP2A_DOCUMENT_PROPERTY_MATERIEL_ID]};
-			if (data.operation_id) server_ids[OP2A_DOCUMENT_PROPERTY_OPERATION_ID] = { server: ws_engine.get_server_id(), entity: OP2A_DATAMODEL_ENTITY_OPERATIONS, id: data[OP2A_DOCUMENT_PROPERTY_OPERATION_ID]};
-			
+			if (data[OSIRI_ACTION_PROPERTY_CHANTIER]) server_ids[OSIRI_ACTION_PROPERTY_CHANTIER] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_CHANTIERS, id: data[OSIRI_ACTION_PROPERTY_CHANTIER]};
+			if (data[OSIRI_ACTION_PROPERTY_PROJET]) server_ids[OSIRI_ACTION_PROPERTY_PROJET] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_PROJETS, id: data[OSIRI_ACTION_PROPERTY_PROJET]};
+			if (data[OSIRI_PROJET_PROPERTY_PILOTE]) server_ids[OSIRI_PROJET_PROPERTY_PILOTE] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: data[OSIRI_PROJET_PROPERTY_PILOTE]};
+			if (data[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT]) server_ids[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: data[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT]};
+			if (data[OSIRI_PROJET_PROPERTY_REDACTEUR]) server_ids[OSIRI_PROJET_PROPERTY_REDACTEUR] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: data[OSIRI_PROJET_PROPERTY_REDACTEUR]};
+			if (data[OSIRI_PHASE_CHANTIER_PROPERTY_REX]) server_ids[OSIRI_PHASE_CHANTIER_PROPERTY_REX] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_REXS, id: data[OSIRI_PHASE_CHANTIER_PROPERTY_REX]};
+			if (data[OSIRI_REX_PROPERTY_INTERLOCUTEUR_REX]) server_ids[OSIRI_REX_PROPERTY_INTERLOCUTEUR_REX] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: data[OSIRI_REX_PROPERTY_INTERLOCUTEUR_REX]};
+			if (data[OSIRI_ACTION_PROPERTY_PHASE_CHANTIER]) server_ids[OSIRI_ACTION_PROPERTY_PHASE_CHANTIER] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_PHASE_CHANTIERS, id: data[OSIRI_ACTION_PROPERTY_PHASE_CHANTIER]};
+			// if (data[OSIRI_ACTION_PROPERTY_COLLABORATEUR]) server_ids[OSIRI_ACTION_PROPERTY_COLLABORATEUR] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: data[OSIRI_ACTION_PROPERTY_COLLABORATEUR]};
+
 			return ws_synchronizer.get_locals_ids(server_ids).then(function(ids)
 			{
-				if (ids.chantier_id) _data.chantier_id = ids.chantier_id;
-				if (ids.materiel_id) _data.materiel_id = ids.materiel_id;
-				if (ids.operation_id) _data.operation_id = ids.operation_id;
+				if (ids[OSIRI_ACTION_PROPERTY_CHANTIER]) _data[OSIRI_ACTION_PROPERTY_CHANTIER] = ids[OSIRI_ACTION_PROPERTY_CHANTIER];
+				if (ids[OSIRI_ACTION_PROPERTY_PROJET]) _data[OSIRI_ACTION_PROPERTY_PROJET] = ids[OSIRI_ACTION_PROPERTY_PROJET];
+				if (ids[OSIRI_PROJET_PROPERTY_PILOTE]) _data[OSIRI_PROJET_PROPERTY_PILOTE] = ids[OSIRI_PROJET_PROPERTY_PILOTE];
+				if (ids[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT]) _data[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT] = ids[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT];
+				if (ids[OSIRI_PROJET_PROPERTY_REDACTEUR]) _data[OSIRI_PROJET_PROPERTY_REDACTEUR] = ids[OSIRI_PROJET_PROPERTY_REDACTEUR];
+				if (ids[OSIRI_PHASE_CHANTIER_PROPERTY_REX]) _data[OSIRI_PHASE_CHANTIER_PROPERTY_REX] = ids[OSIRI_PHASE_CHANTIER_PROPERTY_REX];
+				if (ids[OSIRI_REX_PROPERTY_INTERLOCUTEUR_REX]) _data[OSIRI_REX_PROPERTY_INTERLOCUTEUR_REX] = ids[OSIRI_REX_PROPERTY_INTERLOCUTEUR_REX];
+				if (ids[OSIRI_ACTION_PROPERTY_PHASE_CHANTIER]) _data[OSIRI_ACTION_PROPERTY_PHASE_CHANTIER] = ids[OSIRI_ACTION_PROPERTY_PHASE_CHANTIER];
+				// if (ids[OSIRI_ACTION_PROPERTY_COLLABORATEUR]) _data[OSIRI_ACTION_PROPERTY_COLLABORATEUR] = ids[OSIRI_ACTION_PROPERTY_COLLABORATEUR];
 				
 				return _data;
 			});

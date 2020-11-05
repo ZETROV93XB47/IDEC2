@@ -15,6 +15,7 @@ const OSIRI_MOBILE_LOCAL_STORAGE_PREFIX = "osiri_rex_";
 const OSIRI_STORAGE_KEY_FAMILLES = 'familles'; 
 const OSIRI_STORAGE_KEY_IDEE = 'idee';
 const OSIRI_STORAGE_KEY_MODE_DECO = 'mode_deconnecter';
+const OSIRI_STORAGE_KEY_MODE_CO = 'mode_connecter';
 
 //! Data model
 
@@ -120,6 +121,8 @@ const OSIRI_PROJET_PROPERTY_SYNC_TIMESTAMP = WS_OBJECT_PROPERTY_SYNC_TIMESTAMP;
 const OSIRI_PROJET_PROPERTY_NOM = 'nom';
 const OSIRI_PROJET_PROPERTY_NUMERO = 'numero';
 const OSIRI_PROJET_PROPERTY_IMAGE = 'image';
+const OSIRI_PROJET_PROPERTY_IMAGE_URL = 'image_url';
+const OSIRI_PROJET_PROPERTY_IMAGE_DOWNLOADED = 'image_downloaded';
 const OSIRI_PROJET_PROPERTY_PHASE = 'phase';
 const OSIRI_PROJET_PROPERTY_PILOTE = 'pilote';
 const OSIRI_PROJET_PROPERTY_MES_PROJETS = 'mes_projets';

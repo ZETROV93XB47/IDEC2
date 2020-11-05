@@ -50,7 +50,21 @@
                 self.set_background_color();
 
 				return self.load_page();
-			},
+            },
+            
+            
+			custom_beforein: function(page, event, params)
+			{
+                var self = this;
+                
+				self.phase = params.phase;
+                self.famille = params.famille;
+                self.data = {};
+
+                self.set_background_color();
+
+				return self.load_page();
+            },
 			
 			load_page: function()
 			{

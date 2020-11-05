@@ -220,10 +220,10 @@
 					<ul>
 						{{#each documents_list}}
 						<li>
-							<a  class="link external item-content" href="{{ url }}">
+							<a  class="item-content item-link external" href="{{ url }}">
 								<div class="item-inner">
-								<div class="item-title" style="white-space: normal;">{{ name }}</div>
-								<div class="item-after">{{ type }}</div>
+									<div class="item-title" style="white-space: normal;">{{ name }}</div>
+									<div class="item-after">{{ type }}</div>
 								</div>
 							</a>
 						</li>
@@ -369,14 +369,25 @@
 			get_template_data: async function()
 			{
 				this.data = await ws_database.projets.get_with_id(this.id);
-
-				for (var i = 0; i<this.data.length; i++)
+				
+				if (this.data[OSIRI_PROJET_PROPERTY_IMAGE_URL] && !this.data[OSIRI_PROJET_PROPERTY_IMAGE_DOWNLOADED])
 				{
-					if (!this.data[i][OSIRI_PROJET_PROPERTY_IMAGE])
+					app.dialog.preloader("Chargement de l'image du projet ...");
+					let result = await ws_server.get(this.data[OSIRI_PROJET_PROPERTY_IMAGE_URL]);
+                    app.dialog.close();
+					if (result)
 					{
-						this.data[i][OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
+						this.data[OSIRI_PROJET_PROPERTY_IMAGE] = result;
+						await ws_database.projets.set_with_id(this.id, [OSIRI_PROJET_PROPERTY_IMAGE, OSIRI_PROJET_PROPERTY_IMAGE_DOWNLOADED], [result, true]);
 					}
+					else app.dialog.alert('l\'image non récupérer');
 				}
+
+				if (!this.data[OSIRI_PROJET_PROPERTY_IMAGE])
+				{
+					this.data[OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
+				}
+					
 
 				$('#project-title').text(this.data.nom);
 				// interlocuteurs_etude

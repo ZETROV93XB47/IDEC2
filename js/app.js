@@ -67,7 +67,7 @@ var app = new Framework7(
 			});
 		},
 
-		load_deconnect_mode: function()
+		load_deconnect_mode: async function()
 		{
 			return new Promise(function(resolve, reject)
 			{
@@ -79,7 +79,7 @@ var app = new Framework7(
 				$('.content_connect_mode').css('display', 'none');
 				$('.content_every_one_mode').css('display', 'none');
 				$('.synchro').css('display', 'none');
-				
+			
 				return resolve();
 			});
 		},
@@ -177,7 +177,11 @@ var app = new Framework7(
 				
 				// return connected ? app.methods.load_connect_mode() : app.methods.load_deconnect_mode();
 				
-				return  connected ? app.methods.load_connect_mode() : ( (ws_storage.get_value(OSIRI_STORAGE_KEY_MODE_DECO) == "true") ? app.methods.load_deconnect_mode() : app.methods.load_every_one_mode());
+				if (connected) return app.methods.load_connect_mode();
+				else if (ws_storage.get_value(OSIRI_STORAGE_KEY_MODE_DECO) == "true") app.methods.load_deconnect_mode()
+				else app.methods.load_every_one_mode();
+
+				// return  connected ? app.methods.load_connect_mode() : ( (ws_storage.get_value(OSIRI_STORAGE_KEY_MODE_DECO) == "true") ? app.methods.load_deconnect_mode() : app.methods.load_every_one_mode());
             })
             .catch(function(error)
             {
@@ -313,9 +317,9 @@ function load_home()
     });
 }
 
-function waitting_autorisation ()
+function waitting_autorisation()
 {
-	ws_server.wait_for_identification().then(function(result)
+	ws_server.wait_for_identification().then(async function(result)
 	{
 		if (typeof result == 'string') throw result;
 		if (result.success)
@@ -323,22 +327,36 @@ function waitting_autorisation ()
 			if (result.autorisation)
 			{
 				app.dialog.close();
-				app.methods.load_deconnect_mode();
-				
+
+				app.dialog.preloader("Connexion au serveur...");
+
+				await self.connect_with_device_id();
+
+				app.dialog.close();
+
 				ws_storage.set_value(OSIRI_STORAGE_KEY_MODE_DECO, true);
+
+				// app.methods.load_deconnect_mode();
 			}
 			else
 			{
-				waitting_autorisation();
-				console.log('waitting ...');
+				setTimeout(function()
+				{
+					console.log('waitting ...');
+					waitting_autorisation();
+				}, 3000);
 			}
 		}
 		else
 		{
-			waitting_autorisation();
+			setTimeout(function()
+			{
+				console.log('waitting ...');
+				waitting_autorisation();
+			}, 3000);
 		}
 	})
-	.catch(function()
+	.catch(function(error)
 	{
 		app.dialog.close();
 		if (ws_defines.debug)
@@ -362,23 +380,26 @@ $$('#send_mail').on('click', function ()
 {
 	var email = $("#verify_mail").val();
 
+	app.dialog.preloader("Envoi de mail...");
+
 	if (email) ws_server.send_identification_email(email).then(function(result)
 	{
+		app.dialog.close();
+		debugger
 		if (typeof result == 'string') throw result;
 		if (result.success)
 		{
-			ws_tools.toast('vous allez recevoir un email avec un lien, merci de cliquer dessus', undefined, 5000);
-			app.dialog.preloader("Chargement en cours...");
+			ws_tools.toast('vous allez recevoir un email avec un lien, merci de cliquer dessus', undefined, 6000);
 
 			setTimeout(function()
 			{
 				waitting_autorisation();
 			}, 3000);
 		}
+		else app.dialog.alert('Erreur : '+result.error);
 	})
 	.catch(function(error)
 	{
-		
 		app.dialog.close();
 		if (ws_defines.debug)
 		{
@@ -438,7 +459,7 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 		})
 		.then(function(result)
 		{
-			return self.apply_connection_data(result);
+			return self.apply_connection_data(result, OSIRI_STORAGE_KEY_MODE_CO);
 		})
 		.then(function(result)
 		{
@@ -459,7 +480,7 @@ $$('#popup_connection').on('popup:open', function (e, popup)
 });
 
 
-function apply_connection_data(result)
+function apply_connection_data(result, mode)
 {
 	var startTime;
 	var elapsedTime;
@@ -470,7 +491,7 @@ function apply_connection_data(result)
 	app.dialog.close();			
 
 	if (result == undefined) throw 'Erreur de connexion, données vides.';
-	if (typeof result == 'string') throw result.substring(0,100);
+	if (typeof result == 'string') throw result; //.substring(0,100)
 	if (result.success == false) throw result.error;
 
 	
@@ -489,12 +510,16 @@ function apply_connection_data(result)
 			
 			app.dialog.close();
 			app.popup.close('#popup_connection', true);
-
-			return app.methods.load_connect_mode().then(function()
+			
+			if (mode == OSIRI_STORAGE_KEY_MODE_CO) return app.methods.load_connect_mode().then(function()
 			{
 				self.load_home();
 				homeView.router.back();
 				
+				return Promise.resolve('Chargement terminé !');
+			});
+			else return app.methods.load_deconnect_mode().then(function()
+			{
 				return Promise.resolve('Chargement terminé !');
 			});
 		});
@@ -502,6 +527,54 @@ function apply_connection_data(result)
 	else
 	{
 		return Promise.resolve('Data undefined !');
+	}
+}
+
+async function connect_with_device_id()
+{
+	try
+	{
+		let result = await ws_server.connect_with_device_id();
+		debugger
+		let respence = await apply_connection_data(result, OSIRI_STORAGE_KEY_MODE_DECO);
+			
+		app.dialog.alert(respence);
+	}
+	catch(error)
+	{
+		debugger;
+		
+		app.dialog.close();
+
+		if (error == " (undefined)") error = "Impossible de se connecter.";
+
+		if (ws_defines.debug) console.log(error);
+		
+		app.dialog.alert(error);
+	}
+}
+
+async function connect_with_url(url, token, data)
+{
+	try
+	{
+		const result = await ws_user.connect(url, token, data);
+
+		let respence = await this.apply_connection_data(result, OSIRI_STORAGE_KEY_MODE_CO);
+			
+		app.dialog.alert(respence);
+	}
+	catch(error)
+	{
+		debugger;
+		
+		app.dialog.close();
+
+		if (error == " (undefined)") error = "Impossible de se connecter.";
+
+		if (ws_defines.debug) console.log(error);
+		
+		app.dialog.alert(error);
 	}
 }
 
@@ -523,26 +596,8 @@ function authentification(event, connect_with_old_qrcode)
 
 		app.dialog.preloader("Connexion au serveur...");
 		
-		ws_user.connect(qrcode.url, qrcode.token, qrcode.data).then(function(result)
-		{
-			return self.apply_connection_data(result);
-		})
-		.then(function(result)
-		{
-			app.dialog.alert(result);
-		})
-		.catch(function(error)
-		{
-			debugger;
-			
-			app.dialog.close();
-
-			if (error == " (undefined)") error = "Impossible de se connecter.";
-
-			if (ws_defines.debug) console.log(error);
-			
-			app.dialog.alert(error);
-		});
+		self.connect_with_url(qrcode.url, qrcode.token, qrcode.data);
+		
 	}
 
 	var qrcode =  ws_storage.get_value('connection_qrcode');
@@ -564,9 +619,9 @@ function authentification(event, connect_with_old_qrcode)
 			// Jerome
 			// var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41Nzc2NmEzNGQyNTgyNy4wMDk3NTI5NTwqIT0\/PiQyeSQxMCRpclVnWXVCMDJMRXJibmRQWFd6LzllUDRKVzkyLndPMWJBa3BBRXkyTEFkNzZ6TUZLaWl0Mg=="}';
 			// Jeremy
-			// var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41OGUyNGFmNmU0ZDNiMC4zOTU1Nzk0OTwqIT0\/PiQyeSQxMCRTT1c0cHJPU3pCTGVtZDhVenRLN3kuZDRXQm92dHR4eG91cGx6bkNSTXcvcUxrek13bW9laQ=="}';
+			var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41OGUyNGFmNmU0ZDNiMC4zOTU1Nzk0OTwqIT0\/PiQyeSQxMCRTT1c0cHJPU3pCTGVtZDhVenRLN3kuZDRXQm92dHR4eG91cGx6bkNSTXcvcUxrek13bW9laQ=="}';
 			// Aimeric DROUIN
-			var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41YjJiODgzODQwZjRhNi40MTcwMDY3NzwqIT0\/PiQyeSQxMCRLWEVGQW93OGJFNzd3bExFMUJnVkQuMDY1MzdSLmtvQlRYdkx6VHJKOVZkZ2JIVmE3bzFLVw=="}';
+			// var data = '{"url":"https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app","token":"ZnJhbWV3b3JrLmNvbnRhY3RzPCohPT8+MTwqIT0\/PjA8KiE9Pz41YjJiODgzODQwZjRhNi40MTcwMDY3NzwqIT0\/PiQyeSQxMCRLWEVGQW93OGJFNzd3bExFMUJnVkQuMDY1MzdSLmtvQlRYdkx6VHJKOVZkZ2JIVmE3bzFLVw=="}';
 
 			ws_storage.set_value('connection_qrcode', data);
 			connect(data);
