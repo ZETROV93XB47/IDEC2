@@ -1,624 +1,637 @@
 <div class="page" data-name="formulaire_action">
-    <div class="navbar">
-        <div class="navbar-bg"></div>
-        <div class="navbar-inner sliding">
-            <div class="left">
-                <a href="#" class="link back">
-                <i class="icon icon-back"></i>
-                <span class="if-not-md">Back</span>
-                </a>
-            </div>
-            <div class="title">OSIRI - Formulaire REX</div>
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+			<div class="left">
+				<a href="#" class="link back">
+				<i class="icon icon-back"></i>
+				<span class="if-not-md">Back</span>
+				</a>
+			</div>
+			<div class="title">OSIRI - Formulaire REX</div>
 			<div class="right">
 				<a id="upload_action" href="#" class="link icon-only"><i class="fa fa-paper-plane" style="font-size:20px;"></i></a>
 			</div>
-        </div>
-    </div>
-    <style>
-        li{
-            margin-top: 20px;
-        }
-    </style>
-    <div class="page-content">
-        
-        <script id="osiri_rex_form_template" type="text/template7">
-            <div class="popover popover-action-photo">
-                <div class="popover-inner">
-                    <div class="list">
-                        <ul>
-                            <li><a class="list-button popover-close item-link osiri_rex_take_photo" href="#">Prendre une photo</a></li>
-                            <li><a class="list-button popover-close item-link osiri_rex_add_photo" href="#">Galerie du téléphone</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-				<div class="card-content card-content-padding" id="op2a_materiel_infos">
+		</div>
+	</div>
+	<style>
+		li{
+			margin-top: 20px;
+		}
+	</style>
+	<div class="page-content">
+		
+		<script id="osiri_rex_form_template" type="text/template7">
+			<div class="popover popover-action-photo">
+				<div class="popover-inner">
 					<div class="list">
 						<ul>
-						    <li>
-						        <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">Pilote : Pierre</div>
-                                        <div class="item-after">
-                                            <label osiri_type="Pilote" class="checkbox" style="padding-top: 4px;">
-                                                <input class="name_change" type="checkbox"><i class="icon-checkbox"></i>
-                                            </label>
-                                        </div>
-                                    </div>
-						        </div>
-						    </li>
-						    <li>
-                                <div class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">Contact chantier : Jéremy</div>
-                                        <div class="item-after">
-                                            <label osiri_type="Contact chantier" class="checkbox" style="padding-top: 4px;">
-                                                <input class="name_change" type="checkbox"><i class="icon-checkbox"></i>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+							<li><a class="list-button popover-close item-link osiri_rex_take_photo" href="#">Prendre une photo</a></li>
+							<li><a class="list-button popover-close item-link osiri_rex_add_photo" href="#">Galerie du téléphone</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-            <div class="list inset">
-                <ul>
-                    <li id="accompangement_bcm_fournisseur">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Conditions de test</div></div>
-                            <div class="item-after"></div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <label class="item-checkbox item-content">
-                                <div class="item-inner">
-                                    <div class="item-title">Accompagnement BCM Fournisseur</div>
-                                    <div class="item-after">
-                                        <label class="checkbox" style="padding-top: 4px;">
-                                            <input type="checkbox" {{#if accompangement_bcm_fournisseur}}{{#if accompangement_bcm_fournisseur.value}}checked{{/if}}{{/if}}><i class="icon-checkbox"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                              </label>
-                        </div>
-                    </li>
-                    <li id="ergonomie">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Ergonomie {{#if interet_ergonomie}}<span style="color:red;">*</span>{{/if}}</div></div>
-                            <div class="item-after">
-                                <!-- <p class="segmented segmented-raised segmented-round">
-                                    <button class="button button-round {{#if ergonomie}}{{#js_if "this.ergonomie.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if ergonomie}}{{#js_if "this.ergonomie.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-                                </p> -->
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                            </div>
-                            <div class="item-content item-input">
-                                <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle"><div>Commentaire {{#if interet_ergonomie}}<span style="color:red;">*</span>{{/if}}</div></div>
-                                        <textarea class="resizable" {{#if interet_ergonomie}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if ergonomie}}{{ ergonomie.commentaire }}{{/if}}</textarea>
-                                    </div>
-                                    <div class="item-input-wrap">
-                                        <div class="item-subtitle"><div>Proposition {{#if interet_ergonomie}}<span style="color:red;">*</span>{{/if}}</div></div>
-                                        <textarea class="resizable" {{#if interet_ergonomie}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if ergonomie}}{{ ergonomie.proposition }}{{/if}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="item-media" style="padding: 0; height: 180px; display: none;">
-                                    <div style="height: 65px;">
-                                        <a class="link popover-open add_photo" osiri_prop="ergonomie" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="osiri_rex_photos_ergonomie" class="actions-grid modal-in" style="display:{{#if ergonomie}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if ergonomie}}{{#if ergonomie.image}}
-                                    <div class="actions-button" style="margin-left: 30%">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ ergonomie.image }}" width="48"></div>
-                                        <div class="actions-button-text dynamic-popover">image</div>
-                                    </div>
-                                    {{/if}}{{/if}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="securite">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Sécurité {{#if interet_securite}}<span style="color:red;">*</span>{{/if}}</div></div>
-                            <div class="item-after">
-                                <!-- <p class="segmented segmented-raised segmented-round">
-                                    <button class="button button-round {{#if securite}}{{#js_if "this.securite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if securite}}{{#js_if "this.securite.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-                                </p> -->
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                            </div>
-                            <div class="item-content item-input">
-                                <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle"><div>Commentaire {{#if interet_securite}}<span style="color:red;">*</span>{{/if}}</div></div>
-                                        <textarea class="resizable" {{#if interet_securite}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if securite}}{{ securite.commentaire }}{{/if}}</textarea>
-                                    </div>
-                                    <div class="item-input-wrap">
-                                        <div class="item-subtitle"><div>Proposition {{#if interet_securite}}<span style="color:red;">*</span>{{/if}}</div></div>
-                                        <textarea class="resizable" {{#if interet_securite}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if securite}}{{ securite.proposition }}{{/if}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="item-media" style="padding: 0; height: 180px; display: none;">
-                                    <div style="height: 65px;">
-                                        <a class="link popover-open add_photo" osiri_prop="securite" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="osiri_rex_photos_securite" class="actions-grid modal-in" style="display:{{#if securite}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if securite}}{{#if securite.image}}
-                                    <div class="actions-button" style="margin-left: 30%">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ securite.image }}" width="48"></div>
-                                        <div class="actions-button-text dynamic-popover">image</div>
-                                    </div>
-                                    {{/if}}{{/if}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="productivite">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Productivité {{#if interet_productivite}}<span style="color:red;">*</span>{{/if}}</div>
-                            <div class="item-after">
-                                <!-- <p class="segmented segmented-raised segmented-round">
-                                    <button class="button button-round {{#if productivite}}{{#js_if "this.productivite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if productivite}}{{#js_if "this.productivite.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-                                </p> -->
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                            </div>
-                            <div class="item-content item-input">
-                                <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Commentaire {{#if interet_productivite}}<span style="color:red;">*</span>{{/if}}</div>
-                                        <textarea class="resizable" {{#if interet_productivite}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if productivite}}{{ productivite.commentaire }}{{/if}}</textarea>
-                                    </div>
-                                    <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition {{#if interet_productivite}}<span style="color:red;">*</span>{{/if}}</div>
-                                        <textarea class="resizable" {{#if interet_productivite}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if productivite}}{{ productivite.proposition }}{{/if}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="item-media" style="padding: 0; height: 180px; display: none;">
-                                    <div style="height: 65px;">
-                                        <a class="link popover-open add_photo" osiri_prop="productivite" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="osiri_rex_photos_productivite" class="actions-grid modal-in" style="display:{{#if productivite}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if productivite}}{{#if productivite.image}}
-                                    <div class="actions-button" style="margin-left: 30%">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ productivite.image }}" width="48"></div>
-                                        <div class="actions-button-text dynamic-popover">image</div>
-                                    </div>
-                                    {{/if}}{{/if}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="competitivite">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Compétitivité {{#if interet_competitivite}}<span style="color:red;">*</span>{{/if}}</div>
-                            <div class="item-after">
-                                <!-- <p class="segmented segmented-raised segmented-round">
-                                    <button class="button button-round {{#if competitivite}}{{#js_if "this.competitivite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if competitivite}}{{#js_if "this.competitivite.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-                                </p> -->
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                            </div>
-                            <div class="item-content item-input">
-                                <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Commentaire {{#if interet_competitivite}}<span style="color:red;">*</span>{{/if}}</div>
-                                        <textarea class="resizable" {{#if interet_competitivite}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if competitivite}}{{ competitivite.commentaire }}{{/if}}</textarea>
-                                    </div>
-                                    <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition {{#if interet_competitivite}}<span style="color:red;">*</span>{{/if}}</div>
-                                        <textarea class="resizable" {{#if interet_competitivite}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if competitivite}}{{ competitivite.proposition }}{{/if}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="item-media" style="padding: 0; height: 180px; display: none;">
-                                    <div style="height: 65px;">
-                                        <a class="link popover-open add_photo" osiri_prop="competitivite" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="osiri_rex_photos_competitivite" class="actions-grid modal-in" style="display:{{#if competitivite}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if competitivite}}{{#if competitivite.image}}
-                                    <div class="actions-button" style="margin-left: 30%">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ competitivite.image }}" width="48"></div>
-                                        <div class="actions-button-text dynamic-popover">image</div>
-                                    </div>
-                                    {{/if}}{{/if}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="environnement">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Environnement {{#if interet_environnement}}<span style="color:red;">*</span>{{/if}}</div>
-                            <div class="item-after">
-                                <!-- <p class="segmented segmented-raised segmented-round">
-                                    <button class="button button-round {{#if environnement}}{{#js_if "this.environnement.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if environnement}}{{#js_if "this.environnement.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-                                </p> -->
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                            </div>
-                            <div class="item-content item-input">
-                                <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Commentaire {{#if interet_environnement}}<span style="color:red;">*</span>{{/if}}</div>
-                                        <textarea class="resizable" {{#if interet_environnement}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if environnement}}{{ environnement.commentaire }}{{/if}}</textarea>
-                                    </div>
-                                    <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition {{#if interet_environnement}}<span style="color:red;">*</span>{{/if}}</div>
-                                        <textarea class="resizable" {{#if interet_environnement}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if environnement}}{{ environnement.proposition }}{{/if}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="item-media" style="padding: 0; height: 180px; display: none;">
-                                    <div style="height: 65px;">
-                                        <a class="link popover-open add_photo" osiri_prop="environnement" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="osiri_rex_photos_environnement" class="actions-grid modal-in" style="display:{{#if environnement}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if environnement}}{{#if environnement.image}}
-                                    <div class="actions-button" style="margin-left: 30%">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ environnement.image }}" width="48"></div>
-                                        <div class="actions-button-text dynamic-popover">image</div>
-                                    </div>
-                                    {{/if}}{{/if}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="autre">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Autre {{#if interet_complementaires}}<span style="color:red;">*</span>{{/if}}</div>
-                            <div class="item-after">
-                                <!-- <p class="segmented segmented-raised segmented-round">
-                                    <button class="button button-round {{#if autre}}{{#js_if "this.autre.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if autre}}{{#js_if "this.autre.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-                                </p> -->
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                            </div>
-                            <div class="item-content item-input">
-                                <div class="item-inner" style="display: none; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Commentaire {{#if interet_complementaires}}<span style="color:red;">*</span>{{/if}}</div>
-                                        <textarea class="resizable" {{#if interet_complementaires}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if autre}}{{ autre.commentaire }}{{/if}}</textarea>
-                                    </div>
-                                    <div class="item-input-wrap">
-                                        <div class="item-subtitle">Proposition {{#if interet_complementaires}}<span style="color:red;">*</span>{{/if}}</div>
-                                        <textarea class="resizable" {{#if interet_complementaires}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if autre}}{{ autre.proposition }}{{/if}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="item-media" style="padding: 0; height: 180px; display: none;">
-                                    <div style="height: 65px;">
-                                        <a class="link popover-open add_photo" osiri_prop="autre" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="osiri_rex_photos_autre" class="actions-grid modal-in" style="display:{{#if autre}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if autre}}{{#if autre.image}}
-                                    <div class="actions-button" style="margin-left: 30%">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ autre.image }}" width="48"></div>
-                                        <div class="actions-button-text dynamic-popover">image</div>
-                                    </div>
-                                    {{/if}}{{/if}}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="globale">
-                        <div class="item-content item-input">
-                            <div class="item-inner item-title" style="white-space: normal; font-weight: bold">Globale</div>
-                            <div class="item-after">
-                                <!-- <p class="segmented segmented-raised segmented-round">
-                                    <button class="button button-round {{#if globale}}{{#js_if "this.globale.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
-                                    <button class="button button-round {{#if globale}}{{#js_if "this.globale.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
-                                </p> -->
-                            </div>
-                        </div>
-                        <div class="osiri_action_option">
-                            <div class="stars row" style="margin-left: 10%; margin-right: 10%;">
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                                <a class="star item-link"><i class="col fal fa-star"></i></a>
-                            </div>
-                            <div class="item-content item-input">
-                                <div class="item-inner" style="display: block; padding-top: 24px;">
-                                    <div class="item-input-wrap" style="margin-bottom: 30px;">
-                                        <div class="item-subtitle">Complément d'information</div>
-                                        <textarea class="resizable" style="height: 70px;" placeholder="Complément d'information" osiri_content="conmplement_information">{{#if globale}}{{ globale.conmplement_information }}{{/if}}</textarea>
-                                    </div>
-                                <!-- </div>
-                                <div class="item-media" style="padding: 0; height: 180px; display: none;">
-                                    <div style="height: 65px;">
-                                        <a class="link popover-open add_photo" osiri_prop="globale" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
-                                            <i class="f7-icon material-icons md-only">add_a_photo</i>
-                                        </a>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <!-- <div id="osiri_rex_photos_globale" class="actions-grid modal-in" style="display:{{#if globale}}block{{else}}none{{/if}};">
-                                <div class="actions-group">
-                                    {{#if globale}}{{#if globale.image}}
-                                    <div class="actions-button" style="margin-left: 30%">
-                                        <div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ globale.image }}" width="48"></div>
-                                        <div class="actions-button-text dynamic-popover">image</div>
-                                    </div>
-                                    {{/if}}{{/if}}
-                                </div>
-                            </div> -->
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </script>
+			<div class="card">
+				<div class="card-content card-content-padding" id="op2a_materiel_infos">
+					<div class="list">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title">Pilote : Pierre</div>
+										<div class="item-after">
+											<label osiri_type="Pilote" class="checkbox" style="padding-top: 4px;">
+												<input class="name_change" type="checkbox"><i class="icon-checkbox"></i>
+											</label>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title">Contact chantier : Jéremy</div>
+										<div class="item-after">
+											<label osiri_type="Contact chantier" class="checkbox" style="padding-top: 4px;">
+												<input class="name_change" type="checkbox"><i class="icon-checkbox"></i>
+											</label>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="list inset">
+				<ul>
+					<li id="accompangement_bcm_fournisseur">
+						<div class="item-content item-input">
+							<div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Conditions de test</div></div>
+							<div class="item-after"></div>
+						</div>
+						<div class="osiri_action_option">
+							<label class="item-checkbox item-content">
+								<div class="item-inner">
+									<div class="item-title">Accompagnement BCM Fournisseur</div>
+									<div class="item-after">
+										<label class="checkbox" style="padding-top: 4px;">
+											<input type="checkbox" {{#if accompangement_bcm_fournisseur}}{{#if accompangement_bcm_fournisseur.value}}checked{{/if}}{{/if}}><i class="icon-checkbox"></i>
+										</label>
+									</div>
+								</div>
+							</label>
+						</div>
+					</li>
+					<li id="ergonomie">
+						<div class="item-content item-input">
+							<div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Ergonomie {{#if interet_ergonomie}}<span style="color:red;">*</span>{{/if}}</div></div>
+							<div class="item-after">
+								<!-- <p class="segmented segmented-raised segmented-round">
+									<button class="button button-round {{#if ergonomie}}{{#js_if "this.ergonomie.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+									<button class="button button-round {{#if ergonomie}}{{#js_if "this.ergonomie.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+								</p> -->
+							</div>
+						</div>
+						<div class="osiri_action_option">
+							<div class="item-subtitle" style="padding-left: 16px;">Gain</div>
+							<div class="stars row" style="padding-top: 5px; margin-left: 10%; margin-right: 10%;">
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+							</div>
+							<div class="item-content item-input">
+								<div class="item-inner" style="display: none; padding-top: 24px;">
+									<div class="item-input-wrap" style="margin-bottom: 30px;">
+										<div class="item-subtitle">Commentaire {{#if interet_ergonomie}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_ergonomie}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if ergonomie}}{{ ergonomie.commentaire }}{{/if}}</textarea>
+									</div>
+									<div class="item-input-wrap">
+										<div class="item-subtitle">Propositions d'améliorations {{#if interet_ergonomie}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_ergonomie}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if ergonomie}}{{ ergonomie.proposition }}{{/if}}</textarea>
+									</div>
+								</div>
+								<div class="item-media" style="padding: 0; height: 180px; display: none;">
+									<div style="height: 65px;">
+										<a class="link popover-open add_photo" osiri_prop="ergonomie" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+											<i class="f7-icon material-icons md-only">add_a_photo</i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div id="osiri_rex_photos_ergonomie" class="actions-grid modal-in" style="display:{{#if ergonomie}}block{{else}}none{{/if}};">
+								{{#if ergonomie}}{{#if ergonomie.image}}
+								<div class="item-subtitle" style="padding-left: 16px;">Photo</div>
+								<div class="actions-group">
+									<div class="actions-button" style="margin-left: 30%">
+										<div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ ergonomie.image }}" width="48"></div>
+										<div class="actions-button-text dynamic-popover">image</div>
+									</div>
+								</div>
+								{{/if}}{{/if}}
+							</div>
+						</div>
+					</li>
+					<li id="securite">
+						<div class="item-content item-input">
+							<div class="item-inner item-title" style="white-space: normal; font-weight: bold"><div>Sécurité {{#if interet_securite}}<span style="color:red;">*</span>{{/if}}</div></div>
+							<div class="item-after">
+								<!-- <p class="segmented segmented-raised segmented-round">
+									<button class="button button-round {{#if securite}}{{#js_if "this.securite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+									<button class="button button-round {{#if securite}}{{#js_if "this.securite.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+								</p> -->
+							</div>
+						</div>
+						<div class="osiri_action_option">
+							<div class="item-subtitle" style="padding-left: 16px;">Gain</div>
+							<div class="stars row" style="padding-top: 5px; margin-left: 10%; margin-right: 10%;">
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+							</div>
+							<div class="item-content item-input">
+								<div class="item-inner" style="display: none; padding-top: 24px;">
+									<div class="item-input-wrap" style="margin-bottom: 30px;">
+										<div class="item-subtitle">Commentaire {{#if interet_securite}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_securite}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if securite}}{{ securite.commentaire }}{{/if}}</textarea>
+									</div>
+									<div class="item-input-wrap">
+										<div class="item-subtitle">Propositions d'améliorations {{#if interet_securite}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_securite}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if securite}}{{ securite.proposition }}{{/if}}</textarea>
+									</div>
+								</div>
+								<div class="item-media" style="padding: 0; height: 180px; display: none;">
+									<div style="height: 65px;">
+										<a class="link popover-open add_photo" osiri_prop="securite" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+											<i class="f7-icon material-icons md-only">add_a_photo</i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div id="osiri_rex_photos_securite" class="actions-grid modal-in" style="display:{{#if securite}}block{{else}}none{{/if}};">
+								{{#if securite}}{{#if securite.image}}
+								<div class="item-subtitle" style="padding-left: 16px;">Photo</div>
+								<div class="actions-group">
+									<div class="actions-button" style="margin-left: 30%">
+										<div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ securite.image }}" width="48"></div>
+										<div class="actions-button-text dynamic-popover">image</div>
+									</div>
+								</div>
+								{{/if}}{{/if}}
+							</div>
+						</div>
+					</li>
+					<li id="productivite">
+						<div class="item-content item-input">
+							<div class="item-inner item-title" style="white-space: normal; font-weight: bold">Productivité {{#if interet_productivite}}<span style="color:red;">*</span>{{/if}}</div>
+							<div class="item-after">
+								<!-- <p class="segmented segmented-raised segmented-round">
+									<button class="button button-round {{#if productivite}}{{#js_if "this.productivite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+									<button class="button button-round {{#if productivite}}{{#js_if "this.productivite.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+								</p> -->
+							</div>
+						</div>
+						<div class="osiri_action_option">
+							<div class="item-subtitle" style="padding-left: 16px;">Gain</div>
+							<div class="stars row" style="padding-top: 5px; margin-left: 10%; margin-right: 10%;">
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+							</div>
+							<div class="item-content item-input">
+								<div class="item-inner" style="display: none; padding-top: 24px;">
+									<div class="item-input-wrap" style="margin-bottom: 30px;">
+										<div class="item-subtitle">Commentaire {{#if interet_productivite}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_productivite}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if productivite}}{{ productivite.commentaire }}{{/if}}</textarea>
+									</div>
+									<div class="item-input-wrap">
+										<div class="item-subtitle">Propositions d'améliorations {{#if interet_productivite}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_productivite}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if productivite}}{{ productivite.proposition }}{{/if}}</textarea>
+									</div>
+								</div>
+								<div class="item-media" style="padding: 0; height: 180px; display: none;">
+									<div style="height: 65px;">
+										<a class="link popover-open add_photo" osiri_prop="productivite" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+											<i class="f7-icon material-icons md-only">add_a_photo</i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div id="osiri_rex_photos_productivite" class="actions-grid modal-in" style="display:{{#if productivite}}block{{else}}none{{/if}};">
+								{{#if productivite}}{{#if productivite.image}}
+								<div class="item-subtitle" style="padding-left: 16px;">Photo</div>
+								<div class="actions-group">
+									<div class="actions-button" style="margin-left: 30%">
+										<div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ productivite.image }}" width="48"></div>
+										<div class="actions-button-text dynamic-popover">image</div>
+									</div>
+								</div>
+								{{/if}}{{/if}}
+							</div>
+						</div>
+					</li>
+					<li id="competitivite">
+						<div class="item-content item-input">
+							<div class="item-inner item-title" style="white-space: normal; font-weight: bold">Compétitivité {{#if interet_competitivite}}<span style="color:red;">*</span>{{/if}}</div>
+							<div class="item-after">
+								<!-- <p class="segmented segmented-raised segmented-round">
+									<button class="button button-round {{#if competitivite}}{{#js_if "this.competitivite.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+									<button class="button button-round {{#if competitivite}}{{#js_if "this.competitivite.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+								</p> -->
+							</div>
+						</div>
+						<div class="osiri_action_option">
+							<div class="item-subtitle" style="padding-left: 16px;">Gain</div>
+							<div class="stars row" style="padding-top: 5px; margin-left: 10%; margin-right: 10%;">
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+							</div>
+							<div class="item-content item-input">
+								<div class="item-inner" style="display: none; padding-top: 24px;">
+									<div class="item-input-wrap" style="margin-bottom: 30px;">
+										<div class="item-subtitle">Commentaire {{#if interet_competitivite}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_competitivite}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if competitivite}}{{ competitivite.commentaire }}{{/if}}</textarea>
+									</div>
+									<div class="item-input-wrap">
+										<div class="item-subtitle">Propositions d'améliorations {{#if interet_competitivite}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_competitivite}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if competitivite}}{{ competitivite.proposition }}{{/if}}</textarea>
+									</div>
+								</div>
+								<div class="item-media" style="padding: 0; height: 180px; display: none;">
+									<div style="height: 65px;">
+										<a class="link popover-open add_photo" osiri_prop="competitivite" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+											<i class="f7-icon material-icons md-only">add_a_photo</i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div id="osiri_rex_photos_competitivite" class="actions-grid modal-in" style="display:{{#if competitivite}}block{{else}}none{{/if}};">
+								{{#if competitivite}}{{#if competitivite.image}}
+								<div class="item-subtitle" style="padding-left: 16px;">Photo</div>
+								<div class="actions-group">
+									<div class="actions-button" style="margin-left: 30%">
+										<div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ competitivite.image }}" width="48"></div>
+										<div class="actions-button-text dynamic-popover">image</div>
+									</div>
+								</div>
+								{{/if}}{{/if}}
+							</div>
+						</div>
+					</li>
+					<li id="environnement">
+						<div class="item-content item-input">
+							<div class="item-inner item-title" style="white-space: normal; font-weight: bold">Développement durable {{#if interet_environnement}}<span style="color:red;">*</span>{{/if}}</div>
+							<div class="item-after">
+								<!-- <p class="segmented segmented-raised segmented-round">
+									<button class="button button-round {{#if environnement}}{{#js_if "this.environnement.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+									<button class="button button-round {{#if environnement}}{{#js_if "this.environnement.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+								</p> -->
+							</div>
+						</div>
+						<div class="osiri_action_option">
+							<div class="item-subtitle" style="padding-left: 16px;">Gain</div>
+							<div class="stars row" style="padding-top: 5px; margin-left: 10%; margin-right: 10%;">
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+							</div>
+							<div class="item-content item-input">
+								<div class="item-inner" style="display: none; padding-top: 24px;">
+									<div class="item-input-wrap" style="margin-bottom: 30px;">
+										<div class="item-subtitle">Commentaire {{#if interet_environnement}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_environnement}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if environnement}}{{ environnement.commentaire }}{{/if}}</textarea>
+									</div>
+									<div class="item-input-wrap">
+										<div class="item-subtitle">Propositions d'améliorations {{#if interet_environnement}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_environnement}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if environnement}}{{ environnement.proposition }}{{/if}}</textarea>
+									</div>
+								</div>
+								<div class="item-media" style="padding: 0; height: 180px; display: none;">
+									<div style="height: 65px;">
+										<a class="link popover-open add_photo" osiri_prop="environnement" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+											<i class="f7-icon material-icons md-only">add_a_photo</i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div id="osiri_rex_photos_environnement" class="actions-grid modal-in" style="display:{{#if environnement}}block{{else}}none{{/if}};">
+								{{#if environnement}}{{#if environnement.image}}
+								<div class="item-subtitle" style="padding-left: 16px;">Photo</div>
+								<div class="actions-group">
+									<div class="actions-button" style="margin-left: 30%">
+										<div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ environnement.image }}" width="48"></div>
+										<div class="actions-button-text dynamic-popover">image</div>
+									</div>
+								</div>
+								{{/if}}{{/if}}
+							</div>
+						</div>
+					</li>
+					<li id="autre">
+						<div class="item-content item-input">
+							<div class="item-inner item-title" style="white-space: normal; font-weight: bold">Complémentaires {{#if interet_complementaires}}<span style="color:red;">*</span>{{/if}}</div>
+							<div class="item-after">
+								<!-- <p class="segmented segmented-raised segmented-round">
+									<button class="button button-round {{#if autre}}{{#js_if "this.autre.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+									<button class="button button-round {{#if autre}}{{#js_if "this.autre.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+								</p> -->
+							</div>
+						</div>
+						<div class="osiri_action_option">
+							<div class="item-subtitle" style="padding-left: 16px;">Gain</div>
+							<div class="stars row" style="padding-top: 5px; margin-left: 10%; margin-right: 10%;">
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+							</div>
+							<div class="item-content item-input">
+								<div class="item-inner" style="display: none; padding-top: 24px;">
+									<div class="item-input-wrap" style="margin-bottom: 30px;">
+										<div class="item-subtitle">Commentaire {{#if interet_complementaires}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_complementaires}}osiri_validation="not_empty minlength 15"{{/if}} style="height: 70px;" placeholder="Commentaire" osiri_content="commentaire">{{#if autre}}{{ autre.commentaire }}{{/if}}</textarea>
+									</div>
+									<div class="item-input-wrap">
+										<div class="item-subtitle">Propositions d'améliorations {{#if interet_complementaires}}<span style="color:red;">*</span>{{/if}}</div>
+										<textarea class="resizable" {{#if interet_complementaires}}osiri_validation="not_empty"{{/if}} style="height: 70px;" placeholder="Modification proposée" osiri_content="proposition">{{#if autre}}{{ autre.proposition }}{{/if}}</textarea>
+									</div>
+								</div>
+								<div class="item-media" style="padding: 0; height: 180px; display: none;">
+									<div style="height: 65px;">
+										<a class="link popover-open add_photo" osiri_prop="autre" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+											<i class="f7-icon material-icons md-only">add_a_photo</i>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div id="osiri_rex_photos_autre" class="actions-grid modal-in" style="display:{{#if autre}}block{{else}}none{{/if}};">
+								{{#if autre}}{{#if autre.image}}
+								<div class="item-subtitle" style="padding-left: 16px;">Photo</div>
+								<div class="actions-group">
+									<div class="actions-button" style="margin-left: 30%">
+										<div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ autre.image }}" width="48"></div>
+										<div class="actions-button-text dynamic-popover">image</div>
+									</div>
+								</div>
+								{{/if}}{{/if}}
+							</div>
+						</div>
+					</li>
+					<li id="globale">
+						<div class="item-content item-input">
+							<div class="item-inner item-title" style="white-space: normal; font-weight: bold">Synthèse du test</div>
+							<div class="item-after">
+								<!-- <p class="segmented segmented-raised segmented-round">
+									<button class="button button-round {{#if globale}}{{#js_if "this.globale.action === 'p'"}}button-active{{/js_if}}{{/if}}" value="p">Positif</button>
+									<button class="button button-round {{#if globale}}{{#js_if "this.globale.action === 'n'"}}button-active{{/js_if}}{{/if}}" value="n">Négatif</button>
+								</p> -->
+							</div>
+						</div>
+						<div class="osiri_action_option">
+							<div class="item-subtitle" style="padding-left: 16px;">Gain</div>
+							<div class="stars row" style="padding-top: 5px; margin-left: 10%; margin-right: 10%;">
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+								<a class="star item-link"><i class="col fal fa-star"></i></a>
+							</div>
+							<div class="item-content item-input">
+								<div class="item-inner" style="display: block; padding-top: 24px;">
+									<div class="item-input-wrap" style="margin-bottom: 30px;">
+										<div class="item-subtitle">Complément d'information</div>
+										<textarea class="resizable" style="height: 70px;" placeholder="Complément d'information" osiri_content="conmplement_information">{{#if globale}}{{ globale.conmplement_information }}{{/if}}</textarea>
+									</div>
+								<!-- </div>
+								<div class="item-media" style="padding: 0; height: 180px; display: none;">
+									<div style="height: 65px;">
+										<a class="link popover-open add_photo" osiri_prop="globale" href="#" data-popover=".popover-action-photo" style="width: 40px; height: 40px; padding-left: 17px;">
+											<i class="f7-icon material-icons md-only">add_a_photo</i>
+										</a>
+									</div>
+								</div> -->
+							</div>
+							<!-- <div id="osiri_rex_photos_globale" class="actions-grid modal-in" style="display:{{#if globale}}block{{else}}none{{/if}};">
+								<div class="actions-group">
+									{{#if globale}}{{#if globale.image}}
+									<div class="actions-button" style="margin-left: 30%">
+										<div class="actions-button-media"><img src="data:application/octet-stream;base64,{{ globale.image }}" width="48"></div>
+										<div class="actions-button-text dynamic-popover">image</div>
+									</div>
+									{{/if}}{{/if}}
+								</div>
+							</div> -->
+						</div>
+					</li>
+				</ul>
+			</div>
+		</script>
 
-        <script id="osiri_rex_preform_template" type="text/template7">
-            <div class="block">
-                <div class="row">
-                    <a class="col button" id="recived" href="#">Matériel reçu</a>
-                    <a class="col button" id="not_recived" href="#">Matériel non reçu</a>
-                </div>
-            </div>
-        </script>
-        
+		<script id="osiri_rex_preform_template" type="text/template7">
+			<div class="block">
+				<div class="row">
+					<a class="col button" id="recived" href="#">Matériel reçu</a>
+					<a class="col button" id="not_recived" href="#">Matériel non reçu</a>
+				</div>
+			</div>
+		</script>
+		
 		<div id="osiri_rex_content"></div>
-    </div>
-    <script type="text/javascript" ws_script="page">
-        ws_engine.register_page("formulaire_action", ws_page.extend(
-        {
-            custom_init: function(page, event, params)
-            {
-                var self = this;
+	</div>
+	<script type="text/javascript" ws_script="page">
+		ws_engine.register_page("formulaire_action", ws_page.extend(
+		{
+			custom_init: function(page, event, params)
+			{
+				var self = this;
 
-			    // self.action_id = self.params.action_id;
-			    self.phase_chantier = self.params.phase_chantier;
-			    // self.projet_id = self.params.projet_id;
+				// self.action_id = self.params.action_id;
+				self.phase_chantier = self.params.phase_chantier;
+				// self.projet_id = self.params.projet_id;
 
-                self.data = {};
-                self.template_data = {};
-                self.template_data.imgs = [];
-                debugger
-                
-                function init_context()
-                {
-                    return ws_database.phase_chantiers.get_with_id(self.phase_chantier).then(function(result)
-                    {
-                        if (result)
-                        {
-                            self.phase_chantier_id = result[OSIRI_PHASE_CHANTIER_PROPERTY_ID];
-                            self.phase_chantier = result;
-                            self.is_new = (result[OSIRI_PHASE_CHANTIER_PROPERTY_REX] == null);
-                            
-                            if (!self.is_new) 
-                            {
-                                return ws_database.rexs.get_with_id(result[OSIRI_PHASE_CHANTIER_PROPERTY_REX]).then(function(result)
-                                {
-                                    self.rexs = result;
-                                    self.rex_id = result.id;
-                                    self.data = JSON.parse(result.data);
-                                });
-                            }
-                            else return self.add_rex().then(function(id)
-                            {
-                                var condition = OSIRI_REX_PROPERTY_ID + " = ?";
-                                var binding = [id];
-
-                                return ws_database.rexs.get(condition, binding).then(function(result)
-                                {
-                                    self.rex_id = result.id;
-                                    self.rexs = result;
-                                    return ws_database.phase_chantiers.set_with_id(self.phase_chantier_id, [OSIRI_PHASE_CHANTIER_PROPERTY_REX], [self.rex_id]);
-                                });
-                            });
-                        }
-                        else
-                        {
-                            app.dialog.alert('Problème de creation du REX (phase chantier introuvable )!');
-                        }
-                    })
-                    .catch(function(error)
-                    {
-                        if (ws_defines.debug) console.log(error);
-                        app.dialog.alert(error);
-                    });
-                }
-
-                init_context().then(function()
-                {
-                    return ws_database.projets.get_with_id(self.phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_PROJET]);
-                })
-                .then(function(projet)
-                {
-                    if (projet)
-                    {
-                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_ERGONOMIE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_ERGONOMIE] = true;
-                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_SECURITE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_SECURITE] = true;
-                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_PRODUCTIVITE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_PRODUCTIVITE] = true;
-                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_COMPETITIVITE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_COMPETITIVITE] = true;
-                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_ENVIRENEMENT] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_ENVIRENEMENT] = true;
-                        if (projet[OSIRI_PROJET_PROPERTY_INTERET_COMPLEMENTAIRES] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_COMPLEMENTAIRES] = true;
-                    }
-
-                    return self.load_page(page);
-                })
-                .catch(function(error)
-                {
-                    if (ws_defines.debug) console.log(error);
-                    app.dialog.alert(error);
-                });
-            },
-
-            init_data: function()
-            {
-                var properties = Object.keys(this.data);
-            },
-            
-            load_page: function(page)
-            {
-                var self = this;
-                var prop;
-
-                self.template_data = self.data;
-                if (!self.rexs)
-                {
-                    app.dialog.alert('REX non crée');
-                    return page.view.router.back();
-                }
-                if (self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] == null)
-                return self.apply_template(page, "osiri_rex_preform_template", "osiri_rex_content", self.template_data).then(function()
-                {
-                    $("#recived").click(function()
-                    {
-                        var date = ws_tools.get_date_with_default_format();
-                        ws_database.rexs.set_with_id(self.rex_id, [OSIRI_REX_PROPERTY_MATERIEL_RECEIVED], [date]).then(function()
-                        {
-                            self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] = date;
-                            return self.load_page(page);
-                        });
-                    });
-
-                    $("#not_recived").click(function()
-                    {
-                        ws_tools.toast("Email envoyé au pilote ...");
-                        return ws_server.send_to_pilote();
-                    });
-                });
-                
-                return self.apply_template(page, "osiri_rex_form_template", "osiri_rex_content", self.template_data).then(function()
+				self.data = {};
+				self.template_data = {};
+				self.template_data.imgs = [];
+				debugger
+				
+				function init_context()
 				{
-                    var properties = Object.keys(self.data);
-                    var color = 'yellow';
-                    var half_icon = 'col fas fa-star-half-alt';
+					return ws_database.phase_chantiers.get_with_id(self.phase_chantier).then(function(result)
+					{
+						if (result)
+						{
+							self.phase_chantier_id = result[OSIRI_PHASE_CHANTIER_PROPERTY_ID];
+							self.phase_chantier = result;
+							self.is_new = (result[OSIRI_PHASE_CHANTIER_PROPERTY_REX] == null);
+							
+							if (!self.is_new) 
+							{
+								return ws_database.rexs.get_with_id(result[OSIRI_PHASE_CHANTIER_PROPERTY_REX]).then(function(result)
+								{
+									self.rexs = result;
+									self.rex_id = result.id;
+									self.data = JSON.parse(result.data);
+								});
+							}
+							else return self.add_rex().then(function(id)
+							{
+								var condition = OSIRI_REX_PROPERTY_ID + " = ?";
+								var binding = [id];
 
-                    for (var i = 0; i<properties.length; i++)
-                    {
-                        var stars = $('#'+ properties[i]).find('.stars');
-                        var stars_nbr = self.data[properties[i]][OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE];
-                        var icon = 'col fas fa-star';
-                        
-                        if (stars_nbr)
-                        {
-                            stars.next().find('.item-inner').css('display', 'block');
-                            stars.next().find('.item-media').css('display', 'block');
-                            stars.next().next().css('display', 'block');
+								return ws_database.rexs.get(condition, binding).then(function(result)
+								{
+									self.rex_id = result.id;
+									self.rexs = result;
+									return ws_database.phase_chantiers.set_with_id(self.phase_chantier_id, [OSIRI_PHASE_CHANTIER_PROPERTY_REX], [self.rex_id]);
+								});
+							});
+						}
+						else
+						{
+							app.dialog.alert('Problème de creation du REX (phase chantier introuvable )!');
+						}
+					})
+					.catch(function(error)
+					{
+						if (ws_defines.debug) console.log(error);
+						app.dialog.alert(error);
+					});
+				}
 
-                            if (stars_nbr == Math.trunc(stars_nbr))
-                            {
-                                var stars_elements = $('#'+ properties[i]).find('.stars').children();
-                                
-                                for ( var j = 0 ; j<stars_nbr; j++)
-                                {
-                                    $(stars_elements[j]).find('i').removeClass();
-                                    $(stars_elements[j]).find('i').addClass(icon);
-                                    $(stars_elements[j]).css('color', color);
-                                }
-                            }
-                            else
-                            {
-                                stars_nbr = Math.ceil(stars_nbr);
+				init_context().then(function()
+				{
+					return ws_database.projets.get_with_id(self.phase_chantier[OSIRI_PHASE_CHANTIER_PROPERTY_PROJET]);
+				})
+				.then(function(projet)
+				{
+					if (projet)
+					{
+						if (projet[OSIRI_PROJET_PROPERTY_INTERET_ERGONOMIE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_ERGONOMIE] = true;
+						if (projet[OSIRI_PROJET_PROPERTY_INTERET_SECURITE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_SECURITE] = true;
+						if (projet[OSIRI_PROJET_PROPERTY_INTERET_PRODUCTIVITE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_PRODUCTIVITE] = true;
+						if (projet[OSIRI_PROJET_PROPERTY_INTERET_COMPETITIVITE] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_COMPETITIVITE] = true;
+						if (projet[OSIRI_PROJET_PROPERTY_INTERET_ENVIRENEMENT] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_ENVIRENEMENT] = true;
+						if (projet[OSIRI_PROJET_PROPERTY_INTERET_COMPLEMENTAIRES] == "true") self.data[OSIRI_PROJET_PROPERTY_INTERET_COMPLEMENTAIRES] = true;
+					}
 
-                                var stars_elements = $('#'+ properties[i]).find('.stars').children();
-                                
-                                for ( var j = 0 ; j<stars_nbr; j++)
-                                {
-                                    if (j == stars_nbr-1)
-                                    {
-                                        icon = half_icon;
-                                    }
+					return self.load_page(page);
+				})
+				.catch(function(error)
+				{
+					if (ws_defines.debug) console.log(error);
+					app.dialog.alert(error);
+				});
+			},
 
-                                    $(stars_elements[j]).find('i').removeClass();
-                                    $(stars_elements[j]).find('i').addClass(icon);
-                                    $(stars_elements[j]).css('color', color);
-                                }
-                            }
-                            
-                        }
-                        else
-                        {
-                            stars.next().next().css('display', 'none');
-                        }
-                    }
-                    
-                    var option_element = $("#osiri_rex_content");
-                    $$('.add_photo').on('click', function (e)
-                    {
-                        prop = $(this).attr('osiri_prop');
-                    });
+			init_data: function()
+			{
+				var properties = Object.keys(this.data);
+			},
+			
+			load_page: function(page)
+			{
+				var self = this;
+				var prop;
+
+				self.template_data = self.data;
+				if (!self.rexs)
+				{
+					app.dialog.alert('REX non crée');
+					return page.view.router.back();
+				}
+				if (self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] == null)
+				return self.apply_template(page, "osiri_rex_preform_template", "osiri_rex_content", self.template_data).then(function()
+				{
+					$("#recived").click(function()
+					{
+						var date = ws_tools.get_date_with_default_format();
+						ws_database.rexs.set_with_id(self.rex_id, [OSIRI_REX_PROPERTY_MATERIEL_RECEIVED], [date]).then(function()
+						{
+							self.rexs[OSIRI_REX_PROPERTY_MATERIEL_RECEIVED] = date;
+							return self.load_page(page);
+						});
+					});
+
+					$("#not_recived").click(function()
+					{
+						ws_tools.toast("Email envoyé au pilote ...");
+						return ws_server.send_to_pilote();
+					});
+				});
+				
+				return self.apply_template(page, "osiri_rex_form_template", "osiri_rex_content", self.template_data).then(function()
+				{
+					var properties = Object.keys(self.data);
+					var color = 'yellow';
+					var half_icon = 'col fas fa-star-half-alt';
+
+					for (var i = 0; i<properties.length; i++)
+					{
+						var stars = $('#'+ properties[i]).find('.stars');
+						var stars_nbr = self.data[properties[i]][OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE];
+						var icon = 'col fas fa-star';
+						
+						if (stars_nbr)
+						{
+							stars.next().find('.item-inner').css('display', 'block');
+							stars.next().find('.item-media').css('display', 'block');
+							stars.next().next().css('display', 'block');
+
+							if (stars_nbr == Math.trunc(stars_nbr))
+							{
+								var stars_elements = $('#'+ properties[i]).find('.stars').children();
+								
+								for ( var j = 0 ; j<stars_nbr; j++)
+								{
+									$(stars_elements[j]).find('i').removeClass();
+									$(stars_elements[j]).find('i').addClass(icon);
+									$(stars_elements[j]).css('color', color);
+								}
+							}
+							else
+							{
+								stars_nbr = Math.ceil(stars_nbr);
+
+								var stars_elements = $('#'+ properties[i]).find('.stars').children();
+								
+								for ( var j = 0 ; j<stars_nbr; j++)
+								{
+									if (j == stars_nbr-1)
+									{
+										icon = half_icon;
+									}
+
+									$(stars_elements[j]).find('i').removeClass();
+									$(stars_elements[j]).find('i').addClass(icon);
+									$(stars_elements[j]).css('color', color);
+								}
+							}
+							
+						}
+						else
+						{
+							stars.next().next().css('display', 'none');
+						}
+					}
+					
+					var option_element = $("#osiri_rex_content");
+					$$('.add_photo').on('click', function (e)
+					{
+						prop = $(this).attr('osiri_prop');
+					});
 
 					// affectation d'une nouvelle image
 					option_element.find(".osiri_rex_take_photo").click(function()
@@ -626,294 +639,294 @@
 						osiri_photos.take_photo(Camera.PictureSourceType.CAMERA).then(function(base64)
 						{
 							option_element.find("#osiri_rex_photos_"+ prop)[0].style.display = "block";
-                            $('#osiri_rex_photos_'+ prop +' div.actions-group').html('<div class="actions-button" style="margin-left: 30%"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div>');
+							$('#osiri_rex_photos_'+ prop +' div.actions-group').html('<div class="actions-button" style="margin-left: 30%"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div>');
 							self.set_value(prop, base64, OSIRI_NOUVELLE_IDEE_OPTION_KEY_IMAGE);
 						});
-                    });
-                    
+					});
+					
 					// affectation d'une image deja stocker dans la galerie du telephone
 					option_element.find(".osiri_rex_add_photo").click(function(e)
 					{
 						osiri_photos.take_photo(Camera.PictureSourceType.PHOTOLIBRARY).then(function(base64)
 						{
-                            option_element.find("#osiri_rex_photos_"+ prop)[0].style.display = "block";
-                            $('#osiri_rex_photos_'+ prop +' div.actions-group').html('<div class="actions-button" style="margin-left: 30%"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div>');
+							option_element.find("#osiri_rex_photos_"+ prop)[0].style.display = "block";
+							$('#osiri_rex_photos_'+ prop +' div.actions-group').html('<div class="actions-button" style="margin-left: 30%"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div>');
 							self.set_value(prop, base64, OSIRI_NOUVELLE_IDEE_OPTION_KEY_IMAGE);
 						});
-                    });
-                    
-                    option_element.find(".actions-button-media img").click(function()
-                    {
-                        var image = [$(this).attr('src')];
-                        var myPhotoBrowserPopup = app.photoBrowser.create({
+					});
+					
+					option_element.find(".actions-button-media img").click(function()
+					{
+						var image = [$(this).attr('src')];
+						var myPhotoBrowserPopup = app.photoBrowser.create({
 							photos : image,
-						    type: 'standalone',
+							type: 'standalone',
 						});
-				        myPhotoBrowserPopup.open();
-                    });
+						myPhotoBrowserPopup.open();
+					});
 
-                    $("#osiri_rex_content textarea").change(function()
+					$("#osiri_rex_content textarea").change(function()
 					{   
-                        var id = $(this).parent().parent().parent().parent().parent().attr('id');
-                        var content = $(this).attr('osiri_content');
-                        
+						var id = $(this).parent().parent().parent().parent().parent().attr('id');
+						var content = $(this).attr('osiri_content');
+						
 						self.set_value(id, $$(this).val(), content);
-                    });
+					});
 
-                    $("#accompangement_bcm_fournisseur input").change(function()
+					$("#accompangement_bcm_fournisseur input").change(function()
 					{   
-                        var id = 'accompangement_bcm_fournisseur';
-                        debugger
+						var id = 'accompangement_bcm_fournisseur';
+						debugger
 						self.set_value(id, $$(this)[0].checked, OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE);
-                    });
-                    
-                    $('.list li .item-content button').click(function(e)
-                    {
-                        var id = $$(this).parent().parent().parent().parent().attr("id");
-                        var buttons = $$(this).parent().find(".button");
-                        var value = $$(this).val();
+					});
+					
+					$('.list li .item-content button').click(function(e)
+					{
+						var id = $$(this).parent().parent().parent().parent().attr("id");
+						var buttons = $$(this).parent().find(".button");
+						var value = $$(this).val();
 
-                        buttons.removeClass("button-active");
-                        $$(this).parent().find(".button[value='"+ value +"']").addClass("button-active");
+						buttons.removeClass("button-active");
+						$$(this).parent().find(".button[value='"+ value +"']").addClass("button-active");
 
 						self.set_value(id, value, OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE);
-                    });
+					});
 
-                    $('.star').click(function()
-                    {
-                        var stars = $(this).parent();
-                        stars.next().find('.item-inner').css('display', 'block');
-                        stars.next().find('.item-media').css('display', 'block');
-                        stars.next().next().css('display', 'block');
+					$('.star').click(function()
+					{
+						var stars = $(this).parent();
+						stars.next().find('.item-inner').css('display', 'block');
+						stars.next().find('.item-media').css('display', 'block');
+						stars.next().next().css('display', 'block');
 
-                        var id = stars.parent().parent().attr("id");
-                        var index = $(this).index();
-                        var stars_elemnts = stars.children();
-                        var color = 'yellow';
-                        var origin_icon = 'col fal fa-star';
-                        var icon = 'col fas fa-star';
-                        var half_icon = 'col fas fa-star-half-alt';
+						var id = stars.parent().parent().attr("id");
+						var index = $(this).index();
+						var stars_elemnts = stars.children();
+						var color = 'yellow';
+						var origin_icon = 'col fal fa-star';
+						var icon = 'col fas fa-star';
+						var half_icon = 'col fas fa-star-half-alt';
 
-                        if (self.data[id] == undefined) self.data[id] = {};
+						if (self.data[id] == undefined) self.data[id] = {};
 
-                        if (Math.ceil(self.data[id][OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE]) == index+1)
-                        {
-                            if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt' && index == 0)
-                            {
-                                var value = self.update_stars(index, stars_elemnts, origin_icon, "", 0);
-                                
-                                stars.next().find('.item-inner').css('display', 'none');
-                                stars.next().find('.item-media').css('display', 'none');
-                                stars.next().next().css('display', 'none');
-                            }
-                            else if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt')
-                            {
-                                var value = self.update_stars(index, stars_elemnts, icon, color, 1);
-                            }
-                            else
-                            {
-                                var value = self.update_stars(index, stars_elemnts, half_icon, color, 0.5);
-                            }
-                            
-                        }
-                        else
-                        {
-                            for (var i = 0; i<stars_elemnts.length; i++)
-                            {
-                                $(stars_elemnts[i]).find('i').removeClass();
-                                $(stars_elemnts[i]).find('i').addClass(icon);
-                                $(stars_elemnts[i]).css('color', color);
+						if (Math.ceil(self.data[id][OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE]) == index+1)
+						{
+							if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt' && index == 0)
+							{
+								var value = self.update_stars(index, stars_elemnts, origin_icon, "", 0);
+								
+								stars.next().find('.item-inner').css('display', 'none');
+								stars.next().find('.item-media').css('display', 'none');
+								stars.next().next().css('display', 'none');
+							}
+							else if ($(this).find('i').attr('class') == 'col fas fa-star-half-alt')
+							{
+								var value = self.update_stars(index, stars_elemnts, icon, color, 1);
+							}
+							else
+							{
+								var value = self.update_stars(index, stars_elemnts, half_icon, color, 0.5);
+							}
+							
+						}
+						else
+						{
+							for (var i = 0; i<stars_elemnts.length; i++)
+							{
+								$(stars_elemnts[i]).find('i').removeClass();
+								$(stars_elemnts[i]).find('i').addClass(icon);
+								$(stars_elemnts[i]).css('color', color);
 
-                                if( i == index)
-                                {
-                                    color = '';
-                                    icon = origin_icon;
-                                    var value = i+1;
-                                }
-                            }
-                        }
-                        
+								if( i == index)
+								{
+									color = '';
+									icon = origin_icon;
+									var value = i+1;
+								}
+							}
+						}
+						
 						self.set_value(id, value, OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE);
-                    });
+					});
 
-                    $('textarea').on('input', function()
-                    {
-                        self.validation_required(this);
-                    });
+					$('textarea').on('input', function()
+					{
+						self.validation_required(this);
+					});
 
-                    $('textarea').focus(function()
-                    {
-                        self.validation_required(this);
-                    });
+					$('textarea').focus(function()
+					{
+						self.validation_required(this);
+					});
 
-                    $("#upload_action").click(function()
-                    {
-                        self.upload();
-                    });
+					$("#upload_action").click(function()
+					{
+						self.upload();
+					});
 
-                    $('input.name_change').click(function()
-                    {
-                        var self = this;
+					$('input.name_change').click(function()
+					{
+						var self = this;
 
-                        if ($(this)[0].checked) 
-                        {
-                            var type = $(self).parent().attr('osiri_type');
-                            var name = $(self).parent().parent().parent().find('.item-title').text().split(':')[1];
-                            
-                            app.dialog.create({
-                                title: app.name,
-                                text: 'Veuillez confirmer le nom du '+ type,
-                                cssClass: 'custom-dialog',
-                                closeByBackdropClick: 'true',
-                                content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="'+name+'"></div>',
-                                buttons: [
-                                    {
-                                        text: 'OK',
-                                        onClick: function () {
-                                            
-                                            var name = $('.dialog-input-field.input input').val();
-                                            var text = $(self).parent().parent().parent().find('.item-title').text(type+' : '+name);
-                                        },
-                                    },
-                                ],
-                            }).open();
+						if ($(this)[0].checked) 
+						{
+							var type = $(self).parent().attr('osiri_type');
+							var name = $(self).parent().parent().parent().find('.item-title').text().split(':')[1];
+							
+							app.dialog.create({
+								title: app.name,
+								text: 'Veuillez confirmer le nom du '+ type,
+								cssClass: 'custom-dialog',
+								closeByBackdropClick: 'true',
+								content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="'+name+'"></div>',
+								buttons: [
+									{
+										text: 'OK',
+										onClick: function () {
+											
+											var name = $('.dialog-input-field.input input').val();
+											var text = $(self).parent().parent().parent().find('.item-title').text(type+' : '+name);
+										},
+									},
+								],
+							}).open();
 
-                            // app.dialog.confirm('Est ce que c\'est la bonne personne ?', function ()
-                            // {
-                            //     app.dialog.alert('Super !');
-                            // },
-                            // function()
-                            // {
-                            //     app.dialog.prompt('Veuillez saisir son nom et prènom', function (name)
-                            //     {
-                            //         var type = $(self).parent().attr('osiri_type');
-                            //         var text = $(self).parent().parent().parent().find('.item-title').text(type+' : '+name);
-                            //     });
-                            // });
-                        }
-                    });
-                });
-            },
+							// app.dialog.confirm('Est ce que c\'est la bonne personne ?', function ()
+							// {
+							//     app.dialog.alert('Super !');
+							// },
+							// function()
+							// {
+							//     app.dialog.prompt('Veuillez saisir son nom et prènom', function (name)
+							//     {
+							//         var type = $(self).parent().attr('osiri_type');
+							//         var text = $(self).parent().parent().parent().find('.item-title').text(type+' : '+name);
+							//     });
+							// });
+						}
+					});
+				});
+			},
 
-            validation_required: function(self)
-            {
-                var conditions = $(self).attr('osiri_validation');
-                var text = $(self).val();
-                if (conditions) 
-                {
-                    var conditions_array = conditions.split(' ');
-                    for (var i = 0;i<conditions_array.length; i++)
-                    {
-                        switch(conditions_array[i])
-                        {
-                            case 'not_empty':
-                                var message = 'Veuillez renseigner ce champ';
-                                if (text.length == 0)
-                                {
-                                    if ($(self).parent().children().length <= 2) 
-                                    {
-                                        var message_error = '<div class="item-input-error-message" style="display: block;">'+message+'</div>';
-                                        $(self).parent().append(message_error);
-                                    }
-                                    else
-                                    {
-                                        $(self).parent().find(".item-input-error-message").text(message);
-                                        $($(self).parent().find(".item-input-error-message")[0]).css('display', 'block');
-                                    }
-                                }
-                                else $($(self).parent().find(".item-input-error-message")[0]).css('display', 'none');
-                                break;
-                            case 'minlength':
-                                i++;
-                                var minlength = parseInt(conditions_array[i]);
-                                var message = 'Veuillez saisir plus de '+ conditions_array[i] +' caractères';
-                                if (text.length <= minlength)
-                                {
-                                    if ($(self).parent().children().length <= 2) 
-                                    {
-                                        var message_error = '<div class="item-input-error-message" style="display: block;">'+ message +'</div>';
-                                        // $(this).parent().css('background', 'var(--f7-input-invalid-border-color,var(--f7-input-error-text-color))');
-                                        $(self).parent().append(message_error);
-                                    }
-                                    else
-                                    {
-                                        $(self).parent().find(".item-input-error-message").text(message);
-                                        $($(self).parent().find(".item-input-error-message")[0]).css('display', 'block');
-                                    }
-                                }
-                                else
-                                {
-                                    $($(self).parent().find(".item-input-error-message")[0]).css('display', 'none');
-                                }
-                                break;
-                        }
-                    }
-                }
-            },
+			validation_required: function(self)
+			{
+				var conditions = $(self).attr('osiri_validation');
+				var text = $(self).val();
+				if (conditions) 
+				{
+					var conditions_array = conditions.split(' ');
+					for (var i = 0;i<conditions_array.length; i++)
+					{
+						switch(conditions_array[i])
+						{
+							case 'not_empty':
+								var message = 'Veuillez renseigner ce champ';
+								if (text.length == 0)
+								{
+									if ($(self).parent().children().length <= 2) 
+									{
+										var message_error = '<div class="item-input-error-message" style="display: block;">'+message+'</div>';
+										$(self).parent().append(message_error);
+									}
+									else
+									{
+										$(self).parent().find(".item-input-error-message").text(message);
+										$($(self).parent().find(".item-input-error-message")[0]).css('display', 'block');
+									}
+								}
+								else $($(self).parent().find(".item-input-error-message")[0]).css('display', 'none');
+								break;
+							case 'minlength':
+								i++;
+								var minlength = parseInt(conditions_array[i]);
+								var message = 'Veuillez saisir plus de '+ conditions_array[i] +' caractères';
+								if (text.length <= minlength)
+								{
+									if ($(self).parent().children().length <= 2) 
+									{
+										var message_error = '<div class="item-input-error-message" style="display: block;">'+ message +'</div>';
+										// $(this).parent().css('background', 'var(--f7-input-invalid-border-color,var(--f7-input-error-text-color))');
+										$(self).parent().append(message_error);
+									}
+									else
+									{
+										$(self).parent().find(".item-input-error-message").text(message);
+										$($(self).parent().find(".item-input-error-message")[0]).css('display', 'block');
+									}
+								}
+								else
+								{
+									$($(self).parent().find(".item-input-error-message")[0]).css('display', 'none');
+								}
+								break;
+						}
+					}
+				}
+			},
 
-            upload: function()
+			upload: function()
 			{
 				var self = this;
 
-                app.dialog.preloader("Envoi en cours...");
-                
-                if (self.data.interet_ergonomie && (self.data.ergonomie == undefined || self.data.ergonomie[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
-                {
-                    app.dialog.close();
-                    app.dialog.alert("Veuillez renseigner les champs de l'ergonomie !");
-                    return true;
-                }
+				app.dialog.preloader("Envoi en cours...");
+				
+				if (self.data.interet_ergonomie && (self.data.ergonomie == undefined || self.data.ergonomie[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
+				{
+					app.dialog.close();
+					app.dialog.alert("Veuillez renseigner les champs de l'ergonomie !");
+					return true;
+				}
 
-                if (self.data.interet_securite && (self.data.securite == undefined || self.data.securite[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
-                {
-                    app.dialog.close();
-                    app.dialog.alert("Veuillez renseigner les champs de sécurite !");
-                    return true;
-                }
+				if (self.data.interet_securite && (self.data.securite == undefined || self.data.securite[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
+				{
+					app.dialog.close();
+					app.dialog.alert("Veuillez renseigner les champs de sécurite !");
+					return true;
+				}
 
-                if (self.data.interet_competitivite && (self.data.competitivite == undefined || self.data.competitivite[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
-                {
-                    app.dialog.close();
-                    app.dialog.alert("Veuillez renseigner les champs de compétitivité !");
-                    return true;
-                }
+				if (self.data.interet_competitivite && (self.data.competitivite == undefined || self.data.competitivite[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
+				{
+					app.dialog.close();
+					app.dialog.alert("Veuillez renseigner les champs de compétitivité !");
+					return true;
+				}
 
-                if (self.data.interet_environnement && (self.data.environnement == undefined || self.data.environnement[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
-                {
-                    app.dialog.close();
-                    app.dialog.alert("Veuillez renseigner les champs d'environnement !");
-                    return true;
-                }
+				if (self.data.interet_environnement && (self.data.environnement == undefined || self.data.environnement[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
+				{
+					app.dialog.close();
+					app.dialog.alert("Veuillez renseigner les champs d'environnement !");
+					return true;
+				}
 
-                if (self.data.interet_complementaires && (self.data.autre == undefined || self.data.autre[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
-                {
-                    app.dialog.close();
-                    app.dialog.alert("Veuillez renseigner les champs d'autre !");
-                    return true;
-                }
+				if (self.data.interet_complementaires && (self.data.autre == undefined || self.data.autre[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0))
+				{
+					app.dialog.close();
+					app.dialog.alert("Veuillez renseigner les champs d'autre !");
+					return true;
+				}
 
-                if (self.data.globale == undefined || self.data.globale[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0)
-                {
-                    app.dialog.close();
-                    app.dialog.alert("Veuillez renseigner les champs de globale !");
-                    return true;
-                }
-                debugger
+				if (self.data.globale == undefined || self.data.globale[OSIRI_NOUVELLE_IDEE_OPTION_KEY_NOTE] == 0)
+				{
+					app.dialog.close();
+					app.dialog.alert("Veuillez renseigner les champs de globale !");
+					return true;
+				}
+				debugger
 				ws_server.send_rex(self.data, self.phase_chantier.server_id, self.rexs.date).then(function(result)
 				{
 					debugger
-                    if (typeof result == 'string') throw result;
-                    if (result.success)
-                    {
-                        app.dialog.close();
-                        app.dialog.alert("La REX a été bien envoyée à OSIRI");
-                        ws_database.rexs.set_with_id(self.rex_id, [OSIRI_REX_PROPERTY_SERVER_ID], [result.server_id]);
-                    }
-                    else
-                    {
-                        app.dialog.close();
-                        app.dialog.alert(result.error);
-                    }
+					if (typeof result == 'string') throw result;
+					if (result.success)
+					{
+						app.dialog.close();
+						app.dialog.alert("La REX a été bien envoyée à OSIRI");
+						ws_database.rexs.set_with_id(self.rex_id, [OSIRI_REX_PROPERTY_SERVER_ID], [result.server_id]);
+					}
+					else
+					{
+						app.dialog.close();
+						app.dialog.alert(result.error);
+					}
 				})
 				.catch(function(error)
 				{
@@ -922,64 +935,64 @@
 				});
 			},
 
-            update_stars: function(index, stars_elemnts, icon, color, factor)
-            {
-                for (var i = 0; i<stars_elemnts.length; i++)
-                {
-                    if( i == index)
-                    {
-                        $(stars_elemnts[i]).find('i').removeClass();
-                        $(stars_elemnts[i]).find('i').addClass(icon);
-                        $(stars_elemnts[i]).css('color', color);
-                        var value = i + factor;
-                    }
-                }
-                return value;
-            },
-            
-            add_rex: function()
-            {
-                var self = this;
-
-                var rex_properties = [
-                    OSIRI_REX_PROPERTY_VERSION,
-                    OSIRI_REX_PROPERTY_DATE_DEBUT,
-                    OSIRI_REX_PROPERTY_DATE_FIN,
-                    OSIRI_REX_PROPERTY_DATE,
-                    OSIRI_REX_PROPERTY_PHOTOS,
-                    OSIRI_REX_PROPERTY_COMMENT,
-                    OSIRI_REX_PROPERTY_ETAT,
-                    OSIRI_REX_PROPERTY_DATA,
-                    OSIRI_REX_PROPERTY_MATERIEL_RECEIVED
-                ];
-                
-                var rex_values = [
-                    1,
-                    self.phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT],
-                    self.phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN],
-                    ws_tools.get_date_with_default_format(),
-                    "",
-                    "",
-                    "",
-                    JSON.stringify(self.data),
-                    null
-                ];
-
-                return ws_database.rexs.add_with_server(ws_engine.get_server_id(), rex_properties, rex_values);
-            
-            },
-
-            
-            set_value : function(property_id, value, prop_change)
+			update_stars: function(index, stars_elemnts, icon, color, factor)
 			{
-                if (this.data[property_id] == undefined) this.data[property_id] = {};
+				for (var i = 0; i<stars_elemnts.length; i++)
+				{
+					if( i == index)
+					{
+						$(stars_elemnts[i]).find('i').removeClass();
+						$(stars_elemnts[i]).find('i').addClass(icon);
+						$(stars_elemnts[i]).css('color', color);
+						var value = i + factor;
+					}
+				}
+				return value;
+			},
+			
+			add_rex: function()
+			{
+				var self = this;
+
+				var rex_properties = [
+					OSIRI_REX_PROPERTY_VERSION,
+					OSIRI_REX_PROPERTY_DATE_DEBUT,
+					OSIRI_REX_PROPERTY_DATE_FIN,
+					OSIRI_REX_PROPERTY_DATE,
+					OSIRI_REX_PROPERTY_PHOTOS,
+					OSIRI_REX_PROPERTY_COMMENT,
+					OSIRI_REX_PROPERTY_ETAT,
+					OSIRI_REX_PROPERTY_DATA,
+					OSIRI_REX_PROPERTY_MATERIEL_RECEIVED
+				];
+				
+				var rex_values = [
+					1,
+					self.phase_chantier[OSIRI_REX_PROPERTY_DATE_DEBUT],
+					self.phase_chantier[OSIRI_REX_PROPERTY_DATE_FIN],
+					ws_tools.get_date_with_default_format(),
+					"",
+					"",
+					"",
+					JSON.stringify(self.data),
+					null
+				];
+
+				return ws_database.rexs.add_with_server(ws_engine.get_server_id(), rex_properties, rex_values);
+			
+			},
+
+			
+			set_value : function(property_id, value, prop_change)
+			{
+				if (this.data[property_id] == undefined) this.data[property_id] = {};
 		
-                if (this.data[property_id][prop_change] != value)
-                {
-                    this.data[property_id][prop_change] = value;
-                
-                    return this.save();
-                }
+				if (this.data[property_id][prop_change] != value)
+				{
+					this.data[property_id][prop_change] = value;
+				
+					return this.save();
+				}
 				
 				return Promise.resolve();
 			},
@@ -987,11 +1000,11 @@
 			save : function()
 			{
 				var data = JSON.stringify(this.data);
-                
-                ws_database.rexs.set_with_id(this.rex_id, [OSIRI_REX_PROPERTY_DATA], [data]);
+				
+				ws_database.rexs.set_with_id(this.rex_id, [OSIRI_REX_PROPERTY_DATA], [data]);
 			},
-            
-        }));
-    </script>
+			
+		}));
+	</script>
 </div>
-        
+		

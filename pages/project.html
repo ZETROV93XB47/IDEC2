@@ -372,10 +372,10 @@
 				
 				if (this.data[OSIRI_PROJET_PROPERTY_IMAGE_URL] && !this.data[OSIRI_PROJET_PROPERTY_IMAGE_DOWNLOADED])
 				{
-					app.dialog.preloader("Chargement de l'image du projet ...");
+					app.dialog.preloader('Chargement de l\'image du projet ...');
 					let result = await ws_server.get(this.data[OSIRI_PROJET_PROPERTY_IMAGE_URL]);
                     app.dialog.close();
-					if (result)
+					if (result.length > 0 && result.substr(0, 10) == 'data:image')
 					{
 						this.data[OSIRI_PROJET_PROPERTY_IMAGE] = result;
 						await ws_database.projets.set_with_id(this.id, [OSIRI_PROJET_PROPERTY_IMAGE, OSIRI_PROJET_PROPERTY_IMAGE_DOWNLOADED], [result, true]);
@@ -385,7 +385,7 @@
 
 				if (!this.data[OSIRI_PROJET_PROPERTY_IMAGE])
 				{
-					this.data[OSIRI_PROJET_PROPERTY_IMAGE] = "../img/projet_img.png";
+					this.data[OSIRI_PROJET_PROPERTY_IMAGE] = '../img/projet_img.png';
 				}
 					
 

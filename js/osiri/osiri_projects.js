@@ -258,7 +258,7 @@ var osiri_projects = new function()
         var self = this;
         var promises = [];
 
-        return ws_database.projets.find(OSIRI_PROJET_PROPERTY_MES_PROJETS + " = ?", [true]).then(function(mes_projets)
+        return ws_database.projets.find(OSIRI_PROJET_PROPERTY_MES_PROJETS + " = ?", [1]).then(function(mes_projets)
 		{
             function change_value(i, mes_projets)
             {

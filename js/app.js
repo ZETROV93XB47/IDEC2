@@ -89,7 +89,7 @@ var app = new Framework7(
 			return new Promise(function(resolve, reject)
 			{
 				$('.toolbar').css('display', 'block');
-				$('.views').find('a[href="#view-my-actions"]').attr('href', '#view-my-actions');
+				$('.views').find('#my-actions').attr('href', '#view-my-actions');
 				$('.views').find('a[href="#view-home"] span').text("Tableau de bord");
 				$('.content_deconnect_mode').css('display', 'none');
 				$('.content_every_one_mode').css('display', 'none');
@@ -224,7 +224,7 @@ function is_connected()
 
 // Tab views
 var homeView = app.views.create('#view-home', { url: '/' });
-var submitIdeaView = app.views.create('#view-submit-idea', { url: '/submit_idea_tab/' });
+// var submitIdeaView = app.views.create('#view-submit-idea', { url: '/submit_idea_tab/' });
 var myActionsView = app.views.create('#view-my-actions', { url: '/my_actions_tab/' });
 var innovationsView = app.views.create('#view-innovations', { url: '/innovations_tab/' });
 
@@ -372,8 +372,8 @@ $$('.aaa').on('click', function ()
 	var href = $(this).attr('href');
 	$(".toolbar-inner").removeClass('tab-link-active');
 	$(".toolbar-inner").find("a[href='"+ href +"']").addClass('tab-link-active');
-	if(href == "#view-submit-idea") $(".tab-link-highlight").css('transform', 'translate3d(100%, 0px, 0px)');
-	if(href == "#view-innovations") $(".tab-link-highlight").css('transform', 'translate3d(300%, 0px, 0px)');
+	// if(href == "#view-submit-idea") $(".tab-link-highlight").css('transform', 'translate3d(100%, 0px, 0px)');
+	if(href == "#view-innovations") $(".tab-link-highlight").css('transform', 'translate3d(200%, 0px, 0px)');
 });
 
 $$('#send_mail').on('click', function ()
