@@ -638,8 +638,9 @@
 					{
 						osiri_photos.take_photo(Camera.PictureSourceType.CAMERA).then(function(base64)
 						{
+							debugger
 							option_element.find("#osiri_rex_photos_"+ prop)[0].style.display = "block";
-							$('#osiri_rex_photos_'+ prop +' div.actions-group').html('<div class="actions-button" style="margin-left: 30%"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div>');
+							$('#osiri_rex_photos_'+ prop).html('<div class="actions-group"><div class="actions-button" style="margin-left: 30%"><div class="actions-button-media"><img src="data:application/octet-stream;base64,'+ base64 +'" width="48"></div><div class="actions-button-text dynamic-popover">image</div></div></div>');
 							self.set_value(prop, base64, OSIRI_NOUVELLE_IDEE_OPTION_KEY_IMAGE);
 						});
 					});
@@ -676,7 +677,7 @@
 					$("#accompangement_bcm_fournisseur input").change(function()
 					{   
 						var id = 'accompangement_bcm_fournisseur';
-						debugger
+						
 						self.set_value(id, $$(this)[0].checked, OSIRI_NOUVELLE_IDEE_OPTION_KEY_VALUE);
 					});
 					
@@ -790,19 +791,6 @@
 									},
 								],
 							}).open();
-
-							// app.dialog.confirm('Est ce que c\'est la bonne personne ?', function ()
-							// {
-							//     app.dialog.alert('Super !');
-							// },
-							// function()
-							// {
-							//     app.dialog.prompt('Veuillez saisir son nom et prènom', function (name)
-							//     {
-							//         var type = $(self).parent().attr('osiri_type');
-							//         var text = $(self).parent().parent().parent().find('.item-title').text(type+' : '+name);
-							//     });
-							// });
 						}
 					});
 				});

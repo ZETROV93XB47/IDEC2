@@ -452,7 +452,7 @@ const OSIRI_PHASE_CHANTIER_PROPERTY_INTERLOCUTEUR_REX_NAME = 'interlocuteur_rex_
 
 var ws_defines = new function()
 {
-	this.DEV_MODE = true;
+	this.DEV_MODE = false;
 	this.TEST_MODE = true;
 
 	this.CAMERA_QUALITY = 30;
@@ -464,9 +464,14 @@ var ws_defines = new function()
 		this.SERVER_API_URL = 'https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app';
 		this.API_KEY = '1234';
 	}
+	else if (this.TEST_MODE)
+	{
+		this.SERVER_API_URL = 'https:\/\/osiri.workspace-solution.com\/api\/osiri_mobile_app';
+		this.API_KEY = 'ASFFDGDSFVVDSQFESFEFSDVDFQVFECSQER';
+	}
 	else
 	{
-		this.SERVER_API_URL = 'https:\/\/osiri2-dev.workspace-solution.com\/api\/osiri_mobile_app';
+		this.SERVER_API_URL = 'https:\/\/osiri.workspace-solution.com\/api\/osiri_mobile_app';
 		this.API_KEY = '1234';
 	}
 	
