@@ -1,16 +1,17 @@
 //! App Synchronizer
 
-var app_synchronizer_class = ws_synchronizer_class.extend(
+class app_synchronizer_class extends ws_synchronizer_class
 	{
-		constructor: function()
+		constructor()
 		{
+			super();
 			this.start_delay = 10000;
 			this.wakeup_delay = 2000;
 			this.next_delay = 10000;
 			this.synchronizing = true;
-		},
+		}
 		
-		import_data_item : function(key, data)
+		import_data_item(key, data)
 		{
 			var self = this;
 			var data = data;
@@ -22,15 +23,7 @@ var app_synchronizer_class = ws_synchronizer_class.extend(
 				var server_id = ws_engine.get_server_id();
 				var server_ids = {};
 
-				if (item[OSIRI_ACTION_PROPERTY_CHANTIER]) server_ids[OSIRI_ACTION_PROPERTY_CHANTIER] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_CHANTIERS, id: item[OSIRI_ACTION_PROPERTY_CHANTIER]};
-				if (item[OSIRI_ACTION_PROPERTY_PROJET]) server_ids[OSIRI_ACTION_PROPERTY_PROJET] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_PROJETS, id: item[OSIRI_ACTION_PROPERTY_PROJET]};
-				if (item[OSIRI_PROJET_PROPERTY_PILOTE]) server_ids[OSIRI_PROJET_PROPERTY_PILOTE] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: item[OSIRI_PROJET_PROPERTY_PILOTE]};
-				if (item[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT]) server_ids[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: item[OSIRI_PROJET_PROPERTY_REFERENT_PRODUIT]};
-				if (item[OSIRI_PROJET_PROPERTY_REDACTEUR]) server_ids[OSIRI_PROJET_PROPERTY_REDACTEUR] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: item[OSIRI_PROJET_PROPERTY_REDACTEUR]};
-				if (item[OSIRI_PHASE_CHANTIER_PROPERTY_REX]) server_ids[OSIRI_PHASE_CHANTIER_PROPERTY_REX] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_REXS, id: item[OSIRI_PHASE_CHANTIER_PROPERTY_REX]};
-				if (item[OSIRI_REX_PROPERTY_INTERLOCUTEUR_REX]) server_ids[OSIRI_REX_PROPERTY_INTERLOCUTEUR_REX] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: item[OSIRI_REX_PROPERTY_INTERLOCUTEUR_REX]};
-				if (item[OSIRI_ACTION_PROPERTY_PHASE_CHANTIER]) server_ids[OSIRI_ACTION_PROPERTY_PHASE_CHANTIER] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_PHASE_CHANTIERS, id: item[OSIRI_ACTION_PROPERTY_PHASE_CHANTIER]};
-				// if (item[OSIRI_ACTION_PROPERTY_COLLABORATEUR]) server_ids[OSIRI_ACTION_PROPERTY_COLLABORATEUR] = {server: server_id, entity: OSIRI_DATAMODEL_ENTITY_COLLABORATEURS, id: item[OSIRI_ACTION_PROPERTY_COLLABORATEUR]};
+				// if (item[PROPERTY_COLLABORATEUR]) server_ids[PROPERTY_COLLABORATEUR] = {server: server_id, entity: IDEC_DATAMODEL_ENTITY_COLLABORATEURS, id: item[PROPERTY_COLLABORATEUR]};
 				
 				return self.get_locals_ids(server_ids).then(function(ids)
 				{
@@ -52,7 +45,7 @@ var app_synchronizer_class = ws_synchronizer_class.extend(
 			{
 				return data;
 			});
-		},
-	});
+		}
+	}
 	
 	var ws_synchronizer = new app_synchronizer_class();

@@ -8,15 +8,13 @@
 					<span class="ios-only">Back</span>
 				</a>
 			</div>
-		<div class="title">OSIRI Mobile</div>
+		<div class="title">IDEC Mobile - Info de l'appareil</div>
 	</div>
 </div>
 <div class="page-content">
 	<script id="device_infos_template" type="text/template7">
-		<div class="ws_app_page_header_block">
-			<div class= "ws_app_page_header">Informations appareil</div>
-		</div>
-		<div class="list">	
+		<div class= "block-title">Informations appareil</div>
+		<div class="list">
 			<ul>	
 				<li>
 					<div class="item-content">
@@ -144,16 +142,17 @@
 	</div>
 	
 	<script type="text/javascript" ws_script="page">
-	ws_engine.register_page("device_infos", ws_page.extend(
+	class device_infos_class extends ws_page
 	{	
-		init: function(page, event)
+		custom_init(page, event)
 		{
-			var infos = ws_platform.get_config();
+			let infos = ws_platform.get_config();
 				
 			infos[PLATFORM_CONFIG_KEY_UUID] = ws_engine.get_device_uuid();
 			
 			this.apply_template(page, "device_infos_template", "device_infos_content", infos);
 		}
-	}));
+	}
+	ws_engine.register_page("device_infos", device_infos_class);
 	</script>
 </div>

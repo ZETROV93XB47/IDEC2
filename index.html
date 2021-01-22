@@ -17,7 +17,7 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         
-        <title>OSIRI Rex</title>
+        <title>IDEC Mobile</title>
 
         <link rel="stylesheet" href="framework7/css/framework7.bundle.min.css">
         <link rel="stylesheet" href="fonts/f7icons/css/framework7-icons.css">
@@ -82,6 +82,7 @@
                 <div class="view">
                     <div class="page">
                         <div class="navbar">
+                            <div class="navbar-bg"></div>
                             <div class="navbar-inner">
                                 <div class="title">Menu</div>
                             </div>
@@ -129,17 +130,16 @@
                                     <span class="ios-only">Back</span>
                                     </a>
                                 </div>
-                                <div class="title">OSIRI Mobile</div>
+                                <div class="title">IDEC Mobile</div>
                             </div>						
                         </div>
                         <div class="page-content">
                             <br>
-                            <div class="login-screen-title">Connexion à OSIRI mobile</div>
+                            <div class="login-screen-title">Connexion à IDEC mobile</div>
                             
-                            <div class="block-title" style="white-space: normal; text-align: center;">Allez sur la page OSIRI Mobile sur votre ordinateur et scannez le QR Code</div>
                             <div class="block">
                                 <div id="connection_qrcode" style="text-align:center;"><img src="./img/qr_code.png"></div>
-                                <p><a id="connection_btn" class="button button-big button-fill" style="text-align: center;">Scanner le QR Code sur OSIRI</a></p>
+                                <p><a id="connection_btn" class="button button-big button-fill" style="text-align: center;">Scanner le QR Code</a></p>
                             </div>
                             
                             <div class="block-title">Ou saisissez vos identifiant / mot de passe :</div>
@@ -180,7 +180,7 @@
             <!-- Views/Tabs container -->
             <div class="views tabs safe-areas">
                 <!-- Tabbar for switching views-tabs -->
-                <div class="toolbar toolbar-bottom tabbar-labels">
+                <div class="toolbar toolbar-bottom tabbar-labels display-none">
                     <div class="toolbar-inner">
                         <a href="#view-home" class="tab-link tab-link-active">
                             <i class="icon f7-icons if-not-md">house_fill</i>
@@ -192,7 +192,7 @@
                             <i class="icon material-icons if-md">view_list</i>
                             <span class="tabbar-label">Déposer idée</span>
                         </a> -->
-                        <a id="my-actions" href="#view-my-actions" class="tab-link">
+                        <!-- <a id="my-actions" href="#view-my-actions" class="tab-link">
                             <i class="icon f7-icons if-not-md">square_list_fill</i>
                             <i class="icon material-icons if-md">view_list</i>
                             <span class="tabbar-label">Mes Actions</span>
@@ -201,316 +201,11 @@
                             <i class="icon f7-icons if-not-md">gear</i>
                             <i class="icon material-icons if-md">settings</i>
                             <span class="tabbar-label">Les innovations</span>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
                 <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
-                <div id="view-home" class="view view-main view-init tab tab-active">
-                    <div class="page" data-name="home">
-                        <!-- Top Navbar -->
-                        <div class="navbar">
-                            <div class="navbar-bg"></div>
-                            <div class="navbar-inner">
-                                <div class="left">
-                                    <a href="#" class="link icon-only panel-open" data-panel="left">
-                                    <i class="icon f7-icons if-not-md">menu</i>
-                                    <i class="icon material-icons if-md">menu</i>
-                                    </a>
-                                </div>
-                                <div class="title sliding">OSIRI</div>
-                                <div class="right">
-                                    <a class="synchro link icon-only" data-panel="right">
-                                        <i class="icon f7-icons ios-only">sync</i>
-                                        <i class="icon material-icons md-only">sync</i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Scrollable page content-->
-                        <div class="page-content">
-                            <script id="osiri_rex_action_template" type="text/template7">
-                                <div class="list">
-                                    <ul>
-                                        {{#each rex_actions}}
-                                        <li>
-                                            <a href="/formulaire_action/" class="item-link item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">
-                                                {{ nom }}
-                                                <div class="item-header">{{ description }}</div>
-                                                </div>
-                                                <div class="item-after">{{ date }}</div>
-                                            </div>
-                                            </a>
-                                        </li>
-                                        {{else}}
-                                        <li class="item-content">Aucun REX</li>
-                                        <li>
-                                            <a href="/formulaire_action/" class="item-link item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">
-                                                REX Test
-                                                <div class="item-header">{{ description }}</div>
-                                                </div>
-                                                <div class="item-after"></div>
-                                            </div>
-                                            </a>
-                                        </li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </script>
-                            <script id="osiri_revu_template" type="text/template7">
-                                <div class="list">
-                                    <ul>
-                                        {{#each revus}}
-                                        <li>
-                                            <a href="/formulaire_action/" class="item-link item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">
-                                                {{ nom }}
-                                                <div class="item-header">{{ etape }}</div>
-                                                </div>
-                                                <div class="item-after">{{ phase }}</div>
-                                            </div>
-                                            </a>
-                                        </li>
-                                        {{else}}
-                                        <li class="item-content">Aucune revu</li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </script>
-                            <script id="osiri_mes_actions_template" type="text/template7">
-                                <div class="list">
-                                    <ul>
-                                        {{#each mes_actions}}
-                                        <li>
-                                            <a href="{{#js_if "this.action == 'prototype_tests_chantiers' || this.action == 'preserie_tests_chantiers'"}}/formulaire_action/{{ phase_chantier }}{{else}}/project/{{ projet }}{{/js_if}}" class="item-link item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">
-                                                {{ nom }}
-                                                <div class="item-header">{{ etape }}</div>
-                                                </div>
-                                                <div class="item-after">{{ phase }}</div>
-                                            </div>
-                                            </a>
-                                        </li>
-                                        {{else}}
-                                        <li class="item-content">Aucune action</li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </script>
-                            <script id="osiri_mes_projets_template" type="text/template7">
-                                <div class="list">
-                                    <ul>
-                                        {{#each mes_projets}}
-                                        <li>
-                                            <a href="/project/{{ id }}" class="item-link item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">
-                                                {{ nom }}
-                                                <div class="item-header">{{ etape }}</div>
-                                                </div>
-                                                <div class="item-after">{{ phase }}</div>
-                                            </div>
-                                            </a>
-                                        </li>
-                                        {{else}}
-                                        <li class="item-content">Aucun projet</li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </script>
-                            <script id="osiri_phase_change_template" type="text/template7">
-                                <div class="list">
-                                    <ul>
-                                        {{#each phase_changes}}
-                                        <li>
-                                            <a href="/project/{{ projet }}" class="item-link item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">
-                                                {{ nom }}
-                                                <div class="item-header">{{ de }} -> {{ vers }}</div>
-                                                </div>
-                                                <div class="item-after">{{ date }}</div>
-                                            </div>
-                                            </a>
-                                        </li>
-                                        {{else}}
-                                        <li class="item-content">Aucun changement de phase</li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </script>
-                            <script id="osiri_last_event_template" type="text/template7">
-                                <div class="list">
-                                    <ul>
-                                        {{#each last_events}}
-                                        <li>
-                                            <a href="/project/{{ projet }}" class="item-link item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">
-                                                {{ nom }}
-                                                <div class="item-header">{{ date }}</div>
-                                                </div>
-                                                <div class="item-after">{{ event }}</div>
-                                            </div>
-                                            </a>
-                                        </li>
-                                        {{else}}
-                                        <li class="item-content">Aucun événement</li>
-                                        {{/each}}
-                                    </ul>
-                                </div>
-                            </script>
-                            <div class="content_every_one_mode" style="margin-top: 20%;">
-                                <img src="./img/logo_osiri_300.png" style="display: block; margin: auto; width: 50%;"/>
-                                <div class="block block-strong inset">
-                                    <p style="font-size: 18px;">
-                                        Vous avez un compte OSIRI<br>
-                                    </p>
-                                    <a class="button  button-fill item-link popup-open" data-popup="#popup_connection">Se connecter</a>
-                                </div>
-                                <div class="block block-strong inset">
-                                    <p style="font-size: 18px;">
-                                        Vous n'avez pas de compte<br>
-                                    </p>
-                                    <div class="list no-hairlines">
-                                        <ul>
-                                            <li class="item-content item-input">
-                                                <div class="item-inner">
-                                                    <div class="item-title item-label">Saisissez votre email</div>
-                                                    <div class="item-input-wrap">
-                                                        <input id="verify_mail" type="email" name="email" placeholder="Email">
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="list">
-                                        <ul>
-                                            <li><input id="send_mail" class="button button-big button-fill" type="submit" href="#" value="Envoyer"/></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="content_connect_mode" style="display: none;">
-                                <!-- <div class="card-expandable" style="height: 150px;">
-                                    <div class="card-content">
-                                        <div class="bg-color-blue" style="height: 150px">
-                                        <div id="osiri_rex_todo" class="card-header text-color-white">REX à réaliser</div>
-                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
-                                            <i class="icon f7-icons">multiply_circle_fill</i>
-                                        </a>
-                                        </div>
-                                        <div id="osiri_rex_actions_content" class="card-content-padding">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-expandable" style="height: 150px;">
-                                    <div class="card-content">
-                                        <div class="bg-color-green" style="height: 150px">
-                                        <div id="osiri_revu_todo" class="card-header text-color-white">Revue à organiser</div>
-                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
-                                            <i class="icon f7-icons">multiply_circle_fill</i>
-                                        </a>
-                                        </div>
-                                        <div id="osiri_revu_content" class="card-content-padding">
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <div class="card-expandable" style="height: 150px;">
-                                    <div class="card-content">
-                                        <div class="bg-color-blue" style="height: 150px">
-                                        <div id="osiri_rex_todo" class="card-header text-color-white">Mes projets</div>
-                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
-                                            <i class="icon f7-icons">multiply_circle_fill</i>
-                                        </a>
-                                        </div>
-                                        <div id="osiri_mes_projets_content" class="card-content-padding">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-expandable" style="height: 150px;">
-                                    <div class="card-content">
-                                        <div class="bg-color-green" style="height: 150px">
-                                        <div id="osiri_revu_todo" class="card-header text-color-white">Mes actions</div>
-                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
-                                            <i class="icon f7-icons">multiply_circle_fill</i>
-                                        </a>
-                                        </div>
-                                        <div id="osiri_mes_actions_content" class="card-content-padding">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-expandable" style="height: 150px;">
-                                    <div class="card-content">
-                                        <div class="bg-color-orange" style="height: 150px">
-                                        <div id="osiri_phase_change_todo" class="card-header text-color-white">Changements de phases (mois passé)</div>
-                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
-                                            <i class="icon f7-icons">multiply_circle_fill</i>
-                                        </a>
-                                        </div>
-                                        <div id="osiri_phase_change_content" class="card-content-padding">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-expandable" style="height: 150px;">
-                                    <div class="card-content">
-                                        <div class="bg-color-yellow" style="height: 150px">
-                                        <div id="osiri_last_event_todo" class="card-header text-color-white">Derniers événements (30 derniers jours)</div>
-                                        <a href="#" class="link card-close card-opened-fade-in color-white" style="position: absolute; right: 15px; top: 15px">
-                                            <i class="icon f7-icons">multiply_circle_fill</i>
-                                        </a>
-                                        </div>
-                                        <div id="osiri_last_event_content" class="card-content-padding">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="content_deconnect_mode" style="display: none; margin-top: 20%;">
-                                <img src="./img/logo_osiri_300.png" style="display: block; margin: auto; width: 50%;"/>
-                                <div class="block block-strong inset">
-                                    <p style="font-size: 18px;">
-                                        Vous êtes en mode déconnecté,<br>
-                                        vous pouvez consulter les innovations.<br>
-                                    </p>
-                                    <div class="block">
-                                        <!-- <p class="row">
-                                            <a  href="#view-submit-idea" class="aaa tab-link col button button-fill color-green">Ajouter une nouvelle idée</a>
-                                        </p> -->
-                                        <p class="row">
-                                            <a  href="#view-innovations" class="aaa tab-link col button button-fill color-blue">Liste des innovations</a>
-                                        </p>
-                                    </div>
-                                    <p style="font-size: 18px;">ou bien de se connecter pour avoir accès à vos actions</p>
-                                    <div class="block">
-                                        <p class="row">
-                                            <a class="col button button-fill popup-open" data-popup="#popup_connection">Se connecter</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Submit idea View -->
-                <!-- <div id="view-submit-idea" class="view view-init tab" data-view="submit-idea-tab" data-url="/submit_idea_tab/"> -->
-                <!-- Submit idea page will be loaded here dynamically from /submit_idea_tab/ route -->
-                <!-- <div id="view-submit-idea" class="view view-init tab">
-                </div> -->
-                <!-- My actions View -->
-                <div id="view-my-actions" class="view view-init tab">
-                    <!-- My actions page will be loaded here dynamically from /my_actions_tab/ route -->
-                </div>
-                <!-- Innovations View -->
-                <div id="view-innovations" class="view view-init tab">
-                    <!-- Innovations page will be loaded here dynamically from /innovations_tab/ route -->
-                </div>
+                <div id="view-home" class="view view-main view-init tab tab-active"></div>
             </div>
             
         </div>
@@ -520,8 +215,12 @@
         <!-- Framework7 library -->
         <script type="text/javascript" src="framework7/js/framework7.bundle.min.js"></script>
 
-        <!-- Framework7 library -->
+        <!-- Other libraries -->
         <script type="text/javascript" src="libs/jquery-3.4.1.js"></script>
+        
+	    <script type="text/javascript" src="libs/js_sig_pad/signature_pad.umd.js"></script>
+        <script type="text/javascript" src="libs/pdfjs/pdf.js"></script>
+        <script type="text/javascript" src="libs/pdfjs/pdf.worker.js"></script>
 
         <!-- WS scripts -->
         <script type="text/javascript" src="js/workspace/ws_object.js"></script>
@@ -549,10 +248,7 @@
         <script type="text/javascript" src="js/app/app_engine.js"></script>
 
         <!-- Custom scripts -->
-        <script type="text/javascript" src="js/osiri/osiri_actions.js"></script>
-        <script type="text/javascript" src="js/osiri/osiri_rexs.js"></script>
-        <script type="text/javascript" src="js/osiri/osiri_projects.js"></script>
-        <script type="text/javascript" src="js/osiri/osiri_photos.js"></script>
+        <script type="text/javascript" src="js/idec/idec_photos.js"></script>
         
         <!-- App routes -->
         <script src="js/routes.js"></script>

@@ -1,0 +1,164 @@
+<div class="page" data-name="scanned_info">
+	<div class="navbar">
+		<div class="navbar-bg"></div>
+		<div class="navbar-inner sliding">
+            <div class="left">
+                <a href="#" class="link back">
+                <i class="icon icon-back"></i>
+                <span class="if-not-md">Back</span>
+                </a>
+            </div>
+			<div class="title">IDEC - Information Compagnon</div>
+		</div>
+	</div>
+	<div class="page-content">
+		<script id="idec_info_template" type="text/template7">
+			<div style="text-align: center;">
+				<img src="data:application/octet-stream;base64,{{ avatar }}" height="280" style="padding-top: 20px; border-radius: 50%;">
+			</div>
+			<div class="idec_info">
+				<div class="block-header" style="font-size: 20px; margin-top: 0px; text-align: center;">{{ last_name }} {{ first_name }}</div>	
+				<div class="card-content card-content-padding">
+					<div class="list">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">Société</div>
+									<div class="item-after">{{ company }}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">Sous-traitant de la société</div>
+									<div class="item-after"></div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">Type de contrat</div>
+									<div class="item-after">{{ contrat_type }}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">SST projet</div>
+									<div class="item-after"></div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="block block-strong inset">
+				<button class="button button-fill popup-open documents" data-popup=".popup_document">Documents</button>
+			</div>
+	
+			<div class="popup popup_document">
+				<div class="view">
+					<div class="page" data-name="document">
+						<div class="navbar">
+							<div class="navbar-bg"></div>
+							<div class="navbar-inner">
+								<div class="left">
+									<a href="#" class="link popup-close">
+										<i class="icon icon-back"></i>
+									<span class="ios-only">Back</span>
+									</a>
+								</div>
+								<div class="title">Documents</div>
+							</div>						
+						</div>
+						<div class="page-content">
+							<div class="card-content card-content-padding" id="idec_documents_list">
+								<div class="list">
+									<ul>
+										{{#each documents}}
+										<li>
+											<a class="item-content item-link" href="/pdf/{{@index}}/storage">
+												<div class="item-inner">
+													<div class="item-title" style="white-space: normal;">{{this.name}}</div>
+												</div>
+											</a>
+										</li>
+										{{/each}}
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		
+		<div id="idec_info_content"></div>
+	</div>
+	<script type="text/javascript" ws_script="page">
+		class scanned_info extends ws_page
+		{
+			async custom_init(page, event, params)
+			{
+				this.data = [];
+				
+				let times = 16000;
+				
+				app.dialog.preloader('Chargement ...');
+				await this.load_page();
+				app.dialog.close();
+				
+				let times_to_close = setTimeout(() => page.view.router.back(), times);
+				
+				$('button.button.documents').click(() => clearTimeout(times_to_close));
+				
+				$('#idec_documents_list a.item-content').click(() => app.popup.close('.popup_document', true));
+			}
+			
+			async load_page()
+			{
+				const data = await this.get_template_data();
+				
+                return this.apply_template(page, "idec_info_template", "idec_info_content", data);
+			}
+			
+			async get_template_data()
+			{
+				try 
+				{
+					const result = await ws_server.get_result_data();
+					
+					if (result.status == "success")
+					{
+						let data = result.data.result;
+						
+						for (let i = 0; i < data.documents.length; i++)
+						{
+							ws_storage.set_value('pdf_'+i, data.documents[i]['base64']);
+						}
+						
+						return data;
+					}
+					else
+					{
+						page.view.router.back();
+						app.dialog.alert(result.error);
+					}
+				}
+				catch(error)
+				{
+					if (ws_defines.debug) console.log(error);
+					app.dialog.alert(error);
+				}
+				
+			}
+		}
+
+		ws_engine.register_page("scanned_info", scanned_info);
+	</script>
+</div>

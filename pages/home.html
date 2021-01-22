@@ -1,0 +1,209 @@
+<script type="text/javascript" src="js/app/app_database.js"></script>
+<div class="page" data-name="home">
+    <!-- Top Navbar -->
+    <div class="navbar">
+        <div class="navbar-bg"></div>
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" class="link icon-only panel-open" data-panel="left">
+                <i class="icon f7-icons if-not-md">menu</i>
+                <i class="icon material-icons if-md">menu</i>
+                </a>
+            </div>
+            <div class="title sliding">IDEC</div>
+            <div class="right">
+            </div>
+        </div>
+    </div>
+    <!-- Scrollable page content-->
+    <div class="page-content">
+        <div class="content_deconnect_mode margin-top">
+            <img src="./img/logo.png" style="display: block; margin: auto; width: 50%;"/>
+            <div class="block block-strong inset">
+                <p style="font-size: 18px;">
+                    Ad chantier<br>
+                </p>
+                <form class="list" id="login-form">
+                    <div class="list no-hairlines">
+                        <ul>
+                            <li class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Identifiant</div>
+                                    <div class="item-input-wrap">
+                                        <input type="email" name="login" placeholder="exemple@domain.com">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Mot de passe</div>
+                                    <div class="item-input-wrap">
+                                        <input type="password" name="password" placeholder="Mot de passe">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+                
+                <div class="list">
+                    <ul>
+                        <li><input id="login" class="button button-big button-fill" type="submit" href="#" value="Login"/></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content_connect_mode" style="display: none;">
+            <div class="login-screen-title margin-top">Lire badge NFC chantier</div>
+            <div class="block">
+                <div id="scan_nfc" style="text-align:center;"><img src="./img/nfc.png"></div>
+            </div>
+            <div class="login-screen-title">Scanner le QR code chantier</div>
+            <div class="block">
+                <div id="scan_qrcode" style="text-align:center;"><img src="./img/qr_code.png"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" ws_script="page">
+    class home_class extends ws_page
+    {	
+        custom_init(page, event, params)
+        {
+            var self = this;
+            self.data = {};
+
+            return self.load_page(page);
+        }
+        
+		custom_tabshow(page, event, params)
+		{
+			var self = this;
+			self.data = {};			
+			
+			return self.load_page(page);			
+		}
+
+        load_page(page)
+        {
+            $$('#login').on('click', function ()
+            {
+                var data = app.form.convertToData('#login-form');
+                console.log(JSON.stringify(data));
+
+                app.dialog.preloader("Authentification ...");
+
+                ws_server.authentification(data).then(function(result)
+                {
+                    app.dialog.close();
+                    
+                    if (typeof result == 'string') throw result;
+                    if (result.success)
+                    {
+                        ws_tools.toast('Vous êtes bien connecté');
+                        return app.methods.load_connect_mode();
+                    }
+                    else app.dialog.alert('Erreur : '+result.error);
+                })
+                .catch(function(error)
+                {
+                    app.dialog.close();
+                    if (ws_defines.debug)
+                    {
+                        ws_tools.toast('erreur');
+                        console.log(error);
+                    }
+                });
+            });
+            
+            $('#scan_qrcode').off('click', () => this.scan_qrcode());
+            $('#scan_qrcode').on('click', () => this.scan_qrcode());
+            
+            $('#scan_nfc').off('click', () => this.scan_nfc());
+            $('#scan_nfc').on('click', () => this.scan_nfc());
+
+            $$('#menu_disconnect').on('click', function () 
+			{				
+				app.dialog.confirm("Voulez-vous vraiment vous déconnecter ?", "Déconnexion", function ()
+				{
+					ws_user.logout().then(function()
+					{
+						app.methods.load_deconnect_mode()
+						app.panel.close();
+					});
+				});
+			});
+        }
+
+        faire_quelque_chose(page)
+        {
+            homeView.router.navigate("/scanned_info/");
+        }
+
+        scan_qrcode()
+        {
+            if (app.device.desktop)
+            {	
+                this.faire_quelque_chose('scan_qrcode');
+            }
+            else cordova.plugins.barcodeScanner.scan(function(data) 
+            {
+                console.log('cordova.plugins.barcodeScanner.scan start');
+
+                if (!data.cancelled && data.format == "QR_CODE")
+                {
+                    console.log('start/enter');
+                    ws_storage.set_value('connection_qrcode', data.text);
+                    console.log(data.text);
+                    
+                    this.faire_quelque_chose(data.text);
+                }
+            },
+            function (error) 
+            {
+                console.log('error');
+                
+                app.dialog.alert("Erreur de lecture du QRCode : " + error ? error : 'pas de messgae');
+                
+                connecting = false;
+            });
+        }
+
+        async scan_nfc()
+        {
+            app.dialog.alert("Posez votre carte sur votre téléphone pour la scanner");
+
+            if(app.device.desktop){
+                app.dialog.alert("TAG NFC détecté");
+                var result  = await ws_server.get_result_data('949AD64A');
+                homeView.router.navigate("/scanned_info/");
+                debugger
+                return('949AD64A');
+            }
+            else{
+
+                function success() {
+                console.log("Success");
+            }
+
+            function fail () {
+                console.log("Fail");
+            }
+
+            async function readCard (nfcEvent){
+                    app.dialog.alert("TAG NFC détecté");
+                    var tag = nfcEvent.tag;   
+                    var tag_Id = nfc.bytesToHexString(tag.id);
+                    app.dialog.alert("Numéro de série du TAG : " + tag_Id);
+                    homeView.router.navigate("/scanned_info/");
+                    var result  = await ws_server.get_result_data(tag_Id);
+                    debugger
+            }  
+
+                nfc.addTagDiscoveredListener(readCard, success, fail);
+            }
+        }
+    }
+    ws_engine.register_page("home", home_class);
+    </script>
+</div>

@@ -8,7 +8,7 @@
 			<span class="ios-only">Back</span>
 			</a>
 		</div>
-		<div class="title">OSIRI Mobile - Admin</div>
+		<div class="title">IDEC Mobile - Admin</div>
 		</div>
 	</div>
 	<div class="page-content">
@@ -16,14 +16,11 @@
 			<p class="row"id="ws_app_restart">
 				<button class="col button button-fill button-big" id="admin_reset_all">Réinitialiser</button>
 			</p>
-			<p class="row"id="ws_app_recharge">
-				<button class="col button button-fill button-big" id="admin_recharge_all">Recharger</button>
-			</p>
 			<p class="row" id="ws_app_informations">
 				<a href="/device_infos/" class="col button button-fill button-big">Informations appareil</a>
 			</p>
 			<p class="row" id="ws_app_database_content">
-				<a href="/database_content/" class="col button button-fill button-big">Contenu base-données</a>
+				<a href="/database_content/" class="col button button-fill button-big">Contenu base de données</a>
 			</p>
 			<p class="row" id="ws_app_exit_admin_mode">
 				<a href="#" class="col button button-fill button-big color-red" id="quit_admin_mode">Quittter le mode admin</a>
@@ -35,11 +32,11 @@
 				<a href="#" class="col button button-fill button-big color-green" id="enter_admin_mode">Activer le mode admin</a>
 			</p>
 		</div>
-
-		<script type="text/javascript" ws_script="page">
-		ws_engine.register_page("admin", ws_page.extend(
+	</div>
+	<script type="text/javascript" ws_script="page">
+		class admin_page_class extends ws_page
 		{	
-			custom_init: function(page, event, params)
+			custom_init(page, event, params)
 			{	
 				var self = this;
 				var type = params.type;
@@ -56,7 +53,7 @@
 					app.dialog.confirm("Voulez vous quitter le mode " + type + " ?", function()
 					{
 						ws_engine.set_user_mode(WS_USER_MODE_USER);
-						page.router.navigate("/");
+						page.router.navigate("/home/");
 					});
 				});
 				
@@ -86,70 +83,14 @@
 					{
 						ws_engine.reset().then(function()
 						{
-							app.methods.load_every_one_mode();
-							app.popup.open('#popup_connection', true);
-						});
-					});
-				});
-
-				$("#admin_recharge_all").on('click',function()
-				{
-					app.dialog.confirm("Recharger toute l'application ?", "Admin", function()
-					{
-						var qrcode = ws_storage.get_value('connection_qrcode');
-						ws_engine.reset().then(function()
-						{
-							ws_storage.set_value('connection_qrcode', qrcode);
-							app.methods.load_every_one_mode();
-							
-							app.methods.authentification_form_out();
-							// app.popup.open('#popup_connection', true);
+							app.methods.load_deconnect_mode();
 						});
 					});
 				});
 				
 				return true;
-			},
-			
-	/*
-			do_reset_all: function(self, page, selector, event)
-			{
-				app.dialog.confirm("Réinitialiser toute l'application ?", "Admin", function()
-				{
-					ws_engine.reset().then(function()
-					{
-						app.popup.open('#popup_connection', true);
-					});
-				});
 			}
-	*/
-			
-	/*
-			do_reset_all: function(self, page, selector, event)
-			{
-				app.dialog.confirm("Réinitialiser toute l'application ?", "Admin", function()
-				{
-					var synchronizing = ws_synchronizer.stop();
-					
-					ws_engine.reset().then(function()
-					{
-						ws_synchronizer.stop();
-
-						if (home_update_timer != undefined) clearInterval(home_update_timer);
-						home_update_timer = undefined;
-						
-						if (synchronizing) ws_synchronizer.start();
-						
-						app.popup.open('#popup_connection', true);
-					});
-				});
-			},
-			
-			do_synchronize_all: function(self, page, selector, event)
-			{
-				return ws_synchronizer.synchronize_data();
-			}
-	*/
-		}));
-		</script>
+		}
+		ws_engine.register_page("admin", admin_page_class);
+	</script>
 </div>

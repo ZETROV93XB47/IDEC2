@@ -1,13 +1,13 @@
 //! Page
 
-var ws_page = Class.extend(
+class ws_page
 {
-	constructor: function(id)
+	constructor(id)
 	{
 		this.id = id;
-	},
+	}
 	
-	init: function(page, event, params)
+	init(page, event, params)
 	{
 		var self = this;
 		
@@ -49,14 +49,14 @@ var ws_page = Class.extend(
 				});
 			}
 		});
-	},
+	}
 	
-	custom_init: function(page, event, params)
+	custom_init(page, event, params)
 	{
 		return Promise.resolve(true);
-	},
+	}
 	
-	reinit: function(page, event, params)
+	reinit(page, event, params)
 	{
 		var self = this;
 			
@@ -70,14 +70,14 @@ var ws_page = Class.extend(
 		.then(function(result)
 		{
 		});
-	},
+	}
 	
-	custom_reinit: function(page, event, params)
+	custom_reinit(page, event, params)
 	{
 		return Promise.resolve(true);
-	},
+	}
 	
-	beforein: function(page, event, params)
+	beforein(page, event, params)
 	{
 		var self = this;
 			
@@ -121,14 +121,14 @@ var ws_page = Class.extend(
 			}
 
 		});
-	},
+	}
 	
-	custom_beforein: function(page, event, params)
+	custom_beforein(page, event, params)
 	{
 		return Promise.resolve(true);
-	},
+	}
 	
-	afterin: function(page, event, params)
+	afterin(page, event, params)
 	{
 		var self = this;
 			
@@ -142,14 +142,14 @@ var ws_page = Class.extend(
 		.then(function(result)
 		{
 		});
-	},
+	}
 	
-	custom_afterin: function(page, event, params)
+	custom_afterin(page, event, params)
 	{
 		return Promise.resolve(true);
-	},
+	}
 	
-	beforeout: function(page, event, params)
+	beforeout(page, event, params)
 	{
 		var self = this;
 			
@@ -163,14 +163,14 @@ var ws_page = Class.extend(
 		.then(function(result)
 		{
 		});
-	},
+	}
 	
-	custom_beforeout: function(page, event, params)
+	custom_beforeout(page, event, params)
 	{
 		return Promise.resolve(true);
-	},
+	}
 	
-	afterout: function(page, event, params)
+	afterout(page, event, params)
 	{
 		var self = this;
 			
@@ -184,14 +184,14 @@ var ws_page = Class.extend(
 		.then(function(result)
 		{
 		});
-	},
+	}
 	
-	custom_afterout: function(page, event, params)
+	custom_afterout(page, event, params)
 	{
 		return Promise.resolve(true);
-	},
+	}
 		
-	tabshow: function(page, event)
+	tabshow(page, event)
 	{
 		var self = this;
 			
@@ -202,55 +202,55 @@ var ws_page = Class.extend(
 		.then(function(result)
 		{
 		});
-	},
+	}
 	
-	custom_tabshow: function(page, event)
+	custom_tabshow(page, event)
 	{
 		return Promise.resolve(true);
-	},
+	}
 
 	//! Page
 	
-	set_title: function(title)
+	set_title(title)
 	{
 		$$('.navbar .title').html(title);
-	},
+	}
 
 	//! Content
 	
-	get_element: function(id)
+	get_element(id)
 	{
 		return $$(this.page.el).find("#" + id);
-	},
+	}
 
-	get_element_with_class: function(aclass)
+	get_element_with_class(aclass)
 	{
 		return $$(this.page.el).find("." + aclass);
-	},
+	}
 
-	get_element_with_selector: function(selector)
+	get_element_with_selector(selector)
 	{
 		return $$(this.page.el).find(selector);
-	},
+	}
 	
-	get_jquery_element: function(id)
+	get_jquery_element(id)
 	{
 		return $(this.page.el).find("#" + id);
-	},
+	}
 
-	get_jquery_element_with_class: function(aclass)
+	get_jquery_element_with_class(aclass)
 	{
 		return $(this.page.el).find("." + aclass);
-	},
+	}
 
-	get_jquery_element_with_selector: function(selector)
+	get_jquery_element_with_selector(selector)
 	{
 		return $(this.page.el).find(selector);
-	},
+	}
 
 	//! Template
 	
-	compile_template: function(page, template_id)
+	compile_template(page, template_id)
 	{
 		return app_inited().then(function ()
 		{
@@ -258,9 +258,9 @@ var ws_page = Class.extend(
 			
 			return Template7.compile(template);			
 		});	
-	},
+	}
 
-	apply_template: function(page, template_id, content_id, data)
+	apply_template(page, template_id, content_id, data)
 	{
 		return app_inited().then(function ()
 		{
@@ -272,44 +272,44 @@ var ws_page = Class.extend(
 			
 			return data;
 		});	
-	},
+	}
 	
 	//! Tag
 	
-	get_tag_value: function(id)
+	get_tag_value(id)
 	{
 		var element = $$("#" + id);
 		
 		return $$(this.page.el).find("#" + id).attr("ws_value");
-	},
+	}
 	
-	set_tag_value: function(id, value)
+	set_tag_value(id, value)
 	{
 		$$(this.page.el).find("#" + id).attr("ws_value", value);
 		
 		return value;
-	},
+	}
 	
-	switch_tag_value: function(id)
+	switch_tag_value(id)
 	{
 		var value = this.get_tag_value(id);
 		
 		return this.set_tag_value(id, value ? 0 : 1);
-	},
+	}
 	
-	get_tag_object_id: function(id)
+	get_tag_object_id(id)
 	{
 		return $$(this.page.el).find("#" + id).attr("ws_id");
-	},
+	}
 	
-	get_tag_object_server_id: function(id)
+	get_tag_object_server_id(id)
 	{
 		return $$(this.page.el).find("#" + id).attr("ws_server_id");
-	},
+	}
 	
 	//! Interface
 	
-	set_toggle_switch_icon: function(page, container_id, value, icon_on, icon_off, on_change)
+	set_toggle_switch_icon(page, container_id, value, icon_on, icon_off, on_change)
 	{
 		var self = this;
 		var container = $$(page.el).find("#" + container_id);
@@ -336,40 +336,40 @@ var ws_page = Class.extend(
 				}
 			}
 		});
-	},
+	}
 	
-	set_segment_value: function(page, segment_id, value)
+	set_segment_value(page, segment_id, value)
 	{
 		var buttons = $$(page.el).find("#" + segment_id + " .button");
 
 		buttons.removeClass("button-active");
 		buttons.filter(function(index, el) { return $$(this).attr('ws_value') == value; }).addClass("button-active");
-	},
+	}
 	
-	get_segment_value: function(page, segment_id)
+	get_segment_value(page, segment_id)
 	{
 		var button = $$(page.el).find("#" + segment_id + " .button.button-active");
 
 		return button ? button.attr('ws_value') : undefined;
-	},
+	}
 	
-	set_smart_select_value: function(page, smart_select_id, value)
+	set_smart_select_value(page, smart_select_id, value)
 	{
 		var select = $$(page.el).find("#" + smart_select_id + " select");
 		var text = $$(page.el).find("#" + smart_select_id + " .item-after");
 
 		select.val(value);
 		text.html(select.find("option[value='" + value + "']").html());
-	},
+	}
 	
-	set_date_input: function(page, input_id)
+	set_date_input(page, input_id)
 	{
 		app.calendar.create({ inputEl: "#" + input_id + " input", dateFormat: 'dd/mm/yy' });
-	},
+	}
 
 	//! Events
 	
-	on_event: function(page, selector, event, call, self)
+	on_event(page, selector, event, call, self)
 	{
 		if (self == undefined) self = this;
 		
@@ -377,9 +377,9 @@ var ws_page = Class.extend(
 		{
 			call(self, page, selector, event);
 		});
-	},
+	}
 	
-	on_click: function(page, selector, call, self)
+	on_click(page, selector, call, self)
 	{
 		if (self == undefined) self = this;
 		
@@ -387,9 +387,9 @@ var ws_page = Class.extend(
 		{
 			call(self, page, selector, event);
 		});
-	},
+	}
 	
-	on_segment_click: function(page, selector, call, self)
+	on_segment_click(page, selector, call, self)
 	{
 		if (self == undefined) self = this;
 		
@@ -411,12 +411,12 @@ var ws_page = Class.extend(
 			
 			call(self, page, selector, this, event);
 		});
-	},
+	}
 	
 	//! Forms
 	
-	install_form: function(page, form, data)
+	install_form(page, form, data)
 	{
 		return new ws_form(this, page, form, data);
-	},	
-});
+	}
+}

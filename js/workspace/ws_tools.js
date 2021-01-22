@@ -8,28 +8,28 @@ var ws_tools = new function()
 		
 		return str.replace('.', ',');
 	}
-    
-    this.get_amount_as_string = function(amount, decimals)
-    {
-        var amount = (Math.round(amount*100)/100).toString();
-        
-        return amount.replace('.', ',');
-    }
+	
+	this.get_amount_as_string = function(amount, decimals)
+	{
+		var amount = (Math.round(amount*100)/100).toString();
+		
+		return amount.replace('.', ',');
+	}
 	
 	this.toast = function(message, position, delais)
-    {
-	    if (position == undefined) position = 'bottom';
-	    if (delais == undefined) delais = 2500;
-	    
-	    var toast = app.toast.create({
+	{
+		if (position == undefined) position = 'bottom';
+		if (delais == undefined) delais = 2500;
+		
+		var toast = app.toast.create({
 			text: message,
 			position: position,
 			closeTimeout: delais,
 		});
 		
 		toast.open();
-    }
-    
+	}
+	
 	this.get_date_with_db_date = function(date)
 	{
 		return new Date(Date.parse(date.replace('-','/').replace('-','/')));
@@ -65,23 +65,23 @@ var ws_tools = new function()
 		
 		return day.substr(-2) + '/' + month.substr(-2) + '/' + (long_year ? date.getFullYear() : year.substr(-2));
 	}
-    
-    this.get_date_as_string_y = function(date, long_year)
+	
+	this.get_date_as_string_y = function(date, long_year)
 	{
-        var new_date = new Date();
-        if (long_year == undefined) long_year = false;
-        
-        new_date.setFullYear(date.substr(0, 4));
+		var new_date = new Date();
+		if (long_year == undefined) long_year = false;
+		
+		new_date.setFullYear(date.substr(0, 4));
 		new_date.setMonth((date.substr(5, 7).substr(0, 2))-1);
 		new_date.setDate(date.substr(8, 9));
-        
-        var day = "0" + new_date.getDate();
+		
+		var day = "0" + new_date.getDate();
 		var month = "0" + (new_date.getMonth() + 1);
 		var year = "0" + new_date.getFullYear();
 		
 		return day.substr(-2) + '/' + month.substr(-2) + '/' + (long_year ? new_date.getFullYear() : year.substr(-2));
-        
-    }
+		
+	}
 	
 	this.get_time_with_default_format = function(date, seconds)
 	{
@@ -111,8 +111,8 @@ var ws_tools = new function()
 		
 		return hours.substr(-2) + 'h' + minutes.substr(-2);
 	}
-    
-    this.get_time_as_string_y = function(time, seconds)
+	
+	this.get_time_as_string_y = function(time, seconds)
 	{
 		if (time == undefined) time = new Date();
 
@@ -121,7 +121,7 @@ var ws_tools = new function()
 		
 		return hours.substr(-2) + 'h' + minutes.substr(-2);
 	}
-    
+	
 	this.get_datetime_with_default_format = function(date)
 	{
 		if (date == undefined) date = new Date();
@@ -169,27 +169,27 @@ var ws_tools = new function()
 	
 	this.base64_to_blob = function(b64Data, contentType, sliceSize)
 	{
-        contentType = contentType || '';
-        sliceSize = sliceSize || 512;
+		contentType = contentType || '';
+		sliceSize = sliceSize || 512;
 
-        var byteCharacters = atob(b64Data);
-        var byteArrays = [];
+		var byteCharacters = atob(b64Data);
+		var byteArrays = [];
 
-        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize)
-        {
-            var slice = byteCharacters.slice(offset, offset + sliceSize);
+		for (var offset = 0; offset < byteCharacters.length; offset += sliceSize)
+		{
+			var slice = byteCharacters.slice(offset, offset + sliceSize);
 
-            var byteNumbers = new Array(slice.length);
-            
-            for (var i = 0; i < slice.length; i++)
-            {
-                byteNumbers[i] = slice.charCodeAt(i);
-            }
+			var byteNumbers = new Array(slice.length);
+			
+			for (var i = 0; i < slice.length; i++)
+			{
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
 
-            var byteArray = new Uint8Array(byteNumbers);
+			var byteArray = new Uint8Array(byteNumbers);
 
-            byteArrays.push(byteArray);
-        }
+			byteArrays.push(byteArray);
+		}
 
 		return new Blob(byteArrays, {type: contentType});
 	}
@@ -855,29 +855,29 @@ var ws_tools = new function()
 	
 	this.isEqual = function(a, b) 
 	{
-	    // Create arrays of property names
-	    var aProps = Object.getOwnPropertyNames(a);
-	    var bProps = Object.getOwnPropertyNames(b);
+		// Create arrays of property names
+		var aProps = Object.getOwnPropertyNames(a);
+		var bProps = Object.getOwnPropertyNames(b);
 	
-	    // If number of properties is different,
-	    // objects are not equivalent
-	    if (aProps.length != bProps.length) {
-	        return false;
-	    }
+		// If number of properties is different,
+		// objects are not equivalent
+		if (aProps.length != bProps.length) {
+			return false;
+		}
 	
-	    for (var i = 0; i < aProps.length; i++) {
-	        var propName = aProps[i];
+		for (var i = 0; i < aProps.length; i++) {
+			var propName = aProps[i];
 	
-	        // If values of same property are not equal,
-	        // objects are not equivalent
-	        if (a[propName] !== b[propName]) {
-	            return false;
-	        }
-	    }
+			// If values of same property are not equal,
+			// objects are not equivalent
+			if (a[propName] !== b[propName]) {
+				return false;
+			}
+		}
 	
-	    // If we made it this far, objects
-	    // are considered equivalent
-	    return true;
+		// If we made it this far, objects
+		// are considered equivalent
+		return true;
 	}
 	
 	this.cleanArray = function(array) 

@@ -8,7 +8,7 @@
 				<span class="ios-only">Back</span>
 				</a>
 			</div>			
-			<div class="title">OSIRI Mobile - Contenu de la base de données</div>
+			<div class="title">IDEC Mobile - Contenu de la base de données</div>
 			<div class="right">
 			</div>
 		</div>
@@ -82,9 +82,9 @@
 	</div>
 	
 	<script type="text/javascript" ws_script="page">
-	ws_engine.register_page("database_content", ws_page.extend(
+	class database_content extends ws_page
 	{	
-		custom_init: function(page, event, params)
+		custom_init(page, event, params)
 		{
 			var self = this;
 			var data = {};
@@ -144,9 +144,9 @@
 			});
 			
 			return true;
-		},
+		}
 		
-		get_template_for_data : function (data, page_num) 
+		get_template_for_data(data, page_num) 
 		{
 			var self = this;
 			for(var i = 0; i<data.length; i++)
@@ -161,9 +161,9 @@
 				});
 			}
 			self.on_change_number(undefined, page_num);
-		},
+		}
 		
-		on_change_page : function (longueur, page_num) 
+		on_change_page(longueur, page_num) 
 		{
 			var col = parseInt($$($('select#oe_page_select'))[0].selectedOptions[0].value);
 			var number = Math.trunc(longueur/col);
@@ -189,9 +189,9 @@
 			
 			if (page_num >= total_number_page) 	$$("#oe_next_page").attr("class","link disabled");
 			else 	$$("#oe_next_page").attr("class","link");
-		},
+		}
 		
-		on_change_number : function (self, page_num) 
+		on_change_number(self, page_num) 
 		{
 			if (self == undefined) self = this;
 			var col = parseInt($$($('select#oe_page_select'))[0].selectedOptions[0].value);
@@ -204,6 +204,7 @@
 			}
 			self.on_change_page(len, page_num);
 		}
-	}));
+	}
+	ws_engine.register_page("database_content", database_content);
 	</script>
 </div>

@@ -1,11 +1,9 @@
 //! Page
 
-var ws_form = Class.extend(
+class ws_form
 {
-	constructor: function(object, page, form_id, data, load, save)
+	constructor(object, page, form_id, data, load, save)
 	{
-		var self = this;
-		
 		this.page = page;
 		this.form_id = form_id;
 		this.form = object.get_element(form_id);
@@ -56,12 +54,12 @@ var ws_form = Class.extend(
 			
 			if (button) button.click(function()
 			{
-				self.form.submit();
+				this.form.submit();
 				//$("#" + form_id).submit();
 			});
 		
 			//$("#" + form_id).submit(function(event)
-			self.form.submit(function(event)
+			this.form.submit(function(event)
 			{
 				event.preventDefault();
 	
@@ -74,9 +72,9 @@ var ws_form = Class.extend(
 				});
 			});
 		});
-	},
+	}
 	
-	clear: function()
+	clear()
 	{
 		var data = app.form.convertToData(form);
 		
@@ -101,4 +99,4 @@ var ws_form = Class.extend(
 			app.form.fillFromData(form, data);
 		}
 	}
-});
+}

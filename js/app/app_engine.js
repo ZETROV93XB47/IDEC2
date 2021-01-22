@@ -1,53 +1,54 @@
 //! Engine
 
-var app_engine_class = ws_engine_class.extend(
+class app_engine_class extends ws_engine_class
 {
-	constructor : function()
+	constructor()
 	{
-	},
+		super();
+	}
 	
 	//! Init
 	
-	custom_init : function(server_id)
+	custom_init(server_id)
 	{
 		return Promise.resolve(server_id);
-	},
+	}
 
 	//! Get/Set
 	
-	get_app_name : function()
+	get_app_name()
 	{
-		return 'OSIRI Rex';
-	},
+		return IDEC_APP_NAME;
+	}
 
-	get_version : function()
+	get_version()
 	{
-		return OSIRI_APP_VERSION;
-	},
+		return IDEC_APP_VERSION;
+	}
 
 	//! Server
 	
-	is_multi_servers : function()
+	is_multi_servers()
 	{
-		return OSIRI_APP_MULTI_SERVERS;
-	},
+		return IDEC_APP_MULTI_SERVERS;
+	}
 
 	//! Storage
 	
-	get_local_storage_prefix : function()
+	get_local_storage_prefix()
 	{
-		return OSIRI_MOBILE_LOCAL_STORAGE_PREFIX;
-	},
+		return IDEC_MOBILE_LOCAL_STORAGE_PREFIX;
+	}
 	
 	//! Reset
 		
-	custom_reset: function()
+	custom_reset()
 	{
 		this.event_id = undefined;
 		this.event = undefined;
 		
 		return Promise.resolve();
 	}
-});
+}
 
 var ws_engine = new app_engine_class();

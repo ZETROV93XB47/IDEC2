@@ -1,27 +1,27 @@
 //! WS Datamodel
 
-var ws_datamodel_class = Class.extend(
+class ws_datamodel_class
 {
 	//! Entities
 	
-	get_entities: function()
+	get_entities()
 	{
 		return [];
-	},
+	}
 	
-	get_entity_infos: function(entity)
+	get_entity_infos(entity)
 	{
 		return null;
-	},
+	}
 	
-	get_entity_table: function(entity)
+	get_entity_table(entity)
 	{
 		var infos = this.get_entity_infos(entity);
 		
 		return infos ? infos.table : undefined;
-	},
+	}
 	
-	get_entity_condition: function(entity, condition)
+	get_entity_condition(entity, condition)
 	{
 		var infos = this.get_entity_infos(entity);
 		
@@ -35,16 +35,16 @@ var ws_datamodel_class = Class.extend(
 		}
 		
 		return infos.filter;
-	},
+	}
 	
 	//! Tables
 	
-	get_table_infos: function(table)
+	get_table_infos(table)
 	{
 		return [];
-	},
+	}
 
-	get_tables_entities: function()
+	get_tables_entities()
 	{
 		if (this.table_entities == undefined)
 		{
@@ -62,25 +62,25 @@ var ws_datamodel_class = Class.extend(
 		}
 		
 		return this.table_entities;
-	},
+	}
 	
-	get_tables: function()
+	get_tables()
 	{
 		var tables = this.get_tables_entities();
 		
 		return tables ? Object.keys(tables) : [];
-	},
+	}
 	
-	get_table_entity: function(table)
+	get_table_entity(table)
 	{
 		var tables = this.get_tables_entities();
 		
 		return tables ? tables[table] : undefined;
-	},
+	}
 
 	//! Datatables
 	
-	get_datatable_columns: function(table)
+	get_datatable_columns(table)
 	{
 		var entity = this.get_table_entity(table);
 		var structure = this.get_entity_structure(entity);
@@ -132,5 +132,5 @@ var ws_datamodel_class = Class.extend(
 		}
 		
 		return properties;
-	},
-});
+	}
+}

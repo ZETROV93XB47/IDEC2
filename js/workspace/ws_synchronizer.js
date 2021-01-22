@@ -1,23 +1,23 @@
 //! WS Synchronizer
 
-var ws_synchronizer_class = Class.extend(
+class ws_synchronizer_class
 {
-	start_delay : 5000,
-	wakeup_delay : 2000,
-	next_delay : 5000,
+	start_delay = 5000;
+	wakeup_delay = 2000;
+	next_delay = 5000;
 	
-	synchro_enabled: true,
-	synchronizing : true,
-	timer : undefined,
+	synchro_enabled = true;
+	synchronizing = true;
+	timer = undefined;
 	
-	map : undefined,
-	reverse_map : undefined,
+	map = undefined;
+	reverse_map = undefined;
 	
-	constructor : function()
+	constructor()
 	{
-	},
+	}
 	
-	start : function(delay)
+	start(delay)
 	{
 		if (delay == undefined) delay = this.start_delay;
 		
@@ -27,9 +27,9 @@ var ws_synchronizer_class = Class.extend(
 		{
 			//this.set_timer(delay);
 		}
-	},
+	}
 
-	stop : function()
+	stop()
 	{
 		console.log("synchronizer : stop"); 
 		
@@ -42,9 +42,9 @@ var ws_synchronizer_class = Class.extend(
 		}
 		
 		return false;
-	},
+	}
 
-	wakeup : function(delay, force)
+	wakeup(delay, force)
 	{
 		console.log("synchronizer : wakeup (" + delay + ")"); 
 		
@@ -58,14 +58,14 @@ var ws_synchronizer_class = Class.extend(
 		}
 		
 		this.set_timer(delay);
-	},
+	}
 
-	sync_is_on : function()
+	sync_is_on()
 	{
 		return this.timer != undefined;
-	},
+	}
 	
-	sync : function()
+	sync()
 	{
 		console.log("synchronizer : now"); 
 		
@@ -84,9 +84,9 @@ var ws_synchronizer_class = Class.extend(
 		}
 		
 		if (sync) this.wakeup();
-	},
+	}
 
-	set_timer : function(delay)
+	set_timer(delay)
 	{
 		var self = this;
 		
@@ -106,9 +106,9 @@ var ws_synchronizer_class = Class.extend(
 			},
 			delay);
 		}
-	},
+	}
 
-	synchronize : function()
+	synchronize()
 	{
 		var self = this;
 		
@@ -122,22 +122,6 @@ var ws_synchronizer_class = Class.extend(
 			{
 				return self.synchronize_next_photo();
 			})
-/*
-			.then(function()
-			{
-				console.log("synchronizer : synchronize_next_photo done"); 
-
-				return ws_database.photos.count('(status IS "' + ws_defines.PHOTO_STATUS_NEW + '") OR (status IS "' + ws_defines.PHOTO_STATUS_ERROR + '")');
-			})
-			.then(function(number)
-			{
-				console.log("synchronizer : photo count : " + number); 
-				
-				self.synchronizing = false;
-				
-				if (number > 0) self.set_timer(self.next_delay);
-			})
-*/
 			.then(function()
 			{
 				console.log("synchronizer : synchronization done"); 
@@ -155,24 +139,24 @@ var ws_synchronizer_class = Class.extend(
 				if (self.next_delay != undefined) self.set_timer(self.next_delay);
 			});
 		}
-	},
+	}
 
-	synchronize_next_photo : function()
+	synchronize_next_photo()
 	{
 		return Promise.resolve();
-	},
+	}
 
-	custom_synchronize : function()
+	custom_synchronize()
 	{
 		return Promise.resolve(); 
-	},
+	}
 	
-	is_synchronizing : function()
+	is_synchronizing()
 	{
 		return this.synchronizing;
-	},
+	}
 	
-	logout : function()
+	logout()
 	{
 		var self = this;
 		
@@ -182,11 +166,11 @@ var ws_synchronizer_class = Class.extend(
 		{
 			resolve();
 		});
-	},
+	}
 	
 	//! Data synchronization
 	
-	get_synchronization_infos : function()
+	get_synchronization_infos()
 	{
 		var entities = ws_datamodel.get_entities();
 		var infos = [];
@@ -203,9 +187,9 @@ var ws_synchronizer_class = Class.extend(
 		}
 		
 		return infos;
-	},
+	}
 	
-	get_synchronization_map : function(server)
+	get_synchronization_map(server)
 	{
 		var self = this;
 		var map = {};
@@ -234,9 +218,9 @@ var ws_synchronizer_class = Class.extend(
 				if (ws_defines.debug) console.log(error);
 			});
 		});
-	},
+	}
 	
-	synchronize_data : function()
+	synchronize_data()
 	{
 		return Promise.resolve()
 		
@@ -245,11 +229,11 @@ var ws_synchronizer_class = Class.extend(
 			var param = {};
 			return this.api('synchronize_data', param, ws_engine.get_server_url());
 		});
-	},
+	}
 
 	//! Data import
 	
-	import_all_data : function(server_id, data)
+	import_all_data(server_id, data)
 	{
 		var self = this;
 		var infos = self.get_synchronization_infos();
@@ -286,9 +270,9 @@ var ws_synchronizer_class = Class.extend(
 		{		
 			return process_next_key();
 		});
-	},
+	}
 			
-	import_key_data : function(key, data)
+	import_key_data(key, data)
 	{
 		// var promises = [];
 		var self = this;
@@ -315,16 +299,16 @@ var ws_synchronizer_class = Class.extend(
 			})
 		});
 		return Promise.resolve();
-	},
+	}
 
-	import_data_item : function(key, id, data)
+	import_data_item(key, id, data)
 	{
 		console.log("Import data : " + key + ", id : " + id);
 		
 		return Promise.resolve();
-	},
+	}
 
-	reload_all_data : function(server_id)
+	reload_all_data(server_id)
 	{
 		var self = this;
 
@@ -339,11 +323,11 @@ var ws_synchronizer_class = Class.extend(
 			
 			return self.import_all_data(server_id, data);
 		});
-	},
+	}
 
 	//! Map
 	
-	set_map_local_id : function(server, entity, server_id, local_id)
+	set_map_local_id(server, entity, server_id, local_id)
 	{
 		if (server == undefined) server = 0;
 		
@@ -360,9 +344,9 @@ var ws_synchronizer_class = Class.extend(
 		this.reverse_map[server][entity][local_id] = server_id;
 		
 		return Promise.resolve(local_id);
-	},
+	}
 	
-	get_local_id : function(server, entity, server_id)
+	get_local_id(server, entity, server_id)
 	{
 		var self = this;
 
@@ -384,9 +368,9 @@ var ws_synchronizer_class = Class.extend(
 		{			
 			return id;
 		});
-	},
+	}
 	
-	get_locals_ids : function(server_ids) // server_ids = {property => { server, entity , id }}
+	get_locals_ids(server_ids) // server_ids = {property => { server, entity , id }}
 	{
 		var self = this;
 		var promises = [];
@@ -417,9 +401,9 @@ var ws_synchronizer_class = Class.extend(
 		{	
 			return result;
 		});
-	},
+	}
 	
-	get_server_id : function(server, entity, local_id)
+	get_server_id(server, entity, local_id)
 	{
 		var self = this;
 
@@ -443,11 +427,11 @@ var ws_synchronizer_class = Class.extend(
 			
 			return id.id;
 		});
-	},
+	}
 	
 	//! Database synchro
 	
-	getData : function(properties, values)
+	getData(properties, values)
 	{
 		var data = {};
 		
@@ -457,9 +441,9 @@ var ws_synchronizer_class = Class.extend(
 		}
 		
 		return data;
-	},
+	}
 
-	synchro_db_add : function(table, properties, values, entity, result, synchronizing)
+	synchro_db_add(table, properties, values, entity, result, synchronizing)
 	{
 		if ( entity == undefined ) entity = ws_datamodel.get_table_entity(table);
 		var entity_infos = ws_datamodel.get_entity_infos(entity);
@@ -495,9 +479,9 @@ var ws_synchronizer_class = Class.extend(
 		}
 		
 		return result.insertId;
-	},
+	}
 	
-	synchro_db_modify : function(table, ids, properties, values, entity, result, synchronizing)
+	synchro_db_modify(table, ids, properties, values, entity, result, synchronizing)
 	{
 		if (entity == undefined) entity = ws_datamodel.get_table_entity(table);
 
@@ -533,9 +517,9 @@ var ws_synchronizer_class = Class.extend(
 		}
 		
 		return result;
-	},
+	}
 	
-	synchro_db_delete : function(table, ids, entity, result, synchronizing)
+	synchro_db_delete(table, ids, entity, result, synchronizing)
 	{
 		if (entity == undefined) entity = ws_datamodel.get_table_entity(table);
 		var entity_infos = ws_datamodel.get_entity_infos(entity);
@@ -605,9 +589,9 @@ var ws_synchronizer_class = Class.extend(
 		}
 		
 		return result;
-	},
+	}
 	
-	get_local_map: function()
+	get_local_map()
 	{
 		var map = {};
 		var entities = ws_datamodel.get_entities();
@@ -644,15 +628,14 @@ var ws_synchronizer_class = Class.extend(
 		{
 			if (ws_defines.debug) console.log(error);
 		});
-	},
+	}
 	
-	get_updates: function()
+	get_updates()
 	{
 		return ws_database.synchro_event.all();
-	},
+	}
 	
-	
-	synchro_db_with_server: async function()
+	async synchro_db_with_server()
 	{
 		var self = this;
 		var startTime;
@@ -668,15 +651,15 @@ var ws_synchronizer_class = Class.extend(
 			
 			// Updates
 			var update_from_db = await self.get_updates();
-
+			
 			if (update_from_db.length > 0) for(var i = 0; i<update_from_db.length; i++)
 			{
 				update_from_db[i].data = (update_from_db[i].action != "delete") ? JSON.parse(update_from_db[i].data) : [];
 				params.updates.push(update_from_db[i]);
 			}
-
+			
 			debugger
-
+			
 			// Start synchronisation
 			startTime = new Date().getTime();
 			elapsedTime = 0;
@@ -724,9 +707,9 @@ var ws_synchronizer_class = Class.extend(
 				app.dialog.alert(error);
 			}
 		}
-	},
+	}
 	
-	apply_synchro_update: function(updates)
+	apply_synchro_update(updates)
 	{
 		var self = this;
 		var index = 0;
@@ -856,23 +839,23 @@ var ws_synchronizer_class = Class.extend(
 		}
 		
 		return Promise.resolve();
-	},
+	}
 	
 	//! Convert
 	
-	convert_str : function(str)
+	convert_str(str)
 	{
 		return typeof str == 'string' ? str : '';
-	},
+	}
 	
-	convert_date : function(str)
-	{
-		return str;
-	},
-	
-	convert_time : function(str)
+	convert_date(str)
 	{
 		return str;
 	}
-});
+	
+	convert_time(str)
+	{
+		return str;
+	}
+}
 	

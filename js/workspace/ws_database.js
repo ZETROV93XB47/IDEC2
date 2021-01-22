@@ -1,61 +1,61 @@
 //! WS Database
 
-var ws_database_class = Class.extend(
+class ws_database_class
 {
-	get_name: function()
+	get_name()
 	{
 		return '';
-	},
+	}
 	
-	get_description: function()
+	get_description()
 	{
 		return '';
-	},
+	}
 	
-	get_size: function()
+	get_size()
 	{
 		return 49 * 1024 * 1024;
-	},
+	}
 	
-	get_version: function()
+	get_version()
 	{
 		return 1.0;
-	},
+	}
 
-	get_tables: function()
+	get_tables()
 	{
 		return ws_datamodel.get_tables();
-	},
+	}
 	
-	get_table_entity: function(table)
+	get_table_entity(table)
 	{
 		return ws_datamodel.get_table_entity(table);
-	},
+	}
 	
-	get_table_name: function(table)
+	get_table_name(table)
 	{
 		var entity = ws_datamodel.get_table_entity(table);
 		var infos = ws_datamodel.get_entity_infos(entity);
 		
 		return infos.table;
-	},
+	}
 	
-	is_data_table: function(name)
+	is_data_table(name)
 	{
 		return true;
-	},
+	}
 	
-	get_table_with_name: function(name)
+	get_table_with_name(name)
 	{
 		return null;
-	},
+	}
 	
-	get_table_with_entity: function(entity)
+	get_table_with_entity(entity)
 	{
 		return this.get_table_with_name(ws_datamodel.get_entity_table(entity));
-	},
+	}
 	
-	get_structure: function()
+	get_structure()
 	{
 		var tables = this.get_tables();
 		var result = [];
@@ -66,19 +66,19 @@ var ws_database_class = Class.extend(
 		}
 		
 		return result;
-	},
+	}
 	
-	on_ready: function()
+	on_ready()
 	{
 		return Promise.resolve();
-	},
+	}
 	
-	prepare: function()
+	prepare()
 	{
 		return false ? this.clear() : Promise.resolve();
-	},
+	}
 	
-	open: function()
+	open()
 	{
 		var self = this;
 		
@@ -103,9 +103,9 @@ var ws_database_class = Class.extend(
 				reject(error);
 			});
 		});
-	},
+	}
 	
-	check: function()
+	check()
 	{
 		var queries = [];
 
@@ -122,9 +122,9 @@ var ws_database_class = Class.extend(
 		});
 		
 		return this.batch(queries);
-	},
+	}
 
-	clear: function()
+	clear()
 	{
 		var queries = [];
 		
@@ -134,9 +134,9 @@ var ws_database_class = Class.extend(
 		});
 
 		return this.batch(queries);
-	},
+	}
 
-	clear_data: function()
+	clear_data()
 	{
 		var self = this;
 		var queries = [];
@@ -147,9 +147,9 @@ var ws_database_class = Class.extend(
 		});
 
 		return this.batch(queries);
-	},
+	}
 
-	clear_server_data: function(server_id)
+	clear_server_data(server_id)
 	{
 		var self = this;
 		var queries = [];
@@ -160,9 +160,9 @@ var ws_database_class = Class.extend(
 		});
 
 		return this.batch(queries);
-	},
+	}
 	
-	reset: function()
+	reset()
 	{
 		var self = this;
 		
@@ -174,9 +174,9 @@ var ws_database_class = Class.extend(
 		{
 			return self.on_ready();
 		});
-	},
+	}
 	
-	delete_all_entity_links: function(entity, id)
+	delete_all_entity_links(entity, id)
 	{
 		var entities = ws_datamodel.get_entities();
 		var tables = [];
@@ -199,9 +199,9 @@ var ws_database_class = Class.extend(
 		}
 		
 		return Promise.all(promises);
-	},
+	}
 
-	batch: function(queries)
+	batch(queries)
 	{	
 		var self = this;
 		
@@ -229,9 +229,9 @@ var ws_database_class = Class.extend(
 				resolve();
 			});
 		});
-	},
+	}
 
-	query: function(query, bindings)
+	query(query, bindings)
 	{		 
 		var self = this;
 		
@@ -257,9 +257,9 @@ var ws_database_class = Class.extend(
 				});
 			});
 		});
-	},
+	}
 
-	fetchAll: function(result)
+	fetchAll(result)
 	{
 		return new Promise(function(resolve, reject)
 		{
@@ -272,29 +272,29 @@ var ws_database_class = Class.extend(
 	
 			resolve(output);
 		});
-	},
+	}
 
-	fetch: function(result)
+	fetch(result)
 	{
 		return new Promise(function(resolve, reject)
 		{
 			resolve(result.rows != null && result.rows.length > 0 ? result.rows.item(0) : null);
 		});
 	}
-});
+}
 
 //! Datatable
 
-var ws_datatable = Class.extend(
+class ws_datatable
 {
-	constructor: function(db, table)
+	constructor(db, table)
 	{
 		this.db = db;
 		this.table = table;
 		this.filler = "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,";
-	},
+	}
 	
-	count: function(condition, binding)
+	count(condition, binding)
 	{
 		var self = this;
 
@@ -306,9 +306,9 @@ var ws_datatable = Class.extend(
 		{
 			return result['COUNT(*)'];
 		});
-	},
+	}
 	
-	sum: function(property, condition, binding)
+	sum(property, condition, binding)
 	{
 		var self = this;
 
@@ -320,9 +320,9 @@ var ws_datatable = Class.extend(
 		{
 			return result['SUM(' + property + ')'];
 		});
-	},
+	}
 	
-	exists: function(condition, binding)
+	exists(condition, binding)
 	{
 		var self = this;
 
@@ -334,9 +334,9 @@ var ws_datatable = Class.extend(
 		{
 			return result['COUNT(*)'] > 0;
 		});
-	},
+	}
 
-	all: function(properties, extra)
+	all(properties, extra)
 	{
 		var self = this;
 		var what = properties != undefined ? properties.join(',') : '*';
@@ -348,9 +348,9 @@ var ws_datatable = Class.extend(
 		{
 			return self.db.fetchAll(result);
 		});
-	},
+	}
 
-	find: function(condition, binding, properties, extra)
+	find(condition, binding, properties, extra)
 	{
 		var self = this;
 		var what = properties != undefined ? properties.join(',') : '*';
@@ -363,9 +363,9 @@ var ws_datatable = Class.extend(
 		{
 			return self.db.fetchAll(result);
 		});
-	},
+	}
 	
-	search: function(value, properties)
+	search(value, properties)
 	{
 		var self = this;
 		var condition = [];
@@ -378,9 +378,9 @@ var ws_datatable = Class.extend(
 		}
 		
 		return self.find(condition.join(' OR '), binding);
-	},
+	}
 	
-	add: function(properties, values, entity)
+	add(properties, values, entity)
 	{
 		var self = this;
 		var synchronizing = ws_synchronizer.synchronizing;
@@ -394,9 +394,9 @@ var ws_datatable = Class.extend(
 			if (ws_defines.debug) console.log(error);
 			throw error;
 		});
-	},
+	}
 
-	add_array: function(properties, values)
+	add_array(properties, values)
 	{
 		var promises = [];
 		
@@ -407,14 +407,14 @@ var ws_datatable = Class.extend(
 		}
 	
 		return Promise.all(promises);
-	},
+	}
 
-	add_object: function(object)
+	add_object(object)
 	{
 		return this.add(Object.keys(object), Object.values(object));
-	},
+	}
 
-	insert_on_mass: function(data)
+	insert_on_mass(data)
 	{
 		var ids = Object.keys(data);
 		var ids_lenght = ids.length;
@@ -437,9 +437,9 @@ var ws_datatable = Class.extend(
 		}
 
 		return Promise.all(promise);
-	},
+	}
 
-	insert_in_mass: function(data, index, length)
+	insert_in_mass(data, index, length)
 	{		 
 		var self = this;
 
@@ -489,10 +489,10 @@ var ws_datatable = Class.extend(
 			if (ws_defines.debug) console.log(error);
 			throw error;
 		});
-	},
+	}
 
 
-	replace: function(properties, values, entity)
+	replace(properties, values, entity)
 	{
 		var self = this;
 		var synchronizing = ws_synchronizer.synchronizing;
@@ -508,14 +508,14 @@ var ws_datatable = Class.extend(
 			if (ws_defines.debug) console.log(error);
 			throw error;
 		});
-	},
+	}
 
-	replace_object: function(object)
+	replace_object(object)
 	{
 		return this.replace(Object.keys(object), Object.values(object));
-	},
+	}
 
-	get: function(condition, binding, properties, extra)
+	get(condition, binding, properties, extra)
 	{
 		var self = this;
 		var what = properties != undefined ? properties.join(',') : '*';
@@ -528,9 +528,9 @@ var ws_datatable = Class.extend(
 		{
 			return self.db.fetch(result);
 		});
-	},
+	}
 
-	set: function(condition, binding, properties, values, entity)
+	set(condition, binding, properties, values, entity)
 	{
 		var self = this;
 		var synchronizing = ws_synchronizer.synchronizing;
@@ -546,14 +546,14 @@ var ws_datatable = Class.extend(
 				return ws_synchronizer.synchro_db_modify(self.table, ids, properties, values, entity, result, synchronizing);
 			});
 		});
-	},
+	}
 
-	set_object: function(condition, binding, object)
+	set_object(condition, binding, object)
 	{
 		return this.set(condition, binding, Object.keys(object), Object.values(object));
-	},
+	}
 	
-	delete: function(condition, binding, entity)
+	delete(condition, binding, entity)
 	{
 		var self = this;
 		var synchronizing = ws_synchronizer.synchronizing;
@@ -567,51 +567,51 @@ var ws_datatable = Class.extend(
 				if (ids.length > 0) return ws_synchronizer.synchro_db_delete(self.table, ids, entity, result, synchronizing);
 			});
 		})
-	},
+	}
 
-	delete_all: function()
+	delete_all()
 	{
 		return this.delete();
-	},
+	}
 
-	truncate: function()
+	truncate()
 	{
 		return this.delete_all();		
-	},
+	}
 
-	drop: function()
+	drop()
 	{
 		return this.db.query('DROP TABLE IF EXISTS ?', [this.table]);
-	},
+	}
 
 	//! Entity based tables
 
-	count_entity: function(condition, binding)
+	count_entity(condition, binding)
 	{
 		return this.count(ws_datamodel.get_entity_condition(entity, condition), binding);
-	},
+	}
 	
-	all_entity: function(properties, extra)
+	all_entity(properties, extra)
 	{
 		return this.find(ws_datamodel.get_entity_condition(entity), properties, extra);
-	},
+	}
 	
-	find_entity: function(entity, condition, binding, properties, extra)
+	find_entity(entity, condition, binding, properties, extra)
 	{
 		return this.find(ws_datamodel.get_entity_condition(entity, condition), binding, properties, extra);
-	},
+	}
 	
-	delete_entity: function(entity, condition, binding)
+	delete_entity(entity, condition, binding)
 	{
 		return this.delete(ws_datamodel.get_entity_condition(entity, condition), binding);
-	},
+	}
 
-	delete_all_entity: function(entity)
+	delete_all_entity(entity)
 	{
 		return this.delete(ws_datamodel.get_entity_condition(entity));
-	},
+	}
 	
-	delete_all_entity_links: function(entity, id)
+	delete_all_entity_links(entity, id)
 	{
 		var entities = ws_datamodel.get_entities();
 		var tables = [];
@@ -633,58 +633,58 @@ var ws_datatable = Class.extend(
 		}
 		
 		return Promise.all(promises);
-	},
+	}
 	
 	//! ID based tables
 
-	exists_with_id: function(id)
+	exists_with_id(id)
 	{
 		return this.exists('id = ?', [id]);
-	},
+	}
 
-	get_with_id: function(id)
+	get_with_id(id)
 	{
 		return this.get('id = ?', [id]);
-	},
+	}
 
-	set_with_id: function(id, properties, values)
+	set_with_id(id, properties, values)
 	{
 		return this.set('id = ?', [id], properties, values);
-	},
+	}
 
-	set_object_with_id: function(id, object)
+	set_object_with_id(id, object)
 	{
 		return this.set_object('id = ?', [id], object);
-	},
+	}
 
-	delete_with_id: function(id)
+	delete_with_id(id)
 	{
 		return this.delete('id = ?', [id]);
-	},
+	}
 
 	//! Server ID based tables
 
-	get_with_server_id: function(server_id, id)
+	get_with_server_id(server_id, id)
 	{
 		return this.get(WS_OBJECT_PROPERTY_SERVER + ' = ? AND ' + WS_OBJECT_PROPERTY_SERVER_ID + ' = ?', [server_id, id]);
-	},
+	}
 
-	set_with_server_id: function(server_id, id, properties, values)
+	set_with_server_id(server_id, id, properties, values)
 	{
 		return this.set(WS_OBJECT_PROPERTY_SERVER + ' = ? AND ' + WS_OBJECT_PROPERTY_SERVER_ID + ' = ?', [server_id, id], properties, values);
-	},
+	}
 
-	set_object_with_server_id: function(server_id, id, object)
+	set_object_with_server_id(server_id, id, object)
 	{
 		return this.set_object(WS_OBJECT_PROPERTY_SERVER + ' = ? AND ' + WS_OBJECT_PROPERTY_SERVER_ID + ' = ?', [server_id, id], object);
-	},
+	}
 
-	delete_with_server_id: function(server_id, id)
+	delete_with_server_id(server_id, id)
 	{
 		return this.delete(WS_OBJECT_PROPERTY_SERVER + ' = ? AND ' + WS_OBJECT_PROPERTY_SERVER_ID + ' = ?', [server_id, id]);
-	},
+	}
 	
-	get_local_id: function(server_id, id)
+	get_local_id(server_id, id)
 	{
 		var self = this;
 		
@@ -694,113 +694,113 @@ var ws_datatable = Class.extend(
 			
 			return data != undefined ? data[WS_OBJECT_PROPERTY_ID] : null;
 		});
-	},
+	}
 	
-	get_server_id: function(id)
+	get_server_id(id)
 	{
 		return this.get_with_id(id).then(function(data)
 		{
 			return { server: data[WS_OBJECT_PROPERTY_SERVER], id: data[WS_OBJECT_PROPERTY_SERVER_ID] };
 		});
-	},
+	}
 
 	//! Link based methods
 	
-	get_linked_to: function(link, id)
+	get_linked_to(link, id)
 	{
 		return this.find(link + ' = ' + id);
-	},
+	}
 	
-	count_linked_to: function(link, id, condition, binding)
+	count_linked_to(link, id, condition, binding)
 	{
 		return this.count('(' + link + ' = ' + id + ')' + (condition != undefined ? ' AND ' + condition : ''), binding);
-	},
+	}
 
-	sum_linked_to: function(link, id, property, condition, binding)
+	sum_linked_to(link, id, property, condition, binding)
 	{
 		return this.sum(property, '(' + link + ' = ' + id + ')' + (condition != undefined ? ' AND ' + condition : ''), binding);
-	},
+	}
 
-	all_linked_to: function(link, id, properties, extra)
+	all_linked_to(link, id, properties, extra)
 	{
 		return this.find(link + ' = ' + id, undefined, properties, extra);
-	},
+	}
 
-	find_linked_to: function(link, id, condition, binding, properties, extra)
+	find_linked_to(link, id, condition, binding, properties, extra)
 	{
 		return this.find('(' + link + ' = ' + id + ')' + (condition != undefined ? ' AND ' + condition : ''), binding, properties, extra);
-	},
+	}
 	
-	delete_linked_to: function(link, id)
+	delete_linked_to(link, id)
 	{
 		return this.delete(link + ' = ' + id, undefined);
-	},
+	}
 
 	//! Server based methods
 	
-	count_with_server: function(server, condition, binding)
+	count_with_server(server, condition, binding)
 	{
 		return this.count(WS_OBJECT_PROPERTY_SERVER + ' = ' + server + ' AND ' + condition, binding);
-	},
+	}
 
-	all_with_server: function(server, properties, extra)
+	all_with_server(server, properties, extra)
 	{
 		return this.find(WS_OBJECT_PROPERTY_SERVER + ' = ' + server, undefined, properties, extra);
-	},
+	}
 
-	find_with_server: function(server, condition, binding, properties, extra)
+	find_with_server(server, condition, binding, properties, extra)
 	{
 		return this.find(WS_OBJECT_PROPERTY_SERVER + ' = ' + server + ' AND ' + condition, binding, properties, extra);
-	},
+	}
 
-	add_with_server: function(server, properties, values)
+	add_with_server(server, properties, values)
 	{
 		properties.push(WS_OBJECT_PROPERTY_SERVER);
 		values.push(server);
 		
 		return this.add(properties, values);
-	},
+	}
 
-	add_object_with_server: function(server, object)
+	add_object_with_server(server, object)
 	{
 		object[WS_OBJECT_PROPERTY_SERVER] = server;
 		
 		return this.add_object(object);
-	},
+	}
 
-	delete_with_server: function(server)
+	delete_with_server(server)
 	{
 		return this.delete(WS_OBJECT_PROPERTY_SERVER + ' = ?', [server]);
-	},
+	}
 	
 	//! Server and link based methods
 	
-	count_with_server_and_link: function(server, link, id, condition, binding)
+	count_with_server_and_link(server, link, id, condition, binding)
 	{
 		return this.count(WS_OBJECT_PROPERTY_SERVER + ' = ' + server + ' AND ' + link + ' = ' + id + (condition != undefined ? ' AND ' + condition : ''), binding);
-	},
+	}
 
-	sum_with_server_and_link: function(server, link, id, property, condition, binding)
+	sum_with_server_and_link(server, link, id, property, condition, binding)
 	{
 		return this.sum(property, WS_OBJECT_PROPERTY_SERVER + ' = ' + server + ' AND ' + link + ' = ' + id + (condition != undefined ? ' AND ' + condition : ''), binding);
-	},
+	}
 	
-	all_with_link: function(link, id, properties, extra)
+	all_with_link(link, id, properties, extra)
 	{
 		return this.find(link + ' = ' + id, undefined, properties, extra);
-	},
+	}
 
-	all_with_server_and_link: function(server, link, id, properties, extra)
+	all_with_server_and_link(server, link, id, properties, extra)
 	{
 		return this.find(WS_OBJECT_PROPERTY_SERVER + ' = ' + server + ' AND ' + link + ' = ' + id, undefined, properties, extra);
-	},
+	}
 
-	find_with_server_and_link: function(server, link, id, condition, binding, properties, extra)
+	find_with_server_and_link(server, link, id, condition, binding, properties, extra)
 	{
 		return this.find(WS_OBJECT_PROPERTY_SERVER + ' = ' + server + ' AND ' + link + ' = ' + id + ' AND ' + condition, binding, properties, extra);
-	},
+	}
 
-	add_with_server_and_link: function(server, link, id, properties, values)
+	add_with_server_and_link(server, link, id, properties, values)
 	{
 		properties.push(WS_OBJECT_PROPERTY_SERVER);
 		values.push(server);
@@ -809,18 +809,18 @@ var ws_datatable = Class.extend(
 		values.push(id);
 
 		return this.add(properties, values);
-	},
+	}
 
-	add_object_with_server_and_link: function(server, link, id, object)
+	add_object_with_server_and_link(server, link, id, object)
 	{
 		object[WS_OBJECT_PROPERTY_SERVER] = server;
 		object[link] = id;
 		
 		return this.add_object(object);
-	},
+	}
 
-	delete_with_server_and_link: function(server, link, id)
+	delete_with_server_and_link(server, link, id)
 	{
 		return this.delete(WS_OBJECT_PROPERTY_SERVER + ' = ? AND ' + link + ' = ?', [server, id]);
-	},
-});
+	}
+}

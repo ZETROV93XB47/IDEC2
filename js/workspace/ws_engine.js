@@ -1,12 +1,12 @@
 //! WS Engine
 
-var ws_engine_class = Class.extend(
+class ws_engine_class
 {
-	current_server : undefined,
-	pages : undefined,
-	listeners : undefined,
+	current_server = undefined;
+	pages = undefined;
+	listeners = undefined;
 	
-	init : function()
+	init()
 	{
 		var self = this;		
 		var server_id = ws_storage.get_value(WS_STORAGE_KEY_CURRENT_SERVER_ID);
@@ -15,109 +15,109 @@ var ws_engine_class = Class.extend(
 		{
 			return server_id != undefined ? self.select_server_with_id(server_id) : Promise.resolve();
 		});
-	},
+	}
 
-	custom_init : function(server_id)
+	custom_init(server_id)
 	{
 		return Promise.resolve(server_id);
-	},
+	}
 	
-	get_version : function()
+	get_version()
 	{
 		return '1.0.0';
-	},
+	}
 
-	is_pwa : function()
+	is_pwa()
 	{
 		return false;
-	},
+	}
 		
-	get_local_storage_prefix : function()
+	get_local_storage_prefix()
 	{
 		return 'ws_';
-	},
+	}
 
-	get_device_name : function()
+	get_device_name()
 	{
 		return ws_platform.get_device_name();
-	},
+	}
 
-	get_device_uuid : function()
+	get_device_uuid()
 	{
 		return ws_storage.get_device_uuid();
-	},
+	}
 	
-	get_user_mode : function()
+	get_user_mode()
 	{
 		return ws_storage.get_user_mode();
-	},
+	}
 	
-	set_user_mode : function(user_mode)
+	set_user_mode(user_mode)
 	{
 		return ws_storage.set_user_mode(user_mode);
-	},
+	}
 	
-	get_admin_code : function()
+	get_admin_code()
 	{
-		return ws_storage.get_admin_code();
-	},
+		return ws_storage.get_admin_code() ? ws_storage.get_admin_code() : 5678;
+	}
 	
-	get_support_code : function()
+	get_support_code()
 	{
-		return ws_storage.get_support_code();
-	},
+		return ws_storage.get_support_code() ? ws_storage.get_support_code() : 1234;
+	}
 
-	get_device_id : function()
+	get_device_id()
 	{
 		return this.is_multi_servers() ? this.current_server[WS_SERVER_PROPERTY_DEVICE_ID] : ws_storage.get_device_id();
-	},
+	}
 
-	has_connection : function()
+	has_connection()
 	{
 		return this.is_multi_servers() ? this.current_server != undefined : ws_storage.get_token() != undefined;
-	},
+	}
 
-	has_server : function()
+	has_server()
 	{
 		return this.is_multi_servers() ? this.current_server != undefined : true;
-	},
+	}
 	
-	get_server_url : function()
+	get_server_url()
 	{
 		return this.current_server != undefined ? this.current_server[WS_SERVER_PROPERTY_URL] : ws_storage.get_value(WS_STORAGE_KEY_SERVER_URL);
-	},
+	}
 	
 	//! App
 	
-	on_ready : function()
+	on_ready()
 	{
         document.addEventListener("backbutton", ws_engine.on_backKeyDown, false);
-	},
+	}
 	
-	on_resume : function()
+	on_resume()
 	{
-	},
+	}
 
-    on_backKeyDown : function()
+    on_backKeyDown()
     {
         debugger
         //homeView.router.back();
         page.view.router.back();
-	},
+	}
 	
 	//! Multiserver
 		
-	is_multi_servers : function()
+	is_multi_servers()
 	{
 		return false;
-	},
+	}
 	
-	get_server_id : function()
+	get_server_id()
 	{
 		return this.current_server != undefined ? this.current_server[WS_OBJECT_PROPERTY_ID] : undefined;
-	},
+	}
 	
-	connect_to_server : function(url, result)
+	connect_to_server(url, result)
 	{
 		var self = this;
 
@@ -163,25 +163,25 @@ var ws_engine_class = Class.extend(
 
 			return Promise.resolve();
 		}
-	},
+	}
 	
-	add_server : function(url, result)
+	add_server(url, result)
 	{
 		return ws_database.servers.add([WS_SERVER_PROPERTY_URL, WS_SERVER_PROPERTY_TOKEN, WS_SERVER_PROPERTY_DEVICE_ID], [url, result.token, result.device_id]).then(function(id)
 		{
 			return ws_database.servers.get_with_id(id);
 		});
-	},
+	}
 	
-	update_server : function(id, result)
+	update_server(id, result)
 	{
 		return ws_database.servers.set_with_id(id, [WS_SERVER_PROPERTY_TOKEN, WS_SERVER_PROPERTY_DEVICE_ID], [result.token, result.device_id]).then(function(result)
 		{
 			return ws_database.servers.get_with_id(id);
 		});
-	},
+	}
 	
-	select_server_with_id : function(server_id)
+	select_server_with_id(server_id)
 	{
 		var self = this;
 
@@ -189,37 +189,37 @@ var ws_engine_class = Class.extend(
 		{
 			if (server != null) return self.select_server(server);
 		});
-	},
+	}
 	
-	select_server : function(server)
+	select_server(server)
 	{
 		this.current_server = server;
 				
 		ws_storage.set_value(WS_STORAGE_KEY_CURRENT_SERVER_ID, server.id);
 
 		return this.server_selected(server);
-	},
+	}
 	
-	server_selected : function(server)
+	server_selected(server)
 	{
 		return Promise.resolve(server);
-	},
+	}
 	
-	clear_current_server : function()
+	clear_current_server()
 	{
 		this.current_server = undefined;
-	},
+	}
 	
 	//! User
 
-	get_user_token: function()
+	get_user_token()
 	{
 		return this.is_multi_servers() ? this.current_server[WS_SERVER_PROPERTY_TOKEN] : ws_user.get_token();
-	},
+	}
 	
 	//! Reset
 
-	reset: function()
+	reset()
 	{
 		ws_synchronizer.stop();
 				
@@ -235,30 +235,30 @@ var ws_engine_class = Class.extend(
 		{
 			return ws_filesystem.clear();
 		});
-	},
+	}
 
-	custom_reset: function()
+	custom_reset()
 	{
 		return Promise.resolve();
-	},
+	}
 	
 	//! Pages
 	
-	register_page: function (id, page)
+	register_page (id, page)
 	{
 		if (this.pages == undefined) this.pages = {};
 		
 		this.pages[id] = new page(id);
-	},
+	}
 	
-	get_page: function (id)
+	get_page (id)
 	{
 		return this.pages != undefined ? this.pages[id] : undefined;
-	},
+	}
 	
 	//! Events
 	
-	add_listener: function(event, object_id, object, call)
+	add_listener(event, object_id, object, call)
 	{
 		if (this.listeners == undefined) this.listeners = [];
 		
@@ -274,9 +274,9 @@ var ws_engine_class = Class.extend(
 		}
 		
 		this.listeners.push({event: event, object_id: object_id, object: object, call: call, count: 1});
-	},
+	}
 	
-	remove_listener: function(event, object_id, object, call)
+	remove_listener(event, object_id, object, call)
 	{
 		if (this.listeners != undefined) for (var i = 0; i < this.listeners.length; i++)
 		{
@@ -293,9 +293,9 @@ var ws_engine_class = Class.extend(
 				return;
 			}
 		}
-	},
+	}
 	
-	broadcast_event: function(event, data)
+	broadcast_event(event, data)
 	{
 		if (this.listeners != undefined) for (var i = 0; i < this.listeners.length; i++)
 		{
@@ -306,11 +306,11 @@ var ws_engine_class = Class.extend(
 				listener.call(listener.object, data);
 			}
 		}
-	},
+	}
 	
 	//! Synchronisation
 	
-	get_ids: function(data)
+	get_ids(data)
 	{
 		var list_ids = [];
 		
@@ -325,5 +325,5 @@ var ws_engine_class = Class.extend(
 		}
 		
 		return list_ids;
-	},	
-});
+	}	
+}

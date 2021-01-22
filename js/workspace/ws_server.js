@@ -1,11 +1,11 @@
 //! ws_server
 
-var ws_server_class = Class.extend(
+class ws_server_class
 {
-	last_connection : undefined,
-	last_connection_time : undefined,
+	last_connection = undefined;
+	last_connection_time = undefined;
 		
-	get_data : function(data)
+	get_data(data)
 	{
 		if (data == undefined) data = {};
 		
@@ -22,9 +22,9 @@ var ws_server_class = Class.extend(
 		if (ws_defines.debug) console.log(JSON.stringify(data));
 
 		return data;
-	},
+	}
 
-	get_form_data : function(form_data)
+	get_form_data(form_data)
 	{
 		form_data.append("debug", ws_defines.debug);
 		form_data.append("dev", ws_defines.DEV_MODE);
@@ -37,9 +37,9 @@ var ws_server_class = Class.extend(
 		form_data.append("version", ws_engine.get_version());
 
 		return form_data;
-	},
+	}
 
-	api : function(call, data, server_url) 
+	api(call, data, server_url) 
 	{
 		var self = this;
 		
@@ -90,9 +90,9 @@ var ws_server_class = Class.extend(
 				reject(error + " (" + xhr.responseText + ")");
 			});			
 		});
-	},
+	}
 	
-	upload : function(call, data) 
+	upload(call, data) 
 	{
 		var self = this;
 		
@@ -134,9 +134,9 @@ var ws_server_class = Class.extend(
 				reject(error + " (" + xhr.responseText + ")");
 			});			
 		});
-	},
+	}
 /*
-	upload : function(call, data, server_url) 
+	upload(call, data, server_url) 
 	{
 		var self = this;
 		
@@ -182,10 +182,10 @@ var ws_server_class = Class.extend(
 				reject(error + " (" + xhr.responseText + ")");
 			});			
 		});
-	},
+	}
 */
 	
-	download : function(call, data, server_url)
+	download(call, data, server_url)
 	{
 		var self = this;
 
@@ -223,9 +223,9 @@ var ws_server_class = Class.extend(
 			});	
 */	
 		});
-	},
+	}
 /*
-	download : function(url)
+	download(url)
 	{
 		var self = this;
 
@@ -245,9 +245,9 @@ var ws_server_class = Class.extend(
 				reject(error + " (" + xhr.responseText + ")");
 			});
 		});
-	},
+	}
 */
-	get : function(url, data) 
+	get(url, data) 
 	{
 		var self = this;
 		
@@ -290,9 +290,9 @@ var ws_server_class = Class.extend(
 				reject(error + " (" + xhr.responseText + ")");
 			});			
 		});
-	},
+	}
 
-	post : function(url, data) 
+	post(url, data) 
 	{
 		var self = this;
 		
@@ -335,14 +335,14 @@ var ws_server_class = Class.extend(
 				reject(error + " (" + xhr.responseText + ")");
 			});			
 		});
-	},
+	}
 	
-	test : function(url)
+	test(url)
 	{
 		return this.api('connection_test', {}, url);
-	},
+	}
 
-	update_params : function()
+	update_params()
 	{
 		var self = this;
 		
@@ -363,9 +363,9 @@ var ws_server_class = Class.extend(
 				reject(error);
 			});
 		});
-	},
+	}
 	
-	connect : function(url, token, data)
+	connect(url, token, data)
 	{
 		var device = {};
 		
@@ -375,9 +375,9 @@ var ws_server_class = Class.extend(
 		device[WS_DEVICE_INFO_BROWSER] = ws_platform.get_browser();
 
 		return this.api('connect', { code: token, data: data, device: device }, url);
-	},
+	}
 	
-	login : function(url, login, password)
+	login(url, login, password)
 	{
 		var device = {};
 		
@@ -387,9 +387,9 @@ var ws_server_class = Class.extend(
 		device[WS_DEVICE_INFO_BROWSER] = ws_platform.get_browser();
 
 		return this.api('login', { login: login, password: password, device: device }, url);		
-	},
+	}
 	
-	change_password : function(token, password)
+	change_password(token, password)
 	{
 		var self = this;
 		
@@ -412,9 +412,9 @@ var ws_server_class = Class.extend(
 				reject(error);
 			});
 		});
-	},
+	}
 	
-	get_connection_state : function()
+	get_connection_state()
 	{
 		if (this.last_connection && this.last_connection_time < Date.now() - 10000)
 		{
@@ -424,24 +424,24 @@ var ws_server_class = Class.extend(
 		}
 		
 		return this.last_connection ? WS_SERVER_CONNECTION_STATE_GOOD_CONNECTION : WS_SERVER_CONNECTION_STATE_NO_CONNECTION;
-	},
+	}
 	
-	synchro : function(token)
+	synchro(token)
 	{
 		return self.api('synchro', { token: token });
-	},
+	}
 	
 	//! Files
 	
-	has_file: function(server_id)
+	has_file(server_id)
 	{
 		ws_database.files.get('server_id = ?', [server_id]).then(function(result)
 		{
 			return result.status;
 		});
-	},
+	}
 	
-	get_file: function(server_id, local_id, entitiy, linked_to, type)
+	get_file(server_id, local_id, entitiy, linked_to, type)
 	{
 		var entitie_infos = ws_datamodel.get_entity_infos(entitiy);
 		
@@ -471,9 +471,9 @@ var ws_server_class = Class.extend(
 			alert("404");
 		}
 		
-	},
+	}
 	
-	get_files: async function(update)
+	async get_files (update)
 	{
 		app.dialog.preloader("Télechargement en cours...");
 		
@@ -489,7 +489,9 @@ var ws_server_class = Class.extend(
 					if (file.success)
 					{
 						var resource_binary = btoa(file.data);
-						await op2a_documents.set_file_path(update[i].server_id, update[i].data.name, "application/pdf", resource_binary, update[i].data.chantier_id, update[i].data.metier, update[i].data.materiel_id, update[i].data.operation_id);
+						debugger
+						// dans le cas de l'existence d'un entité document
+						// await idec_documents.set_file_path(update[i].server_id, update[i].data.name, "application/pdf", resource_binary, update[i].data.chantier_id, update[i].data.metier, update[i].data.materiel_id, update[i].data.operation_id);
 					}
 					else
 					{
@@ -511,9 +513,9 @@ var ws_server_class = Class.extend(
 		
 		app.dialog.close();
 		return Promise.resolve(true);
-	},
+	}
 	
-	prepare_download: function(server_id)
+	prepare_download(server_id)
 	{
 		var param = {};
 		
@@ -522,4 +524,4 @@ var ws_server_class = Class.extend(
 		
 		return ws_server.download_file(param);
 	}
-});
+}

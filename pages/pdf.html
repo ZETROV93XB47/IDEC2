@@ -1,8 +1,9 @@
 <div class="page" data-name="pdf">
 	<div class="navbar">
+		<div class="navbar-bg"></div>
 		<div class="navbar-inner sliding">
 			<div class="left"><a href="#" class="link back"><i class="icon icon-back"></i><span class="ios-only">Retour</span></a></div>
-			<div class="title">OSIRI Mobile - PDF</div>
+			<div class="title">IDEC Mobile - PDF</div>
 		</div>
 	</div>
 	<style type="text/css">
@@ -141,18 +142,18 @@
 		}
 	</style>
 	<div class="page-content">
-	    <div class="block">
-		    <div id="pdf-main-container">
+		<div class="block">
+			<div id="pdf-main-container">
 				<div id="pdf-loader">Loading document ...</div>
 				<div id="pdf-contents">
 					<div id="pdf-meta">
 						<div id="pdf-buttons"></div>
 					</div>
-                    
+					
 					<canvas id="pdf-canvas" width="2000"></canvas>
 					<div id="page-loader">Loading page ...</div>
 					
-					<div class="toolbar toolbar-bottom-md" id="basic-tools" style="bottom:0;position:fixed; margin-bottom: 56px; background-color: skyblue;">
+					<div class="toolbar toolbar-bottom-md" id="basic-tools" style="bottom:0;position:fixed; background-color: var(--f7-theme-color);"> <!-- margin-bottom: 56px;  -->
 						<div class="toolbar-inner">
 							<a class="link" id="pdf-first"><img style="transform:rotate(-90deg)" src="icon/first.png"/></a>
 							<a class="link" id="pdf-prev"><img src="icon/prev.png"/></a>
@@ -165,30 +166,31 @@
 					</div>
 				</div>
 			</div>
-	    </div>
+		</div>
 	</div>
 	
 	<script type="text/javascript" ws_script="page">
-	ws_engine.register_page("pdf", ws_page.extend(
+	class pdf_class extends ws_page
 	{
-		custom_init: function(page, event, params)
+		async custom_init(page, event, params)
 		{
 			var self = this;
 			var canvas = document.getElementById("pdf-main-container");
 			
 			self.id = params.id;
+			self.type = params.type;
 			
 			var touchstartX = 0;
-            var touchendX = 0;
-            
+			var touchendX = 0;
+			
 			var translatePos = { x: 0, y: 0 };
 			var startDragOffset = {};
-	        var mouseDown = false;
-	        
-	        var clickTimer = null;
+			var mouseDown = false;
+		
+			var clickTimer = null;
 			
 			var click = (app.device.desktop) ? ['mousedown', 'mouseup', 'mousemove'] : ['touchstart', 'touchend', 'touchmove'];
-            
+			
 			function on_click_0(e)
 			{
 				touchstartX = (app.device.desktop) ?  e.screenX : e.changedTouches[0].screenX;
@@ -200,42 +202,42 @@
 				var total_pages = parseInt($("#pdf-total-pages").text(), 10);
 				
 				touchendX = (app.device.desktop) ?  e.screenX : e.changedTouches[0].screenX;
-			    
-			    if (touchendX < touchstartX)
-			    {
-			        if (current_page != total_pages) showPage(++current_page);
-			    }
-			    if (touchendX > touchstartX)
-			    {
-			        if (current_page != 1) showPage(--current_page);
-			    }
+				
+				if (touchendX < touchstartX)
+				{
+					if (current_page != total_pages) showPage(++current_page);
+				}
+				if (touchendX > touchstartX)
+				{
+					if (current_page != 1) showPage(--current_page);
+				}
 			}
 			
 			function translate_pos(e)
-            {
-                if (mouseDown)
-                {
-                    if (app.device.desktop)
+			{
+				if (mouseDown)
+				{
+					if (app.device.desktop)
 					{
-                        translatePos.x = e.clientX - startDragOffset.x;
-                        translatePos.y = e.clientY - startDragOffset.y;
-                    }
-                    else
-                    {
-	                    translatePos.x = e.touches[0].clientX - startDragOffset.x;
-                        translatePos.y = e.touches[0].clientY - startDragOffset.y;
+						translatePos.x = e.clientX - startDragOffset.x;
+						translatePos.y = e.clientY - startDragOffset.y;
 					}
-                    
-                	canvas.style.left = translatePos.x + "px";
-                    canvas.style.top = translatePos.y + "px";
-                }
-            }
-            
-            function startranslat(e)
+					else
+					{
+						translatePos.x = e.touches[0].clientX - startDragOffset.x;
+						translatePos.y = e.touches[0].clientY - startDragOffset.y;
+					}
+					
+					canvas.style.left = translatePos.x + "px";
+					canvas.style.top = translatePos.y + "px";
+				}
+			}
+			
+			function startranslat(e)
 			{
 				mouseDown = true;
 				
-                if (app.device.desktop)
+				if (app.device.desktop)
 				{
 					startDragOffset.x = e.clientX - translatePos.x;
 					startDragOffset.y = e.clientY - translatePos.y;
@@ -254,32 +256,32 @@
 			
 			function touchStart() 
 			{
-			    if (clickTimer == null)
-			    {
-			        clickTimer = setTimeout(function()
-			        {
-			            clickTimer = null;
-			            //alert("single");
+				if (clickTimer == null)
+				{
+					clickTimer = setTimeout(function()
+					{
+						clickTimer = null;
+						//alert("single");
 			
-			        }, 500)
-			    } 
-			    else 
-			    {
-			        clearTimeout(clickTimer);
-			        clickTimer = null;
-			        
-			        // Double click
-			        //resize and reposition the canvas
+					}, 500)
+				} 
+				else 
+				{
+					clearTimeout(clickTimer);
+					clickTimer = null;
+					
+					// Double click
+					//resize and reposition the canvas
 					document.getElementById("pdf-canvas").style.maxWidth = "100%";
 					$("#basic-tools").attr('ws_zoom', "100");
 					canvas.style.left = (document.getElementById("pdf-contents").offsetWidth - document.getElementById("pdf-canvas").offsetWidth)/2 + "px";
-	                canvas.style.top = "0px";
-	                
+					canvas.style.top = "0px";
+					
 					// add event listeners to swipe
 					canvas.addEventListener(click[1], swipeLorR, false);
 					// remove event listeners to handle screen drag
 					canvas.removeEventListener(click[2], translate_pos, false);
-			    }
+				}
 			}
 			
 			canvas.addEventListener(click[0], on_click_0, false);
@@ -289,113 +291,104 @@
 			$("#pdf-zoom").click(function()
 			{
 				if ($("#basic-tools").attr('ws_zoom') != "100")
-                {
-	                // add event listeners to handle screen drag
-	                canvas.addEventListener(click[0], startranslat, false);
-	                canvas.addEventListener(click[1], mouse_up, false);
-	                canvas.addEventListener(click[2], translate_pos, false);
-	                
-	                // remove event listeners to swipe
-	                canvas.removeEventListener(click[1], swipeLorR, false);
-                }
+				{
+					// add event listeners to handle screen drag
+					canvas.addEventListener(click[0], startranslat, false);
+					canvas.addEventListener(click[1], mouse_up, false);
+					canvas.addEventListener(click[2], translate_pos, false);
+					
+					// remove event listeners to swipe
+					canvas.removeEventListener(click[1], swipeLorR, false);
+				}
 			});
 			
 			$("#pdf-unzoom").click(function()
 			{
 				if ($("#basic-tools").attr('ws_zoom') != "100")
-                {
-	                // add event listeners to handle screen drag
-	                canvas.addEventListener(click[0], startranslat, false);
-	                canvas.addEventListener(click[1], mouse_up, false);
-	                canvas.addEventListener(click[2], translate_pos, false);
-	                
-	                // remove event listeners to swipe
-	                canvas.removeEventListener(click[1], swipeLorR, false);
-                }
+				{
+					// add event listeners to handle screen drag
+					canvas.addEventListener(click[0], startranslat, false);
+					canvas.addEventListener(click[1], mouse_up, false);
+					canvas.addEventListener(click[2], translate_pos, false);
+					
+					// remove event listeners to swipe
+					canvas.removeEventListener(click[1], swipeLorR, false);
+				}
 			});
-            
+
+			await $.getScript("libs/pdfjs/utils.js", function()
+			{
+				console.log("fichier utils est bien charger");
+			});
+
 			if (self.id)
-            {
-                return new Promise(function(resolve, rejecte)
-                {
-                     $.getScript("libs/pdfjs/utils.js", function()
-                    {
-                        console.log("fichier utils est bien charger");
-                        return resolve(true);
-                    });
-                })
-                .then(function(file)
-                {
-                    return ws_database.files.get_with_server_id(1, self.id);
-                })
-                .then(function(file)
-                {
-                    self.file = file;
+			{
+				switch (self.type)
+				{
+					case 'database':
+					return ws_database.files.get_with_server_id(1, self.id).then(function(file)
+					{
+						self.file = file;
 
-                    if (file.path)
-                    {
-                        // if file's base 64 in database
-                        app.dialog.preloader("Chargement de fichier...");
-
-                        return op2a_photos.get_photo_as_data_url(file.path).then(function(pdfData_binary)
-                        {
-                            var pdfData_base64 = atob(pdfData_binary.substr(13));
-                            init();
-                            showPDF(pdfData_base64);
-                            app.dialog.close();
-                        });
-                    } 
-                    else
-                    {
-                        // if not we will download its
-                        var param = {};
-
-                        app.dialog.preloader("Télechargement en cours...");
-                        
-                        param.server_id = self.file.server_id;
-                        //param.base64 = WS_VALUE_DOWNLOAD_BASE64;
-
-                        return ws_server.download_file(param).then(function(pdfData_binary)
-                        {
-                            debugger
-                           /* return btoa(pdfData_base64);
-                        })
-                        .then(function(pdfData_binary)
-                        {
-                            debugger*/
-                            init();
-                            showPDF({ data: pdfData_binary});
-                            op2a_documents.add_binary_pdf(chantier_id, self.file.name, "application/pdf", pdfData_binary, chantier.data.type);
-                            app.dialog.close();
-                        })
-                        .catch(function(error)
+						if (file.path)
 						{
-							app.dialog.close();
-							app.dialog.alert(error);
-							console.log(error);
-						});
-                    }
-                });
-            }
-            else
-            {
-                return new Promise(function(resolve, rejecte)
-                {
-                     $.getScript("libs/pdfjs/utils.js", function()
-                    {
-                        console.log("fichier utils est bien charger");
-                        return resolve(true);
-                    });
-                })
-                .then(function()
-                {
-                    init();
-                    showPDF({ data: atob(ws_defines.PDF_EXEMPLE)});
-                });
-                
-            }
+							// if file's base 64 in database
+							app.dialog.preloader("Chargement de fichier...");
+
+							return idec_photos.get_photo_as_data_url(file.path).then(function(pdfData_binary)
+							{
+								var pdfData_base64 = atob(pdfData_binary.substr(13));
+								init();
+								showPDF(pdfData_base64);
+								app.dialog.close();
+							});
+						} 
+						else
+						{
+							// if not we will download its
+							var param = {};
+
+							app.dialog.preloader("Télechargement en cours...");
+							
+							param.server_id = self.file.server_id;
+
+							return ws_server.download_file(param).then(function(pdfData_binary)
+							{
+								debugger
+								init();
+								showPDF({ data: pdfData_binary});
+								
+								// dans le cas de l'existence d'un entité document pour gere les documents
+								// idec_documents.add_binary_pdf(chantier_id, self.file.name, "application/pdf", pdfData_binary, chantier.data.type);
+								app.dialog.close();
+							})
+							.catch(function(error)
+							{
+								app.dialog.close();
+								app.dialog.alert(error);
+								console.log(error);
+							});
+						}
+					});
+					
+					case 'storage':
+					default:
+						let pdfData_base64 = ws_storage.get_value('pdf_'+self.id);
 						
-		},
-	}));	
+						var pdfData_binary = atob(pdfData_base64);
+
+						init();
+						showPDF({ data: pdfData_binary });
+						break;
+				}
+			}
+			else
+			{
+				init();
+				showPDF({ data: atob(ws_defines.PDF_EXEMPLE)});
+			}
+		}
+	}
+	ws_engine.register_page("pdf", pdf_class);
 	</script>
 </div>
