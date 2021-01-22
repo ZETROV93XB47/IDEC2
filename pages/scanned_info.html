@@ -105,6 +105,7 @@
 		{
 			async custom_init(page, event, params)
 			{
+				const nfc_id = params.id;
 				// test
 				this.data = [];
 				
@@ -133,7 +134,7 @@
 				try 
 				{
 					const result = await ws_server.get_result_data();
-					
+					debugger
 					if (result.status == "success")
 					{
 						let data = result.data.result;

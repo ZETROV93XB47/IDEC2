@@ -132,19 +132,15 @@
 						app.panel.close();
 					});
 				});
-			});
-        }
-
-        faire_quelque_chose(page)
-        {
-            homeView.router.navigate("/scanned_info/");
+            });
+            
         }
 
         scan_qrcode()
         {
             if (app.device.desktop)
             {	
-                this.faire_quelque_chose('scan_qrcode');
+                console.log('scan_qrcode');
             }
             else cordova.plugins.barcodeScanner.scan(function(data) 
             {
@@ -171,37 +167,34 @@
 
         async scan_nfc()
         {
-            app.dialog.alert("Posez votre carte sur votre téléphone pour la scanner");
+            ws_tools.toast("Posez votre carte sur votre téléphone pour la scanner");
 
-            if(app.device.desktop){
-                app.dialog.alert("TAG NFC détecté");
-                var result  = await ws_server.get_result_data('949AD64A');
-                homeView.router.navigate("/scanned_info/");
-                debugger
-                return('949AD64A');
+            if(!app.device.desktop)
+            {
+                nfc.addTagDiscoveredListener(readCard,
+                function()
+                {
+                    if (ws_define.debug) console.log("Success");
+                },
+                function()
+                {
+                    if (ws_define.debug) console.log("Fail");
+                });
             }
-            else{
-
-                function success() {
-                console.log("Success");
+            else
+            {
+                homeView.router.navigate("/scanned_info/949AD64A");
             }
+            
+        }
 
-            function fail () {
-                console.log("Fail");
-            }
-
-            async function readCard (nfcEvent){
-                    app.dialog.alert("TAG NFC détecté");
-                    var tag = nfcEvent.tag;   
-                    var tag_Id = nfc.bytesToHexString(tag.id);
-                    app.dialog.alert("Numéro de série du TAG : " + tag_Id);
-                    homeView.router.navigate("/scanned_info/");
-                    var result  = await ws_server.get_result_data(tag_Id);
-                    debugger
-            }  
-
-                nfc.addTagDiscoveredListener(readCard, success, fail);
-            }
+        async readCard (nfcEvent)
+        {
+            app.dialog.alert("TAG NFC détecté");
+            var tag = nfcEvent.tag;   
+            var tag_id = nfc.bytesToHexString(tag.id);
+            
+            homeView.router.navigate("/scanned_info/"+tag_id);
         }
     }
     ws_engine.register_page("home", home_class);

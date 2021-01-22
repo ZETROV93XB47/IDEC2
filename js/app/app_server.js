@@ -7,11 +7,12 @@ class app_server_class extends ws_server_class
 		super();
 	}
 	
-	get_result_data(params)
+	get_result_data(nfc_id)
 	{
-		var data = [];
-		data['nfc_etiquette'] = params;
-		return this.api(data);
+		var params = [];
+		params['nfc_etiquette'] = nfc_id;
+
+		return this.api('result_data', params);
 	}
 
 	//! Synchro

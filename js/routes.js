@@ -5,6 +5,7 @@ var routes = [
     { path: '/home/', url: './pages/home.html', },
     
     { path: '/scanned_info/', url: './pages/scanned_info.html'},
+    { path: '/scanned_info/:id', url: './pages/scanned_info.html'},
     
     { path: '/pdf/', url: './pages/pdf.html' },
     { path: '/pdf/:id', url: './pages/pdf.html'},
