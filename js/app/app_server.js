@@ -9,8 +9,8 @@ class app_server_class extends ws_server_class
 	
 	get_result_data(nfc_id)
 	{
-		var params = [];
-		params['nfc_etiquette'] = nfc_id;
+		var params = {};
+		params.nfc_etiquette = nfc_id;
 
 		return this.api('result_data', params);
 	}
