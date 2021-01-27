@@ -14,10 +14,10 @@
 	<div class="page-content">
 		<script id="idec_info_template" type="text/template7">
 			<div style="text-align: center;">
-				<img src="data:application/octet-stream;base64,{{ avatar }}" height="280" style="padding-top: 20px; border-radius: 50%;">
+				<img src="data:application/octet-stream;base64,{{ avatar }}" height="200" width="200" style="padding-top: 20px; border-radius: 50%;">
 			</div>
 			<div class="idec_info">
-				<div class="block-header" style="font-size: 20px; margin-top: 0px; text-align: center;">{{ last_name }} {{ first_name }}</div>	
+				<div class="block-header" style="font-size: 20px; margin-top: 0px; text-align: center;">{{ first_name }} {{ last_name }}</div>	
 				<div class="card-content card-content-padding">
 					<div class="list">
 						<ul>
@@ -48,6 +48,54 @@
 							<li>
 								<div class="item-content">
 									<div class="item-inner">
+									<div class="item-title">Numéro de série de la carte </div>
+									<div class="item-after">{{ nfc_etiquette_virtual_link }}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">Matricule</div>
+									<div class="item-after">{{ matricule }}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">Date de création du compte </div>
+									<div class="item-after">{{ creation_date }}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">Type d'activité </div>
+									<div class="item-after">{{ dns_type }}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">Obesrvations/Commentaires</div>
+									<div class="item-after">{{ due_observation }}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">Etat de la carte NFC</div>
+									<div class="item-after">{{ nfc_etat_virtual_link }}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
 									<div class="item-title">SST projet</div>
 									<div class="item-after"></div>
 									</div>
@@ -60,7 +108,7 @@
 			<div class="block block-strong inset">
 				<button class="button button-fill popup-open documents" data-popup=".popup_document">Documents</button>
 			</div>
-	
+			
 			<div class="popup popup_document">
 				<div class="view">
 					<div class="page" data-name="document">
@@ -103,30 +151,51 @@
 	<script type="text/javascript" ws_script="page">
 		class scanned_info extends ws_page
 		{
+			custom_afterout(page, event, params)
+			{
+				return ws_storage.reset();
+			}
 			async custom_init(page, event, params)
 			{
-				this.nfc_id = params.id;
-				// test
-				this.data = [];
-				
-				let times = 16000;
-				
-				app.dialog.preloader('Chargement ...');
-				await this.load_page();
-				app.dialog.close();
-				
-				let times_to_close = setTimeout(() => page.view.router.back(), times);
-				
-				$('button.button.documents').click(() => clearTimeout(times_to_close));
-				
-				$('#idec_documents_list a.item-content').click(() => app.popup.close('.popup_document', true));
+				try{
+					this.nfc_id = params.id;
+					this.data = [];
+					
+					let times = 16000;
+					app.dialog.preloader('Chargement ...');
+					
+					await this.load_page();
+					app.dialog.close();
+					
+					let times_to_close = setTimeout(() => page.view.router.back(), times);
+					
+					$('button.button.documents').click(() => clearTimeout(times_to_close));
+					
+					$('#idec_documents_list a.item-content').click(() => app.popup.close('.popup_document', true));
+				}
+
+				catch(error)
+				{
+					app.dialog.close();
+					if (ws_defines.debug) console.log(error);
+					app.dialog.alert(error);
+				}	
+
 			}
 			
 			async load_page()
 			{
-				const data = await this.get_template_data();
-				
-                return this.apply_template(page, "idec_info_template", "idec_info_content", data);
+				try{
+					const data = await this.get_template_data();
+	                return this.apply_template(page, "idec_info_template", "idec_info_content", data);					
+				}
+				catch(error)
+				{
+					app.dialog.close();
+					if (ws_defines.debug) console.log(error);
+					app.dialog.alert(error);
+					
+				}	
 			}
 			
 			async get_template_data()
@@ -138,26 +207,24 @@
 					if (result.status == "success")
 					{
 						let data = result.data.result;
-						
 						for (let i = 0; i < data.documents.length; i++)
 						{
 							ws_storage.set_value('pdf_'+i, data.documents[i]['base64']);
 						}
-						
 						return data;
 					}
 					else
 					{
-						page.view.router.back();
-						app.dialog.alert(result.error);
+						throw result.message;
 					}
 				}
 				catch(error)
 				{
+					app.dialog.close();
 					if (ws_defines.debug) console.log(error);
 					app.dialog.alert(error);
-				}
-				
+					
+				}	
 			}
 		}
 

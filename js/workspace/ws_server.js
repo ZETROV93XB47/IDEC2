@@ -41,7 +41,7 @@ class ws_server_class
 
 	api(call, data, server_url) 
 	{
-		debugger
+		
 		var self = this;
 		
 		if (ws_defines.debug) console.log(data);

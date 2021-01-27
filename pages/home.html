@@ -72,7 +72,6 @@
         {
             var self = this;
             self.data = {};
-
             return self.load_page(page);
         }
         
@@ -80,7 +79,6 @@
 		{
 			var self = this;
 			self.data = {};			
-			
 			return self.load_page(page);			
 		}
 
@@ -92,8 +90,9 @@
                 console.log(JSON.stringify(data));
 
                 app.dialog.preloader("Authentification ...");
-
-                ws_server.authentification(data).then(function(result)
+                
+                debugger
+                ws_user.login(ws_defines.SERVER_API_URL, data.login, data.password).then(function(result)
                 {
                     app.dialog.close();
                     
@@ -171,7 +170,13 @@
 
             if(!app.device.desktop)
             {
-                nfc.addTagDiscoveredListener(readCard,
+                nfc.addTagDiscoveredListener(
+                    function(nfcEvent){
+                        app.dialog.alert("TAG NFC détecté");
+                        var tag = nfcEvent.tag;   
+                        var tag_id = nfc.bytesToHexString(tag.id);
+                        homeView.router.navigate("/scanned_info/"+tag_id);
+                },
                 function()
                 {
                     if (ws_define.debug) console.log("Success");
@@ -190,10 +195,9 @@
 
         async readCard (nfcEvent)
         {
-            app.dialog.alert("TAG NFC détecté");
-            var tag = nfcEvent.tag;   
+            var tag = nfcEvent.tag;
+            app.dialog.alert("TAG NFC détecté");   
             var tag_id = nfc.bytesToHexString(tag.id);
-            
             homeView.router.navigate("/scanned_info/"+tag_id);
         }
     }
