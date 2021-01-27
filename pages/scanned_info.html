@@ -32,14 +32,6 @@
 							<li>
 								<div class="item-content">
 									<div class="item-inner">
-									<div class="item-title">Sous-traitant de la société</div>
-									<div class="item-after"></div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="item-content">
-									<div class="item-inner">
 									<div class="item-title">Type de contrat</div>
 									<div class="item-after">{{ contrat_type }}</div>
 									</div>
@@ -90,14 +82,6 @@
 									<div class="item-inner">
 									<div class="item-title">Etat de la carte NFC</div>
 									<div class="item-after">{{ nfc_etat_virtual_link }}</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="item-content">
-									<div class="item-inner">
-									<div class="item-title">SST projet</div>
-									<div class="item-after"></div>
 									</div>
 								</div>
 							</li>
@@ -162,7 +146,7 @@
 					this.data = [];
 					
 					let times = 16000;
-					app.dialog.preloader('Chargement ...');
+				    app.dialog.preloader('Chargement ...');
 					
 					await this.load_page();
 					app.dialog.close();
@@ -203,7 +187,7 @@
 				try 
 				{
 					const result = await ws_server.get_result_data(this.nfc_id);
-					debugger
+					//debugger
 					if (result.status == "success")
 					{
 						let data = result.data.result;

@@ -87,11 +87,12 @@
             $$('#login').on('click', function ()
             {
                 var data = app.form.convertToData('#login-form');
+
                 console.log(JSON.stringify(data));
 
                 app.dialog.preloader("Authentification ...");
                 
-                debugger
+                //debugger
                 ws_user.login(ws_defines.SERVER_API_URL, data.login, data.password).then(function(result)
                 {
                     app.dialog.close();
@@ -172,7 +173,7 @@
             {
                 nfc.addTagDiscoveredListener(
                     function(nfcEvent){
-                        app.dialog.alert("TAG NFC détecté");
+                        ws_tools.toast("TAG NFC détecté");
                         var tag = nfcEvent.tag;   
                         var tag_id = nfc.bytesToHexString(tag.id);
                         homeView.router.navigate("/scanned_info/"+tag_id);
