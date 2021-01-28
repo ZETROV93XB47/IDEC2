@@ -20,24 +20,19 @@ var app = new Framework7(
 			authentification(event, true);
 		},
 
-		load_connect_mode: function()
+		load_connect_mode: async function()
 		{
-			return new Promise(function(resolve, reject)
-			{
-				$('.toolbar').css('display', 'block');
-				$('.views').find('#my-actions').attr('href', '#view-my-actions');
-				$('.views').find('a[href="#view-home"] span').text("Tableau de bord");
-				$('.content_deconnect_mode').css('display', 'none');
-
-				$('.content_connect_mode').css('display', 'block');
-				$('.synchro').css('display', 'block');
-
-				return resolve();
-			});
+			console.trace('on est dans load_connect_mode()');
+			$('.toolbar').css('display', 'block');
+			debugger
+			$('.content_deconnect_mode').css('display', 'none');
+			$('.content_connect_mode').css('display', 'block');
+			$('.synchro').css('display', 'block');
 		},
 
 		load_deconnect_mode: function()
 		{
+			console.trace('on est dans load_deconnect_mode()');
 			return new Promise(function(resolve, reject)
 			{
 				$('.synchro').css('display', 'none');
@@ -88,6 +83,7 @@ var app = new Framework7(
             .then(function()
             {
 				return is_connected();
+
             })
             .then(function(result)
             {
@@ -101,12 +97,25 @@ var app = new Framework7(
             })
             .then(function()
             {
-				return init_db ? ws_database.reset() : Promise.resolve();
+				if(init_db ){
+					return ws_database.reset();
+				} 
+				else{
+					return Promise.resolve();
+				}
             })
             .then(function()
             {
-				if (connected) return app.methods.load_connect_mode();
-				else app.methods.load_deconnect_mode()
+				console.log(connected ? 'on est conncter' : 'pas connecter');
+				if (connected) {
+					debugger
+					return app.methods.load_connect_mode();
+				}
+
+				else{
+					debugger
+					app.methods.load_deconnect_mode();
+				} 
             })
             .catch(function(error)
             {
@@ -136,15 +145,10 @@ function app_inited()
 	});
 }
 
-function is_connected()
+async function is_connected()
 {
-	return new Promise(function(resolve, reject)
-	{
-		ws_database.servers.count().then(function(count)
-		{
-			resolve(count > 0);
-		});
-	});
+	const count = await	ws_database.servers.count();
+	return count>0;
 }
 
 // Tab views

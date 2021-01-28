@@ -68,7 +68,7 @@
 									<div class="item-after">{{ dns_type }}</div>
 									</div>
 								</div>
-							</li>
+							</li>			
 							<li>
 								<div class="item-content">
 									<div class="item-inner">
@@ -85,6 +85,18 @@
 									</div>
 								</div>
 							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+									<div class="item-title">Chantiers </div>
+									<div class="item-after">
+										{{#each acces_chantiers}}
+										<li>{{name}} {{date_end}}</li>
+										{{/each}}
+									</div>
+									</div>
+								</div>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -92,7 +104,6 @@
 			<div class="block block-strong inset">
 				<button class="button button-fill popup-open documents" data-popup=".popup_document">Documents</button>
 			</div>
-			
 			<div class="popup popup_document">
 				<div class="view">
 					<div class="page" data-name="document">
@@ -135,10 +146,6 @@
 	<script type="text/javascript" ws_script="page">
 		class scanned_info extends ws_page
 		{
-			custom_afterout(page, event, params)
-			{
-				return ws_storage.reset();
-			}
 			async custom_init(page, event, params)
 			{
 				try{
@@ -146,7 +153,7 @@
 					this.data = [];
 					
 					let times = 16000;
-				    app.dialog.preloader('Chargement ...');
+					app.dialog.preloader('Chargement ...');
 					
 					await this.load_page();
 					app.dialog.close();
@@ -170,6 +177,7 @@
 			async load_page()
 			{
 				try{
+					ws_storage.reset();
 					const data = await this.get_template_data();
 	                return this.apply_template(page, "idec_info_template", "idec_info_content", data);					
 				}
@@ -191,6 +199,7 @@
 					if (result.status == "success")
 					{
 						let data = result.data.result;
+						if(data.avatar == "null") data.avatar = DEFAULT_AVATAR_BASE64;
 						for (let i = 0; i < data.documents.length; i++)
 						{
 							ws_storage.set_value('pdf_'+i, data.documents[i]['base64']);

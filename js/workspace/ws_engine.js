@@ -119,6 +119,7 @@ class ws_engine_class
 	
 	connect_to_server(url, result)
 	{
+		debugger
 		var self = this;
 
 		if (self.is_multi_servers())
@@ -131,6 +132,7 @@ class ws_engine_class
 				}
 				else
 				{
+					debugger
 					return self.add_server(url, result);
 				}
 			})
